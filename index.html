@@ -1,0 +1,1366 @@
+<title>園見学ノート</title>
+<!-- v20260821a -->
+<style>
+:root{
+  --page:#FFEFD4; --sheet:#FFFDF7; --card:#FFFFFF;
+  --ink:#4E3A2C; --ink-2:#8B7360; --ink-3:#B6A493;
+  --line:#F0E2CC; --line-2:#F7EEDF;
+  --sun:#FFC33D;  --sun-soft:#FFF3D0;
+  --coral:#FF8D72;--coral-soft:#FFEDE7;
+  --mint:#3FBF9B; --mint-soft:#E4F7F1;
+  --sky:#5FBFE8;  --sky-soft:#E6F4FC;
+  --grape:#A98BE0;--grape-soft:#F0EAFB;
+  --shadow:0 .3em 0 rgba(120,92,62,.06), 0 1.4em 2.6em -1.4em rgba(120,92,62,.3);
+  --pop:0 .25em 0 rgba(120,92,62,.16);
+  --maru:"Hiragino Maru Gothic ProN","ヒラギノ丸ゴ ProN W4",HGMaruGothicMPRO,"M PLUS Rounded 1c","Yu Gothic",YuGothic,"Meiryo",sans-serif;
+  --round-latin:"Arial Rounded MT Bold","Nunito","Quicksand",var(--maru);
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --page:#241E1A; --sheet:#332B25; --card:#3E352D;
+  --ink:#FBEEDD; --ink-2:#C4AF9B; --ink-3:#907E6D;
+  --line:#4E4238; --line-2:#463B33;
+  --sun:#FFCF5E; --sun-soft:#4A3B24; --coral:#FFA48C; --coral-soft:#4A2F28;
+  --mint:#6BD5B4; --mint-soft:#20403A; --sky:#86D2F2; --sky-soft:#22394A;
+  --grape:#C0A6EE; --grape-soft:#332A45;
+  --shadow:0 .3em 0 rgba(0,0,0,.18),0 1.4em 2.6em -1.4em rgba(0,0,0,.5);
+  --pop:0 .25em 0 rgba(0,0,0,.3);
+}}
+:root[data-theme="dark"]{
+  --page:#241E1A; --sheet:#332B25; --card:#3E352D;
+  --ink:#FBEEDD; --ink-2:#C4AF9B; --ink-3:#907E6D;
+  --line:#4E4238; --line-2:#463B33;
+  --sun:#FFCF5E; --sun-soft:#4A3B24; --coral:#FFA48C; --coral-soft:#4A2F28;
+  --mint:#6BD5B4; --mint-soft:#20403A; --sky:#86D2F2; --sky-soft:#22394A;
+  --grape:#C0A6EE; --grape-soft:#332A45;
+  --shadow:0 .3em 0 rgba(0,0,0,.18),0 1.4em 2.6em -1.4em rgba(0,0,0,.5);
+  --pop:0 .25em 0 rgba(0,0,0,.3);
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--page);color:var(--ink);font-family:var(--maru);font-size:16px;line-height:1.75;-webkit-text-size-adjust:100%;
+  -webkit-user-select:none;-moz-user-select:none;user-select:none;-webkit-touch-callout:none;-webkit-tap-highlight-color:transparent}
+input,textarea,#io{-webkit-user-select:text;-moz-user-select:text;user-select:text;-webkit-touch-callout:default}
+button,input,textarea{font:inherit;color:inherit}
+:focus-visible{outline:3px solid var(--sky);outline-offset:2px;border-radius:10px}
+.wrap{max-width:760px;margin:0 auto;padding:0 14px 110px}
+header{position:sticky;top:0;z-index:30;background:var(--page);padding-bottom:2px}
+.hd{max-width:760px;margin:0 auto;padding:13px 16px 2px;display:flex;align-items:center;gap:9px}
+.hd h1{font-size:19px;font-weight:800;margin:0;letter-spacing:.05em}
+.fileBtn{margin-left:auto;background:var(--mint);color:#fff;border:0;border-radius:999px;padding:8px 15px;font-size:12.5px;font-weight:800;cursor:pointer;box-shadow:var(--pop);white-space:nowrap}
+.fileBtn:active{transform:translateY(2px);box-shadow:none}
+.saveBtn{background:var(--sun);color:#4E3A2C;border:0;border-radius:999px;
+  padding:8px 18px;font-size:13.5px;font-weight:800;cursor:pointer;box-shadow:var(--pop);white-space:nowrap}
+.saveBtn:active{transform:translateY(2px);box-shadow:none}
+.saveBtn.done{background:var(--mint);color:#fff}
+.saveBtn.bad{background:var(--coral-soft);color:var(--coral);border:2px solid var(--coral);box-shadow:none}
+.hd .sub2{font-size:10.5px;color:var(--ink-3);font-weight:800;margin-left:auto}
+nav{max-width:760px;margin:0 auto;padding:8px 12px 9px;display:flex;gap:5px}
+nav button{flex:1;background:var(--sheet);border:0;border-radius:999px;padding:9px 2px;cursor:pointer;color:var(--ink-3);font-size:12.5px;font-weight:800}
+nav button[aria-selected="true"]{background:var(--sun);color:#4E3A2C;box-shadow:var(--pop)}
+.card{background:var(--card);border-radius:22px;box-shadow:var(--shadow)}
+.stack{display:flex;flex-direction:column;gap:13px}
+.row{display:flex;align-items:center;gap:9px}
+h2{font-size:15.5px;font-weight:800;margin:0;letter-spacing:.03em}
+.lbl{font-size:10.5px;letter-spacing:.13em;color:var(--ink-3);font-weight:800}
+.muted{color:var(--ink-2);font-size:13.5px;line-height:1.75}
+.btn{background:var(--sun);color:#4E3A2C;border:0;border-radius:999px;padding:12px 19px;font-weight:800;font-size:15px;cursor:pointer;box-shadow:var(--pop)}
+.btn.ghost{background:var(--sheet);color:var(--ink-2);box-shadow:none;border:2px solid var(--line)}
+.btn.danger{background:var(--coral-soft);color:var(--coral);box-shadow:none;border:2px solid var(--coral)}
+.btn.sm{padding:8px 14px;font-size:12.5px}
+.btn:active{transform:translateY(2px);box-shadow:none}
+input[type=text],input[type=date],textarea{width:100%;background:var(--sheet);border:2px solid var(--line);border-radius:14px;padding:10px 13px;font-size:16px}
+textarea{resize:vertical;min-height:56px;line-height:1.7}
+.parks{display:flex;gap:8px;overflow-x:auto;padding:11px 2px 7px}
+.chip{flex:0 0 auto;background:var(--sheet);border:2px solid var(--line);border-radius:999px;padding:9px 16px;font-size:14px;font-weight:800;cursor:pointer;white-space:nowrap;color:var(--ink-2)}
+.chip[aria-pressed="true"]{background:var(--sun);border-color:var(--sun);color:#4E3A2C;box-shadow:var(--pop)}
+.chip.add{color:var(--coral);border-color:var(--coral);border-style:dashed;background:transparent}
+.addbox{display:none;gap:8px;padding:3px 2px 9px}
+.addbox.on{display:flex}
+.addbox input{flex:1}
+.meta{padding:17px;display:grid;gap:12px}
+.meta .g2{display:grid;grid-template-columns:1fr 1fr;gap:11px}
+.meta label{display:grid;gap:5px}
+.score{padding:15px 17px;display:flex;align-items:center;gap:15px;background:var(--sun-soft);border-radius:22px;box-shadow:var(--shadow)}
+.score .n{font-family:var(--round-latin);font-size:36px;font-weight:800;line-height:1;font-variant-numeric:tabular-nums}
+.score .n small{font-size:13px;margin-left:2px}
+.bar{height:9px;background:var(--card);border-radius:999px;overflow:hidden;margin-top:6px}
+.bar i{display:block;height:100%;background:var(--sun);border-radius:999px;transition:width .4s}
+.phase{display:flex;align-items:center;gap:9px;margin:20px 4px 2px}
+.phase b{font-size:14px;font-weight:800;letter-spacing:.06em}
+.phase span{font-size:11.5px;color:var(--ink-3);font-weight:800}
+.phase:first-child{margin-top:6px}
+.cat{overflow:hidden}
+.cat>summary{list-style:none;cursor:pointer;padding:15px 17px;display:flex;align-items:center;gap:9px}
+.cat>summary::-webkit-details-marker{display:none}
+.dot{width:11px;height:11px;border-radius:50%;flex:0 0 auto}
+.cat .count{margin-left:auto;font-size:11px;color:var(--ink-3);font-weight:800;font-variant-numeric:tabular-nums;background:var(--line-2);padding:3px 9px;border-radius:999px}
+.caret{color:var(--ink-3);font-size:11px;transition:transform .2s}
+.cat[open] .caret{transform:rotate(90deg)}
+.sec>summary{list-style:none;cursor:pointer;padding:16px 17px;display:flex;align-items:center;gap:10px}
+.sec>summary::-webkit-details-marker{display:none}
+.sec[open]>summary .caret{transform:rotate(90deg)}
+.sec[open]>summary{border-bottom:2px dotted var(--line)}
+.secn{flex:0 0 auto;width:24px;height:24px;border-radius:50%;background:var(--sun);color:#4E3A2C;
+  display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:800}
+.secbody{padding:15px 17px 18px}
+.sec .count{margin-left:auto}
+.weight{display:flex;gap:5px;padding:0 17px 13px}
+.weight button{flex:1;background:var(--sheet);border:2px solid var(--line);border-radius:999px;padding:6px 3px;font-size:11px;font-weight:800;color:var(--ink-3);cursor:pointer}
+.weight button[aria-pressed="true"]{background:var(--grape);border-color:var(--grape);color:#fff}
+.item{border-top:2px dotted var(--line);padding:14px 17px}
+.item .q{font-size:14.5px;font-weight:800;line-height:1.6;margin:0}
+.why{background:none;border:0;padding:2px 0 0;color:var(--coral);font-size:11.5px;font-weight:800;cursor:pointer}
+.why-body{display:none;margin:8px 0 0;padding:10px 13px;background:var(--coral-soft);border-radius:15px;font-size:12.5px;line-height:1.8;color:var(--ink-2)}
+.open>.why-body{display:block}
+.rate{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;margin-top:10px}
+.rate button{background:var(--sheet);border:2px solid var(--line);border-radius:15px;padding:9px 2px 7px;cursor:pointer;display:grid;gap:1px;justify-items:center}
+.rate button b{font-size:17px;line-height:1;color:var(--ink-3)}
+.rate button span{font-size:9.5px;color:var(--ink-3);font-weight:800}
+.rate button[data-v="3"][aria-pressed="true"]{background:var(--mint-soft);border-color:var(--mint)}
+.rate button[data-v="3"][aria-pressed="true"] b,.rate button[data-v="3"][aria-pressed="true"] span{color:var(--mint)}
+.rate button[data-v="2"][aria-pressed="true"]{background:var(--sky-soft);border-color:var(--sky)}
+.rate button[data-v="2"][aria-pressed="true"] b,.rate button[data-v="2"][aria-pressed="true"] span{color:var(--sky)}
+.rate button[data-v="1"][aria-pressed="true"]{background:var(--sun-soft);border-color:var(--sun)}
+.rate button[data-v="1"][aria-pressed="true"] b,.rate button[data-v="1"][aria-pressed="true"] span{color:#A8730C}
+.rate button[data-v="0"][aria-pressed="true"]{background:var(--coral-soft);border-color:var(--coral)}
+.rate button[data-v="0"][aria-pressed="true"] b,.rate button[data-v="0"][aria-pressed="true"] span{color:var(--coral)}
+.item textarea{margin-top:8px;font-size:15px;min-height:48px}
+.sinkBtn{margin-top:8px;background:var(--sheet);border:2px solid var(--line);border-radius:999px;
+  padding:7px 15px;font-size:12.5px;font-weight:800;color:var(--ink-2);cursor:pointer;float:right}
+.item::after{content:"";display:block;clear:both}
+.chk{display:flex;align-items:flex-start;gap:11px;cursor:pointer}
+.chk input{width:22px;height:22px;flex:0 0 auto;margin-top:2px;accent-color:var(--mint)}
+.pickcat{padding:13px 16px;border-top:2px dotted var(--line)}
+.pickrow{display:flex;align-items:flex-start;gap:10px;padding:6px 0}
+.pickrow input{width:20px;height:20px;flex:0 0 auto;margin-top:3px;accent-color:var(--sun)}
+.pickrow label{font-size:13.5px;line-height:1.6;cursor:pointer;font-weight:800}
+.pickmain{flex:1;min-width:0}
+.pickmain .why-body{margin-top:7px}
+.scroller{overflow-x:auto;-webkit-overflow-scrolling:touch;border-radius:22px}
+table{border-collapse:collapse;width:100%;font-size:13px}
+th,td{border-bottom:2px dotted var(--line);padding:9px 10px;text-align:left;vertical-align:top}
+thead th{position:sticky;top:0;background:var(--card);font-size:12.5px;font-weight:800;border-bottom:3px solid var(--sun);white-space:nowrap}
+tbody th{font-weight:600;color:var(--ink-2);min-width:190px;font-size:12.5px}
+td{text-align:center;font-variant-numeric:tabular-nums;min-width:78px;font-weight:800}
+td.ans{text-align:left;font-weight:600;font-size:12px;min-width:140px;line-height:1.6}
+tr.catrow th{background:var(--sun-soft);font-weight:800;color:var(--ink);font-size:12px}
+tr.catrow td{background:var(--sun-soft)}
+tr.total th,tr.total td{border-top:3px solid var(--sun);border-bottom:0;font-weight:800;padding-top:12px}
+tr.total td{font-family:var(--round-latin);font-size:19px}
+.v3{color:var(--mint)}.v2{color:var(--sky)}.v1{color:#A8730C}.v0{color:var(--coral)}.vna{color:var(--ink-3);font-weight:600}
+.memo-cell{font-size:11px;text-align:left;color:var(--ink-2);line-height:1.55;min-width:120px;font-weight:600;margin-top:3px}
+.empty{padding:36px 24px;text-align:center;color:var(--ink-2);font-size:14px;line-height:1.9}
+.banner{background:var(--coral-soft);border:2px solid var(--coral);border-radius:18px;padding:12px 15px;font-size:13px;line-height:1.7;margin-top:12px}
+.tip{background:var(--sky-soft);border-radius:16px;padding:11px 14px;font-size:12.5px;line-height:1.8;color:var(--ink-2);margin:0 17px 13px}
+.io textarea{font-family:ui-monospace,Menlo,monospace;font-size:12px;min-height:110px;line-height:1.5}
+.confirm{background:var(--coral-soft);border-radius:18px;padding:12px 15px;display:none;gap:9px;flex-wrap:wrap;align-items:center;margin-top:10px}
+.confirm.on{display:flex}
+.confirm p{margin:0;flex:1;min-width:160px;font-size:13px;font-weight:800}
+footer{padding:22px 6px;color:var(--ink-3);font-size:11px;line-height:1.9;text-align:center}
+
+
+/* ---- 当日ページ：並べ替え ---- */
+.items{display:flex;flex-direction:column}
+.item.done{opacity:.5}
+.item.done .q::before{content:"✓ ";color:var(--mint);font-weight:800}
+.remain{margin-left:auto;font-size:11px;font-weight:800;font-variant-numeric:tabular-nums;padding:3px 10px;border-radius:999px;background:var(--coral-soft);color:var(--coral)}
+.remain.zero{background:var(--mint-soft);color:var(--mint)}
+.sub{display:flex;gap:6px;padding:0 0 3px}
+.sub button{flex:1;background:var(--sheet);border:2px solid var(--line);border-radius:999px;padding:8px 3px;font-size:12.5px;font-weight:800;color:var(--ink-3);cursor:pointer}
+.sub button[aria-pressed="true"]{background:var(--grape);border-color:var(--grape);color:#fff}
+.sumcat{font-size:12px;font-weight:800;letter-spacing:.05em;color:var(--ink-3);margin:15px 0 5px 4px}
+.sumrow{display:flex;gap:11px;padding:8px 0;border-bottom:2px dotted var(--line)}
+.sumrow .k{flex:0 0 46%;font-size:12.5px;color:var(--ink-2);line-height:1.6}
+.sumrow .v{flex:1;font-size:13.5px;font-weight:800;line-height:1.6;word-break:break-word}
+.sumrow .v.na{color:var(--ink-3);font-weight:600}
+.sumrow .v .mm{display:block;font-size:11.5px;font-weight:600;color:var(--ink-2);margin-top:2px}
+.saveState{max-width:760px;margin:0 auto;padding:0 16px 4px;font-size:11px;font-weight:800;color:var(--ink-3);display:flex;align-items:center;gap:8px;min-height:18px}
+.saveState .ok{color:var(--mint)}
+.saveState button{background:var(--coral-soft);border:2px solid var(--coral);color:var(--coral);border-radius:999px;padding:2px 11px;font-size:11px;font-weight:800;cursor:pointer}
+#imgWrap{display:none;margin-top:13px}
+#imgWrap.on{display:block}
+#imgWrap canvas{width:100%;height:auto;border-radius:16px;border:2px solid var(--line);display:block}
+.opts{display:flex;flex-wrap:wrap;gap:6px;margin-top:9px}
+.opts button{background:var(--sheet);border:2px solid var(--line);border-radius:999px;padding:7px 14px;font-size:13px;font-weight:800;color:var(--ink-2);cursor:pointer}
+.opts button[aria-pressed="true"]{background:var(--sky);border-color:var(--sky);color:#fff}
+.nudge{background:var(--sun-soft);border:2px solid var(--sun);border-radius:18px;padding:13px 16px;
+  font-size:13px;line-height:1.75;margin:0 0 4px}
+.nudge.ok{background:var(--mint-soft);border-color:var(--mint);font-size:12px;font-weight:800;color:var(--mint)}
+.nudge.warn{background:var(--coral-soft);border-color:var(--coral)}
+#sortWrap{position:fixed;inset:0;z-index:200;background:var(--page);display:flex;flex-direction:column}
+#sortWrap[hidden]{display:none}
+.sortTop{display:flex;align-items:center;gap:10px;padding:14px 16px 6px;max-width:640px;margin:0 auto;width:100%}
+.sortTop span{flex:1;text-align:center;font-size:12.5px;font-weight:800;color:var(--ink-3);font-variant-numeric:tabular-nums}
+.sortStage{flex:1;position:relative;display:flex;align-items:center;justify-content:center;padding:8px 18px}
+.sortCard{width:100%;max-width:460px;background:var(--card);border-radius:26px;box-shadow:var(--shadow);
+  padding:26px 24px;touch-action:pan-y;user-select:none;transition:transform .25s ease,opacity .25s ease}
+.sortCard .cat{font-size:12px;font-weight:800;letter-spacing:.1em;color:var(--ink-3);display:block;margin-bottom:9px}
+.sortCard .q{font-size:21px;font-weight:800;line-height:1.55;margin:0}
+.sortCard .why{display:block;margin-top:14px;padding:13px 15px;background:var(--coral-soft);border-radius:16px;
+  font-size:13px;line-height:1.85;color:var(--ink-2);border:0;text-align:left;width:100%}
+.sortCard .now{display:inline-block;margin-top:15px;font-size:11.5px;font-weight:800;padding:4px 12px;border-radius:999px;
+  background:var(--line-2);color:var(--ink-3)}
+.sortHint{position:absolute;top:50%;transform:translateY(-50%);font-size:13px;font-weight:800;opacity:0;transition:opacity .15s;pointer-events:none}
+.sortHint.left{left:8px;color:var(--sky)}
+.sortHint.right{right:8px;color:var(--mint)}
+.sortBtns{display:flex;gap:9px;padding:10px 18px 26px;max-width:520px;margin:0 auto;width:100%}
+.sortB{flex:1;border:0;border-radius:999px;padding:16px 6px;font-size:14px;font-weight:800;cursor:pointer;box-shadow:var(--pop)}
+.sortB:active{transform:translateY(2px);box-shadow:none}
+.sortB.day{background:var(--sky);color:#fff}
+.sortB.pre{background:var(--mint);color:#fff}
+.sortB.off{background:var(--sheet);color:var(--ink-3);border:2px solid var(--line);box-shadow:none;flex:0 0 96px}
+.sortDone{text-align:center;font-size:16px;font-weight:800;line-height:2}
+.fromcat{display:block;font-size:10.5px;font-weight:800;letter-spacing:.08em;color:var(--ink-3);margin-bottom:4px}
+.cat.miss{border:2px solid var(--coral)}
+.cat.miss .remain{background:var(--coral-soft);color:var(--coral)}
+/* ---- 印刷 ---- */
+#printArea{display:none}
+@media print{
+  header,nav,.parks,.addbox,.io,.btn,footer,.why,.weight,.confirm,.banner,.wrap>section,.tip{display:none !important}
+  body{background:#fff;color:#000;font-size:10.5px;line-height:1.5}
+  .wrap{max-width:none;padding:0}
+  #printArea{display:block !important}
+  .pTitle{font-size:16px;font-weight:800;margin:0 0 2px}
+  .pSub{font-size:10px;color:#555;margin:0 0 10px}
+  .pCat{font-size:11.5px;font-weight:800;background:#EEE;padding:3px 7px;margin:11px 0 5px;break-after:avoid}
+  .pItem{display:flex;gap:6px;align-items:flex-start;padding:3px 0;break-inside:avoid}
+  .pBox{width:11px;height:11px;border:1px solid #333;flex:0 0 auto;margin-top:2px}
+  .pLine{flex:1;border-bottom:1px dotted #BBB;min-height:15px}
+  .pQ{flex:0 0 46%;font-weight:600}
+  .pCols{column-count:2;column-gap:18px}
+  table{font-size:9px} thead th{position:static;border-bottom:1.5px solid #333}
+  th,td{border-bottom:1px solid #DDD;padding:4px 5px}
+  .scroller{overflow:visible} .card{box-shadow:none}
+  @page{margin:11mm}
+}
+@media (prefers-reduced-motion:reduce){*{transition:none !important}}
+</style>
+
+<header>
+  <div class="hd">
+    <svg width="25" height="25" viewBox="0 0 40 40" aria-hidden="true">
+      <circle cx="20" cy="22" r="14" fill="var(--sun)"/><circle cx="20" cy="10" r="8.5" fill="var(--sun)"/>
+      <circle cx="17" cy="9" r="1.6" fill="#4E3A2C"/><circle cx="23" cy="9" r="1.6" fill="#4E3A2C"/>
+      <path d="M20 12.4 L23 14.6 L17 14.6 Z" fill="var(--coral)"/></svg>
+    <h1>園見学ノート</h1>
+    <button class="fileBtn" id="fileBtn" onclick="saveBackupFile()">ファイルに保存</button>
+    <button class="saveBtn" id="saveBtn" onclick="manualSave()">保存</button>
+  </div>
+  <nav role="tablist">
+    <button role="tab" id="t-pre" aria-selected="true"  onclick="setTab('pre')">事前</button>
+    <button role="tab" id="t-day" aria-selected="false" onclick="setTab('day')">当日</button>
+    <button role="tab" id="t-sum" aria-selected="false" onclick="setTab('sum')">まとめ</button>
+    <button role="tab" id="t-set" aria-selected="false" onclick="setTab('set')">設定</button>
+  </nav>
+</header>
+
+<div class="saveState" id="saveState"></div>
+<div class="wrap" style="padding-bottom:0"><div id="nudge"></div></div>
+<div class="wrap">
+  <div id="storageWarn"></div>
+  <div class="parks" id="parks"></div>
+  <div class="addbox" id="addbox">
+    <input type="text" id="newName" placeholder="園の名前を入れてね" autocomplete="off"
+      onkeydown="if(event.key==='Enter')commitPark();if(event.key==='Escape')toggleAdd(false)">
+    <button class="btn sm" onclick="commitPark()">追加</button>
+    <button class="btn sm ghost" onclick="toggleAdd(false)">やめる</button>
+  </div>
+
+  <section id="pre"><div id="preBody" class="stack"></div></section>
+  <section id="day" hidden><div id="dayBody" class="stack"></div></section>
+
+  <section id="sum" hidden>
+    <div class="stack" style="padding-top:11px">
+      <div class="sub">
+        <button id="s-one" aria-pressed="true"  onclick="setSum('one')">この園の記録</button>
+        <button id="s-all" aria-pressed="false" onclick="setSum('all')">園をくらべる</button>
+      </div>
+      <div id="sumOne"></div>
+      <div id="sumAll" hidden>
+        <div class="card" style="padding:14px 16px;margin-bottom:13px">
+          <label class="row" style="gap:9px;cursor:pointer">
+            <input type="checkbox" id="showMemo" onchange="renderCmp()" style="width:auto;transform:scale(1.3)">
+            <span style="font-size:13.5px;font-weight:800">メモも表に出す</span></label>
+        </div>
+        <div class="card scroller" id="cmpBody"></div>
+      </div>
+      <div class="card" style="padding:16px 17px">
+        <h2>紙に印刷する</h2>
+        <p class="muted" style="margin:7px 0 11px">
+          <b>持っていく用</b>は、えらんだ項目が空欄で並んだ紙です。<b>まとめ</b>はこの園の記録、<b>比較表</b>は全部の園を並べた紙です。
+        </p>
+        <div class="row" style="gap:7px;flex-wrap:wrap">
+          <button class="btn sm" onclick="doPrint('list')">持っていく用</button>
+          <button class="btn sm ghost" onclick="doPrint('one')">この園のまとめ</button>
+          <button class="btn sm ghost" onclick="doPrint('compare')">比較表</button>
+        </div>
+        <hr style="border:0;border-top:2px dotted var(--line);margin:15px 0">
+        <h2>画像で保存する</h2>
+        <p class="muted" style="margin:7px 0 11px">記入した項目だけを1枚の画像にします。スマホに保存したり、家族に送ったりできます。</p>
+        <button class="btn" onclick="makeImage()">この園を画像にする</button>
+        <p id="imgMsg" class="muted" style="margin:10px 0 0"></p>
+        <div id="imgWrap"><canvas id="imgCanvas"></canvas>
+          <p class="muted" style="margin:9px 0 0;font-size:12px">保存できないときは、この画像を長押し（PCは右クリック）しても保存できます。</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="set" hidden>
+    <div class="stack io" style="padding-top:11px">
+
+      <div class="card" style="padding:18px;background:var(--sun-soft);border:2px solid var(--sun)">
+        <h2>カードで仕分ける</h2>
+        <p class="muted" style="margin:8px 0 13px">
+          全<b id="allN2">135</b>項目を1枚ずつ出します。<b>「事前にしらべる」「当日きく」「使わない」</b>の3つに振り分けるだけ。
+          スワイプでも、ボタンでも進められます。
+        </p>
+        <button class="btn" id="sortStart" style="width:100%;padding:15px">はじめる</button>
+      </div>
+
+      <details class="card sec">
+        <summary><span class="secn">1</span><h2>使い方</h2><span class="caret">▶</span></summary>
+        <div class="secbody">
+        <p class="muted" style="margin:0">
+          <b>① 事前</b>　園のホームページや自治体の資料で分かることを、先に埋めておきます。電話で予約するときに聞くこともここです。<br><br>
+          <b>② 当日</b>　見学しながら記録します。記入したら<b>「書けた ↓」</b>を押してください。その項目が下に下がり、まだ聞いていないものが上に残ります。書き足したくなったら<b>「もう一度書く ↑」</b>で戻せます。<br><br>
+          <b>③ まとめ</b>　記入したものを一覧で見返せます。園が複数あれば横に並べて比べられます。紙に印刷したり、1枚の画像にして保存もできます。<br><br>
+          各項目の<b style="color:var(--coral)">「聞く理由 ▾」</b>を押すと、なぜそこを見るのかが読めます。<br><br>
+          入力は<b>自動で保存されます</b>。ただしブラウザの中の保存なので、確実に残したいときは<b>設定 →「持ち出す・戻す」→「ファイルに保存」</b>を使ってください。園はいくつでも追加できます（画面の上の「＋ 園を追加」）。
+        </p>
+        </div>
+      </details>
+
+      <details class="card sec">
+        <summary><span class="secn">2</span><h2>項目をえらぶ</h2><span class="count" id="onBadge">0</span><span class="caret">▶</span></summary>
+        <div class="secbody">
+        <p class="muted" style="margin:0 0 11px">
+          全部で<b id="allN">0</b>項目あります。見学は1時間ほどなので、<b>ぜんぶは聞けません</b>。
+          使う項目を先に絞っておくと、当日ラクになります。外した項目は記録画面にも印刷にも出ません。
+        </p>
+        <p class="muted" style="margin:0 0 11px"><b>「事前」で分かることは、先にホームページなどで調べてまとめておきましょう。</b>当日は、行かないと分からないことだけに集中できます。</p>
+        <p class="muted" style="margin:0 0 11px">1つずつ選ぶのが大変なときは、<b>この画面のいちばん上にある「カードで仕分ける」</b>が早いです。</p>
+        <div class="row" style="gap:7px;flex-wrap:wrap">
+          <button class="btn sm" onclick="preset('all')">ぜんぶ使う</button>
+          <button class="btn sm ghost" onclick="preset('none')">ぜんぶ外す</button>
+        </div>
+        <p class="muted" style="margin:11px 0 0;font-weight:800">いま使う項目：<span id="onN">0</span> 個</p>
+        <p class="muted" style="margin:6px 0 0;font-size:12px">チェックを変えると<b>すぐに反映されます</b>。項目の下に<b>「なぜ聞くのか」</b>を書いてあるので、読んでから決めてください。</p>
+        <div id="picBody" class="stack" style="margin-top:13px"></div>
+        </div>
+      </details>
+
+      <details class="card sec">
+        <summary><span class="secn">3</span><h2>保存について</h2><span class="caret">▶</span></summary>
+        <div class="secbody">
+        <p class="muted" style="margin:0 0 11px">
+          入力するたびに<b>自動で保存されます</b>。念のため確かめたいときは、画面いちばん上の<b>「保存」ボタン</b>を押してください。押すと緑色になります。<br>
+          まちがえて消してしまったときは、上に出る<b>「元にもどす」</b>を押してください。
+        </p>
+        <p class="muted" style="margin:0 0 13px;font-size:12.5px">
+          記録は<b>ブラウザごとに別々に</b>保存されます。前回と違うブラウザで開くと出てきません。いつも同じところから開いてください。
+        </p>
+        <hr style="border:0;border-top:2px dotted var(--line);margin:0 0 13px">
+        <p class="muted" style="margin:0 0 10px;font-weight:800">うまく保存されないとき</p>
+        <p class="muted" style="margin:0 0 10px;font-size:12.5px">
+          <b>先に画面いちばん上の「保存」を1回押してから</b>、下のボタンを押してください。保存を押したときに、ブラウザへ保存の許可を求めます。
+        </p>
+        <p class="muted" style="margin:0 0 10px;font-size:12.5px">下のボタンを押して、出てきた文字をそのまま伝えてもらえれば原因が分かります。</p>
+        <button class="btn sm" onclick="document.getElementById('diag').textContent=diagText()">しらべる</button>
+        <pre id="diag" style="white-space:pre-wrap;font-size:12px;line-height:1.8;color:var(--ink-2);margin:11px 0 0;font-family:inherit"></pre>
+        </div>
+      </details>
+
+      <details class="card sec">
+        <summary><span class="secn">4</span><h2>持ち出す・戻す</h2><span class="caret">▶</span></summary>
+        <div class="secbody">
+        <p class="muted" style="margin:0 0 11px"><b>いちばん確実な方法です。</b>記録をファイルにして端末に保存します。ブラウザの中の保存と違って、これは消えません。見学が終わったら押しておくと安心です。</p>
+        <div class="row" style="gap:8px;flex-wrap:wrap">
+          <button class="btn" onclick="saveBackupFile()">ファイルに保存</button>
+          <button class="btn ghost" onclick="document.getElementById('bkFile').click()">ファイルから戻す</button>
+          <input type="file" id="bkFile" accept="application/json,.json" style="display:none" onchange="loadBackupFile(this)">
+        </div>
+        <p id="bkMsg" class="muted" style="margin:10px 0 0"></p>
+        <div class="confirm" id="cfFile"><p>いまの記録を、ファイルの内容で置きかえます。</p>
+          <button class="btn sm danger" onclick="applyBackupFile()">置きかえる</button>
+          <button class="btn sm ghost" onclick="hideC('cfFile');PENDING=null">やめる</button></div>
+        <hr style="border:0;border-top:2px dotted var(--line);margin:15px 0">
+        <p class="muted" style="margin:0 0 10px;font-size:12.5px">文字列でやりとりしたいときは、こちらを使ってください。下の文字列をコピーして、移した先の同じ欄に貼って「読みこむ」を押します。</p>
+        <textarea id="io" spellcheck="false" placeholder="ここに書き出されます"></textarea>
+        <div class="row" style="margin-top:10px;gap:8px;flex-wrap:wrap">
+          <button class="btn sm" onclick="doExport()">書き出す</button>
+          <button class="btn sm ghost" onclick="doImport()">読みこむ</button>
+        </div>
+        <p id="ioMsg" class="muted" style="margin:10px 0 0"></p>
+        <div class="confirm" id="cfImport"><p>いまの記録を、貼りつけた内容で置きかえます。</p>
+          <button class="btn sm danger" onclick="doImport(true)">置きかえる</button>
+          <button class="btn sm ghost" onclick="hideC('cfImport')">やめる</button></div>
+        <hr style="border:0;border-top:2px dotted var(--line);margin:15px 0">
+        <button class="btn sm danger" onclick="showC('cfWipe')">ぜんぶ消す</button>
+        <div class="confirm" id="cfWipe"><p>すべての園の記録を消します。元に戻せません。</p>
+          <button class="btn sm danger" onclick="wipe()">消す</button>
+          <button class="btn sm ghost" onclick="hideC('cfWipe')">やめる</button></div>
+        </div>
+      </details>
+
+      <details class="card sec">
+        <summary><span class="secn">5</span><h2>この道具について</h2><span class="caret">▶</span></summary>
+        <div class="secbody">
+        <p class="muted" style="margin:0">
+          項目は「保育士にゆとりがあるか」を軸に組んでいます。設備の新しさより、そこで働く人に余裕があるかどうかが、子どもの過ごし方に直結するからです。<br><br>
+          点数がつくのは<b>「見て確かめること」だけ</b>です。定員や料金は良し悪しではないので、点数には入れていません。<br><br>
+          点数は園に優劣をつけるためではなく、<b>自分が何を大事にしているかを確かめる</b>ためのものです。最後は実際に見た感触で決めてくださいね。
+        </p>
+        </div>
+      </details>
+
+    </div>
+  </section>
+
+  <div id="sortWrap" hidden>
+    <div class="sortTop">
+      <button class="btn sm ghost" id="sortClose">とじる</button>
+      <span id="sortCount"></span>
+      <button class="btn sm ghost" id="sortUndo">ひとつ戻す</button>
+    </div>
+    <div class="sortStage">
+      <div class="sortHint left">当日きく</div>
+      <div class="sortHint right">事前にしらべる</div>
+      <div class="sortCard" id="sortCard"></div>
+      <div class="sortDone" id="sortDone" hidden></div>
+    </div>
+    <div class="sortBtns">
+      <button class="sortB day" id="sortDay">← 当日</button>
+      <button class="sortB off" id="sortOff">使わない</button>
+      <button class="sortB pre" id="sortPre">事前 →</button>
+    </div>
+  </div>
+
+  <div id="printArea"></div>
+  <footer>記録はこの端末のブラウザ内にだけ保存され、どこにも送信されません。<br>
+    園の運用は自治体・法人によって異なります。気になる点は必ず園にご確認ください。</footer>
+</div>
+
+<script>
+const CATS=[
+{id:"prep",page:"pre",kind:"ask",phase:"先に調べておくこと",name:"調べれば分かること",color:"var(--sky)",
+ tip:"ここは見学に行く前に埋められます。先に埋めておくと、当日は「行かないと分からないこと」だけに集中できます。",
+ items:[
+ ["園の種類","自治体のホームページか、園のサイトに出ています。",0,["認可","認可外","小規模","企業主導型","認定こども園","家庭的保育"]],
+ ["住所・最寄り駅・家からのルート","",0],
+ ["家から園までの実際の所要時間","子連れは倍かかります。見学の前に一度、実際のルートを歩いてみてください。",0],
+ ["保育料（自治体の表で調べる）","保育料は世帯の課税額で決まるので、園ではなく自治体の表を見ます。",0],
+ ["開所時間と、標準時間・時間外","",0],
+ ["休園日・休園期間（年末年始・お盆）","",0],
+ ["クラスごとの定員","園のサイトか自治体の一覧に出ていることが多いです。",0],
+ ["園庭の有無","",0,["あり","なし"]],
+ ["保育理念・方針","先に読んでおくと、見学のとき「これはどういう意味ですか」と踏み込んで聞けます。",0],
+ ["去年の申込状況・内定の最低指数","自治体が公表していることがあります。受かる見込みが読めます。",0]]},
+{id:"tel",page:"pre",kind:"check",phase:"電話で聞くこと",name:"電話で確認しておくこと",color:"var(--grape)",
+ tip:"かけるなら平日の10時過ぎ（登園が落ち着くころ）か、14時前後（お昼寝の時間帯）。行事の日を避けたいので、先にホームページを見ておくと確実です。",
+ items:[
+ ["見学の所要時間はどのくらいか","",1],
+ ["子どもを連れて行ってよいか","",1],
+ ["見学中、園児と一緒に活動することはあるか","",0],
+ ["持ち物（スリッパ・筆記用具）は必要か","",1],
+ ["説明会はあるか。あれば日時","",0],
+ ["車・ベビーカーで行ってよいか","駐車場やベビーカーの置き場所も一緒に聞いておくと当日あわてません。",1],
+ ["入園説明会や用品購入の時期","",0]]},
+
+{id:"route",page:"day",kind:"rate",phase:"見て確かめること",name:"通園経路・園のまわり",color:"var(--sky)",items:[
+ ["送迎ルートの安全性（歩道・信号・交通量）","毎日2往復する道です。雨の日や暗くなってからも通ります。",1],
+ ["駐輪場・駐車場の広さと屋根","雨の日に子どもを抱えて何メートル歩くかが決まります。",1],
+ ["ベビーカー置き場があるか","",0],
+ ["自転車・ベビーカーを置いたままにできるか","送迎時のみ可、という園もあります。",0],
+ ["入口のセキュリティ（オートロック・部外者が入れないか）","",1]]},
+
+{id:"env",page:"day",kind:"rate",phase:"見て確かめること",name:"保育室・環境",color:"var(--mint)",items:[
+ ["部屋に入ったときのにおい","換気と掃除の頻度がそのまま出ます。おむつや給食のにおいがこもる園は、手が回っていないことが多いです。",1],
+ ["掃除が行き届いているか","おもちゃまでこまめに消毒されていれば理想的です。",1],
+ ["おもちゃが子どもの手の届く高さにあるか","「自分で選んで遊ぶ」を想定しているか。棚の上にしまわれている園は、大人が出し入れを管理する保育になりがちです。",1],
+ ["おもちゃの数と、年齢に合っているか","",0],
+ ["絵本の数と種類","",0],
+ ["クラスの広さと、子どもの密度","狭いところに人数が多いと、感染症が広がりやすくなります。",1],
+ ["風通し・空調・日当たり","小さい子ほど、自分で暑さ寒さを調整できません。",1],
+ ["掲示物が「今」のものになっているか","数ヶ月前の行事が貼りっぱなしなら、そこまで手が回っていないサインです。",0],
+ ["展示されている制作物の多さ","たくさんあると華やかですが、制作の準備に時間を取られている分、子どもを見る余裕が削られている場合もあります。多ければよいとは限りません。",0],
+ ["手洗い場・トイレが子ども向けの設備か","",0],
+ ["沐浴・シャワーの設備","夏場や汚れたときに使います。",0],
+ ["昼寝の環境（空調・照明・カーテン）","",0],
+ ["クラスは個室か、ワンフロアか","",0]]},
+
+{id:"safe",page:"day",kind:"rate",phase:"見て確かめること",name:"安全",color:"var(--coral)",items:[
+ ["指はさみ・棚の転倒防止・角の保護","つかまり立ちが始まると危険が一気に増えます。対策済みかどうかで、意識の高さが分かります。",1],
+ ["危険な場所や死角がないか","",1],
+ ["階段・ベランダ・玄関の柵と施錠","抜け出しと転落への備え。柵の高さと、鍵が子どもの手の届かない位置にあるかを見ます。",1],
+ ["園庭・砂場・遊具が、その年齢の子に合っているか","大きい子向けの遊具しかない園では、0〜1歳が遊べる場所が限られます。",0],
+ ["AEDが設置されているか、場所はどこか","",0]]},
+
+{id:"staff",page:"day",kind:"rate",phase:"見て確かめること",name:"保育者の様子",color:"var(--sun)",items:[
+ ["子どもへの声かけと、目線の高さ","しゃがんで話しているか。立ったまま指示を出す場面が多い園は、余裕がありません。",1],
+ ["言葉のかけ方の印象（丁寧／柔らかい／雑／冷たい／威圧的）","",1],
+ ["職員同士の会話の内容とトーン","子どもの前での私語や、指示の飛び方。職場の空気がいちばん出るところです。",1],
+ ["先生が遊びに参加しているか","",1],
+ ["子どもをしっかり見ているか","見学者の対応をしながらでも、視線が子どもに戻っているか。",1],
+ ["保育者の表情と、動きの余裕","疲れが出ていないか。見学者に挨拶をする余裕があるかどうかも含めて見ます。",1],
+ ["身だしなみ","爪や髪。子どもに触れる仕事なので、ここは安全にも関わります。",0],
+ ["園長・施設長の様子（話しやすいか）","何かあったときに相談できる相手かどうか。",1],
+ ["見学者への説明が適切か、質問に答えているか","はぐらかされる質問があったら、そこは覚えておいてください。",1]]},
+
+{id:"kids",page:"day",kind:"rate",phase:"見て確かめること",name:"子どもの様子",color:"var(--grape)",items:[
+ ["子どもの表情と、声の出し方","静かすぎる部屋は、落ち着いているのではなく我慢していることがあります。",1],
+ ["子どもが保育者を慕っているか","そばに寄っていく、名前を呼ぶ、といった場面があるか。",1],
+ ["泣いている子への関わり方","放っておかれていないか。誰かが必ず気づいて動くかどうかを見ます。",1],
+ ["ひとつの遊びがどれくらい続いているか","集中が切れずに続いていれば、環境がその子たちに合っているということです。",0],
+ ["子ども同士のトラブルへの入り方","止めるだけで終わるか、間に入って気持ちを言葉にしているか。",0],
+ ["自由遊び・コーナー保育・一斉保育の割合","園の考え方がいちばん出るところです。",0]]},
+
+{id:"basic",page:"day",kind:"ask",phase:"聞いて確かめること",name:"基本のこと",color:"var(--sky)",items:[
+ ["入りたいクラスの定員と、いまの在籍数・空き","",1],
+ ["兄弟で入ってくる子が何人いそうか","兄弟がいると加点される自治体が多いので、実際の空き枠はここで変わります。聞きにくければ「兄弟枠は多いですか」で十分です。",1],
+ ["保育料のほかにかかるお金（給食費・教材費・行事費など）","",1],
+ ["1日のスケジュール","クラスの流れを聞いておくと、家のリズムを寄せやすくなります。",1]]},
+
+{id:"daily",page:"day",kind:"ask",phase:"聞いて確かめること",name:"登園・お迎え",color:"var(--mint)",items:[
+ ["登園は何時までか","",1],
+ ["欠席や遅刻の連絡は何時までか。電話かアプリか","",1],
+ ["親が休みの日でも預けられるか","",1],
+ ["仕事以外（通院・リフレッシュ）でも預かってもらえるか","",0],
+ ["延長保育：当日申込はできるか、何時までの連絡か、料金","",1],
+ ["延長のときの補食・夕食はあるか","",0],
+ ["土曜保育：いつまでに申込か、お弁当は必要か","",0],
+ ["お迎えが母親以外のときの手続き","",0],
+ ["早めに迎えに行くとき、避けたほうがよい時間","お昼寝の途中で起こすことになる時間帯があります。",0],
+ ["朝、登園時に親がやること（所要時間）","検温、連絡帳、おむつの補充。ここが長い園は、毎朝10分違います。",1]]},
+
+{id:"items",page:"day",kind:"ask",phase:"聞いて確かめること",name:"持ち物・保護者の負担",color:"var(--coral)",items:[
+ ["毎日の持ち物（着替え・スタイ・タオル）","",1],
+ ["週はじめ・週おわりに持っていくもの、持ち帰るもの","月曜の荷物がとても多い園があります。",1],
+ ["持ち物の置き場所（ロッカー／手渡し）","",0],
+ ["おむつは紙か布か。持参の頻度","",1,["紙","布"]],
+ ["おむつのサブスク（手ぶら登園）はあるか。必須か、いくらか","",1],
+ ["使用済みおむつは持ち帰りか","",1,["持ち帰り","園で処分"]],
+ ["布団・シーツは持参か。持ち帰りの頻度","",1],
+ ["服の指定（キャラもの・フード・ひも・ボタンのNG）","",1],
+ ["手作りが必要なものと、サイズ指定","入園前の作業量がここで決まります。",1],
+ ["かばんは市販品でよいか","",0],
+ ["名前つけの方法（手書き・シール・ハンコ）","おむつは1枚ずつ書くことになります。",0],
+ ["連絡帳は紙かアプリか","手書きの園は保育者の負担が大きく、その分ほかが削られます。",1,["紙","アプリ","両方"]],
+ ["保護者会・役員はあるか。年に何回集まるか","",1],
+ ["保護者が平日に参加する行事は年何回か","平日開催が多いと、働きながらでは厳しくなります。",1],
+ ["保護者主催の行事はあるか","",0]]},
+
+{id:"food",page:"day",kind:"ask",phase:"聞いて確かめること",name:"食事・離乳食",color:"var(--sun)",items:[
+ ["完全給食か。自園調理か外部搬入か","",1,["自園調理","外部搬入"]],
+ ["離乳食はどの形態まで出せるか（初期・中期・後期・完了期）","",1],
+ ["離乳食の進め方は家庭と相談できるか","園が形態を決めるのか、家庭と合わせるのか。ここは園ごとにかなり違います。",1],
+ ["食材チェック表の運用（家庭で何回食べていればOKか）","基準が園によって違います。入園前に何を食べさせておくかが、これで決まります。",1],
+ ["食物アレルギーの対応（除去か代替か）。診断書は必要か","",1],
+ ["ミルク・母乳の持ち込みはできるか。園のミルクのメーカー","",1],
+ ["窒息を防ぐために何をしているか","食材の大きさ、食べているときの見守り方。即答できるかどうかも見てください。",1],
+ ["おやつは手作りか","",0],
+ ["献立表はあるか。使用食材まで分かるか","",0],
+ ["主食（ごはん）の持参はあるか","3歳以上は持参の園があります。",0],
+ ["お弁当が必要な日はあるか","",0]]},
+
+{id:"nap",page:"day",kind:"ask",phase:"聞いて確かめること",name:"お昼寝",color:"var(--grape)",items:[
+ ["SIDS対策（何分おきの呼吸チェック、記録の方法）","0歳児クラスでいちばん大事な質問です。「どう記録していますか」まで聞くと、運用の実態が出ます。",1],
+ ["昼寝は何時から何時までか","",1],
+ ["昼寝は何歳まであるか","",0],
+ ["寝ない子・早く起きた子はどうしているか","",0],
+ ["ベビーコットか、布団か","",0]]},
+
+{id:"sick",page:"day",kind:"ask",phase:"聞いて確かめること",name:"病気・ケガ",color:"var(--coral)",items:[
+ ["呼び出しの基準（何度以上か、下痢・嘔吐のとき）","この基準は園によってかなり差があります。復職後の生活に直結します。",1],
+ ["解熱後、いつから登園できるか","",1],
+ ["熱以外で登園できない例","予防接種のあと、けが、他の子の睡眠を妨げるとき など。",0],
+ ["薬の対応（飲み薬・塗り薬・目薬・点鼻薬）","",1],
+ ["日焼け止め・虫よけ・保湿剤を塗ってもらえるか","",0],
+ ["看護師は常勤か","",1,["常勤","非常勤","いない"]],
+ ["病児・病後児保育はあるか","",0],
+ ["ケガをしたときの対応と、連絡の流れ","",1],
+ ["子ども同士のトラブルのとき、相手の名前は伝えるか","園の方針が分かれるところです。",0],
+ ["職員は救急法を学んでいるか","",0]]},
+
+{id:"play",page:"day",kind:"ask",phase:"聞いて確かめること",name:"遊び・生活",color:"var(--mint)",items:[
+ ["外遊び・散歩の頻度と、よく行く公園","",1],
+ ["園庭がない場合、外遊びはどうしているか","",1],
+ ["水遊びを中止する基準（熱中症）","",0],
+ ["プール・水遊びの場所（外から見えないか）","",0],
+ ["どろんこ遊びはあるか。汚れた服は下洗いしてもらえるか","毎日の洗濯量が変わります。",0],
+ ["室内遊びは何をしているか","",0],
+ ["トイレトレーニングの時期と進め方","",0],
+ ["着替えの頻度","",0],
+ ["縦割り保育はあるか","",0],
+ ["園内の習い事・外部講師（リトミック・英語など）の頻度","",0],
+ ["カメラやアプリで日中の様子が見られるか","",0]]},
+
+{id:"bousai",page:"day",kind:"ask",phase:"聞いて確かめること",name:"防災・防犯",color:"var(--sky)",items:[
+ ["建物の耐震性（築年数）","",1],
+ ["避難訓練の頻度と、毎回どんな想定でやるか","回数より中身です。同じ想定の繰り返しだと、形だけになっていることがあります。",1],
+ ["2階以上の場合の避難経路","まだ歩けない子をどうやって下ろすのか、まで聞けると確実です。",1],
+ ["災害時の保護者への連絡方法","",1],
+ ["水・食料（ミルク・離乳食）・トイレの備蓄は何日分か","月齢に合ったものが用意されているかまで聞けると確実です。",1],
+ ["洪水・浸水のリスクと、広域避難先","",0],
+ ["台風・大雨で休園になる基準","",0],
+ ["不審者訓練・防犯カメラ・防犯対策","",0]]},
+
+{id:"narashi",page:"day",kind:"ask",phase:"聞いて確かめること",name:"慣らし保育・入園準備",color:"var(--sun)",items:[
+ ["慣らし保育の期間とスケジュール","復職日をいつにするかが、これで決まります。",1],
+ ["延びるのはどんなときか","ここまで聞いておくと、あとで慌てません。",1],
+ ["保護者の同伴は必要か","",0],
+ ["入園までにやっておくとよいこと","寝かしつけの方法、哺乳瓶、生活リズム。園側の希望を先に聞けます。",1],
+ ["入園前の健康診断は必要か","",0],
+ ["入園説明会・用品購入の時期","",0]]}
+];
+const RATE=[["3","◎","よい"],["2","○","ふつう"],["1","△","気になる"],["0","✕","合わない"]];
+const WEIGHTS=[["2","重視する"],["1","ふつう"],["0","気にしない"]];
+const KEY="engakunote.v3";
+const ALL=[]; CATS.forEach(function(c){c.items.forEach(function(_,i){ALL.push(c.id+"_"+i)})});
+
+let S={parks:[],cur:null,weights:{},off:{},pg:{}}, storageOK=true, sumView="one";
+let STORE=null, STORE_KIND="なし", STORE_ERR="", LOADED="（保存が使えません）", PROBE=null, ACCESS="未確認", NOKEEP=false;
+(function(){
+  var probe=function(get,name){
+    try{
+      var st=get();                     /* ここで例外が出ることがある */
+      if(!st) return false;
+      st.setItem("__probe__","1"); st.removeItem("__probe__");
+      STORE=st; STORE_KIND=name; return true;
+    }catch(e){
+      if(!STORE_ERR) STORE_ERR=(e&&e.name?e.name:"Error")+": "+(e&&e.message?e.message:"");
+      return false;
+    }
+  };
+  PROBE=probe;
+  if(!probe(function(){return window.localStorage},"この端末に保存（ずっと残ります）")){
+    probe(function(){return window.sessionStorage},"一時保存（タブを閉じると消えます）");
+  }
+  storageOK=!!STORE;
+  if(STORE){ try{ var raw=STORE.getItem(KEY);
+    LOADED = raw ? ("あり（"+raw.length+" 文字）") : "なし（からっぽでした）";
+    if(raw) S=Object.assign(S,JSON.parse(raw)) }catch(e){ LOADED="読めませんでした" } }
+})();
+function save(){ if(!STORE){ showSave(""); return }
+  try{ STORE.setItem(KEY,JSON.stringify(S)); storageOK=true; showSave("ok") }
+  catch(e){ storageOK=false; STORE_ERR=(e&&e.name?e.name:"Error")+": "+(e&&e.message?e.message:""); warnStorage(); showSave("") } }
+function diagText(){
+  var t="保存のしかた： "+STORE_KIND;
+  if(!STORE) t+="\n※このブラウザでは保存が使えません。";
+  if(STORE_ERR) t+="\n理由： "+STORE_ERR;
+  t+="\n開いたときに読めた記録： "+LOADED;
+  try{ var v=STORE?STORE.getItem(KEY):null;
+    t+="\nいま保存されている量： "+(v?v.length+" 文字":"まだ何も保存されていません") }catch(e){}
+  t+="\n最後に保存した時刻： "+(S._t?new Date(S._t).toLocaleString("ja-JP"):"まだ保存していません");
+  t+="\n登録している園： "+S.parks.length+" 園";
+  t+="\n保存場所（毎回変わると記録は消えます）：\n"+location.origin;
+  t+="\n保存の許可（Safari対策）： "+ACCESS;
+  t+="\nブラウザ： "+navigator.userAgent.slice(0,90);
+  return t;
+}
+function showSave(state){
+  const el=document.getElementById("saveState"); if(!el)return;
+  const d=new Date(), t=("0"+d.getHours()).slice(-2)+":"+("0"+d.getMinutes()).slice(-2);
+  let h="";
+  if(state!=="ok") h='<span style="color:var(--coral)">保存できていません。「設定」で書き出して控えてください</span>';
+  else if(BAK.length) h='<span class="ok">✓ '+t+'</span>';
+  if(BAK.length) h+='<button onclick="undoBak()">元にもどす</button>';
+  el.innerHTML=h;
+  const b=document.getElementById("saveBtn");
+  if(b&&state!=="ok"){ b.textContent="保存できません"; b.classList.add("bad") } }
+/* 消す・読みこむ の前に控えを取る（最大5件） */
+let BAK=[];
+function snapshot(){ try{ BAK.push(JSON.stringify(S)); if(BAK.length>5)BAK.shift(); }catch(e){} }
+function undoBak(){ const b=BAK.pop(); if(!b)return;
+  try{ S=JSON.parse(b); 
+
+
+if(!S.cur&&S.parks[0])S.cur=S.parks[0].id; save(); render(); msg("元にもどしました。") }catch(e){} }
+function warnStorage(){ document.getElementById("storageWarn").innerHTML=
+ '<div class="banner"><b>このブラウザでは自動保存が使えません。</b><br>記録は画面を閉じると消えてしまいます。「設定」で書き出して控えてください。</div>' }
+const uid=function(){return Math.random().toString(36).slice(2,9)};
+const cur=function(){ for(var i=0;i<S.parks.length;i++) if(S.parks[i].id===S.cur) return S.parks[i]; return null };
+const w=function(id){ return S.weights[id]===undefined?1:+S.weights[id] };
+const on=function(k){ return !S.off[k] };
+function esc(s){ return String(s==null?"":s).replace(/[&<>"]/g,function(m){return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[m]}) }
+function pageOf(c,i){ var k=c.id+"_"+i; return (S.pg&&S.pg[k])||c.page }
+function setPage(c,i,pg){ if(!S.pg)S.pg={}; var k=c.id+"_"+i;
+  if(pg===c.page){ delete S.pg[k] } else { S.pg[k]=pg } }
+function liveItems(c,page){ const r=[]; c.items.forEach(function(it,i){
+  if(!on(c.id+"_"+i)) return;
+  if(page && pageOf(c,i)!==page) return;
+  r.push([it,i]) }); return r }
+function catOf(cid){ for(var i=0;i<CATS.length;i++) if(CATS[i].id===cid) return CATS[i]; return null }
+/* その項目が入力済みか */
+function filled(p,c,i){ const k=c.id+"_"+i;
+  return (c.kind==="ask") ? !!(p.a[k]&&p.a[k].trim()) : p.r[k]!==undefined }
+/* 下に沈めるかどうか。「聞く」欄は自分でボタンを押したときだけ沈む */
+function sunk(p,c,i){ const k=c.id+"_"+i;
+  if(!p.d) p.d={};
+  return !!p.d[k] }
+function toggleSink(k){
+  const p=cur(); if(!p)return; if(!p.d) p.d={};
+  if(p.d[k]) delete p.d[k]; else p.d[k]=1;
+  save();
+  const el=document.querySelector('[data-k="'+k+'"]');
+  if(el){ const b=el.querySelector(".sinkBtn"); if(b) b.textContent = p.d[k] ? "もう一度書く ↑" : "書けた ↓" }
+  syncCat(k.slice(0,k.lastIndexOf("_"))); }
+
+function toggleAdd(o){ const b=document.getElementById("addbox");
+  b.classList.toggle("on", o===undefined?!b.classList.contains("on"):o);
+  if(b.classList.contains("on")){const i=document.getElementById("newName");i.value="";i.focus()} }
+function commitPark(){ const i=document.getElementById("newName"),n=i.value.trim(); if(!n){i.focus();return}
+  const p={id:uid(),name:n,addr:"",date:"",mins:"",note:"",r:{},m:{},a:{},d:{}};
+  S.parks.push(p); S.cur=p.id; save(); toggleAdd(false); render() }
+function pick(id){ S.cur=id; save(); render() }
+function setField(k,v){ const p=cur(); if(!p)return; p[k]=v; save(); if(k==="name")renderParks() }
+function setAns(k,v){ const p=cur(); if(!p)return; if(v)p.a[k]=v; else delete p.a[k]; save() }
+function setOpt(k,v){ const p=cur(); if(!p)return;
+  if(p.a[k]===v){ delete p.a[k] } else { p.a[k]=v }
+  save();
+  const el=document.querySelector('[data-k="'+k+'"]');
+  if(el){ const ta=el.querySelector("textarea"); if(ta) ta.value=p.a[k]||"";
+    el.querySelectorAll(".opts button").forEach(function(b){
+      b.setAttribute("aria-pressed", String(b.textContent===p.a[k])) }) }
+  syncCat(k.slice(0,k.lastIndexOf("_"))); syncScore(); }
+function setMemo(k,v){ const p=cur(); if(!p)return; if(v)p.m[k]=v; else delete p.m[k]; save() }
+function setW(cid,v){ S.weights[cid]=v; save(); syncScore(); }
+function toggleWhy(el){ el.parentNode.classList.toggle("open") }
+function ensureStorageAccess(){
+  return new Promise(function(done){
+    if(!document.hasStorageAccess){ ACCESS="この端末では確認不要"; return done(true) }
+    document.hasStorageAccess().then(function(has){
+      if(has){ ACCESS="許可されています"; return done(true) }
+      document.requestStorageAccess().then(function(){
+        ACCESS="いま許可されました";
+        if(PROBE){ STORE=null; PROBE(function(){return window.localStorage},"この端末に保存（ずっと残ります）") }
+        storageOK=!!STORE; NOKEEP=false; renderNudge(); done(true);
+      }).catch(function(e){
+        ACCESS="断られました（"+(e&&e.name?e.name:"Error")+"）";
+        NOKEEP=true; renderNudge(); done(false);
+      });
+    }).catch(function(){ ACCESS="確認できませんでした"; done(true) });
+  });
+}
+function manualSave(){
+  const b=document.getElementById("saveBtn"); if(!b)return;
+  b.textContent="保存中…";
+  ensureStorageAccess().then(function(){ doManualSave() });
+}
+function doManualSave(){
+  const b=document.getElementById("saveBtn"); if(!b)return;
+  save();
+  if(storageOK){ b.textContent="✓ 保存しました"; b.classList.add("done"); b.classList.remove("bad");
+    clearTimeout(b._t); b._t=setTimeout(function(){ b.textContent="保存"; b.classList.remove("done") },1800) }
+  else { b.textContent=NOKEEP?"閉じると消えます":"保存できません"; b.classList.add("bad") }
+}
+function imsg2(t){ const e=document.getElementById("ioMsg2"); if(e)e.textContent=t }
+function showC(id){ document.getElementById(id).classList.add("on") }
+function hideC(id){ document.getElementById(id).classList.remove("on") }
+function toggleItem(k,v){ if(v) delete S.off[k]; else S.off[k]=1; save(); renderPickCounts(); renderPre(); renderDay() }
+function toggleCat(cid,v){ const c=catOf(cid); if(!c)return;
+  c.items.forEach(function(_,i){ if(v) delete S.off[cid+"_"+i]; else S.off[cid+"_"+i]=1 }); save(); renderPick(); renderPre(); renderDay() }
+function preset(mode){ S.off={};
+  if(mode==="none") ALL.forEach(function(k){ S.off[k]=1 }); save(); renderPick(); renderPre(); renderDay() }
+
+/* 評価を押したとき：全体を作り直さず、その場だけ更新して並べ替える */
+function setRate(k,v){ const p=cur(); if(!p)return;
+  if(p.r[k]===v) delete p.r[k]; else p.r[k]=v; save(); syncItem(k) }
+function setChk(k,v){ const p=cur(); if(!p)return;
+  if(v)p.r[k]="3"; else delete p.r[k]; save(); syncItem(k) }
+function syncItem(k){
+  const p=cur(); if(!p)return;
+  const cid=k.slice(0,k.lastIndexOf("_")), i=+k.slice(k.lastIndexOf("_")+1), c=catOf(cid); if(!c)return;
+  const f=filled(p,c,i);
+  document.querySelectorAll('[data-k="'+k+'"]').forEach(function(el){
+    el.classList.toggle("done",f);
+    el.querySelectorAll(".rate button").forEach(function(b){
+      b.setAttribute("aria-pressed", String(p.r[k]===b.getAttribute("data-v"))) });
+  });
+  syncCat(cid); syncScore();
+}
+/* 未記入を上、記入済みを下へ */
+function syncCat(cid,pg){
+  const p=cur(), c=catOf(cid); if(!p||!c)return;
+  const sel='[data-cat="'+cid+'"]'+(pg?'[data-pg="'+pg+'"]':'');
+  const box=document.querySelector(sel); if(!box)return;
+  const live=liveItems(c,pg); let remain=0;
+  live.forEach(function(x,pos){
+    const i=x[1], k=cid+"_"+i, f=filled(p,c,i), sk=sunk(p,c,i);
+    if(!f) remain++;
+    const el=box.querySelector('[data-k="'+k+'"]');
+    if(el){ el.style.order = sk ? (500+pos) : pos; el.classList.toggle("done",f) }
+  });
+  const b=box.querySelector('[data-remain="'+cid+'"]');
+  if(b){ b.textContent = remain? ("残り "+remain) : "ぜんぶ済み";
+         b.classList.toggle("zero", remain===0) }
+}
+function syncScore(){
+  const p=cur(); if(!p)return;
+  const sc=score(p), d=done(p);
+  const n=document.getElementById("scoreN"), t=document.getElementById("scoreT"), bar=document.getElementById("scoreBar");
+  if(n) n.innerHTML=(sc===null?"—":sc)+'<small>'+(sc===null?"":"点")+'</small>';
+  if(t) t.textContent=d[0]+" / "+d[1]+" 項目";
+  if(bar) bar.style.width=(d[1]?Math.round(d[0]/d[1]*100):0)+"%";
+}
+function score(p){ let got=0,max=0;
+  CATS.forEach(function(c){ if(c.kind!=="rate")return; const ww=w(c.id); if(!ww)return;
+    c.items.forEach(function(_,i){ const k=c.id+"_"+i; if(!on(k))return; const v=p.r[k];
+      if(v===undefined)return; got+=(+v)*ww; max+=3*ww }) });
+  return max? Math.round(got/max*100):null }
+function done(p){ let n=0,t=0;
+  CATS.forEach(function(c){ c.items.forEach(function(_,i){ if(!on(c.id+"_"+i))return; t++;
+    if(filled(p,c,i)) n++ }) }); return [n,t] }
+
+function setTab(t){ ["pre","day","sum","set"].forEach(function(x){
+    document.getElementById(x).hidden=x!==t;
+    document.getElementById("t-"+x).setAttribute("aria-selected",String(x===t)) });
+  if(t==="pre") renderPre();
+  if(t==="day") renderDay();
+  if(t==="sum"){ renderSum(); renderCmp() }
+  if(t==="set") renderPick();
+  window.scrollTo(0,0) }
+function setSum(v){ sumView=v;
+  document.getElementById("s-one").setAttribute("aria-pressed",String(v==="one"));
+  document.getElementById("s-all").setAttribute("aria-pressed",String(v==="all"));
+  document.getElementById("sumOne").hidden=v!=="one";
+  document.getElementById("sumAll").hidden=v!=="all";
+  if(v==="all")renderCmp(); else renderSum() }
+
+function render(){ renderParks(); renderPre(); renderDay(); renderSum(); renderCmp(); renderNudge() }
+function goBackup(){ setTab("set"); setTimeout(function(){
+  var d=document.querySelectorAll("#set details.sec")[3];
+  if(d){ d.open=true; d.scrollIntoView() } },60) }
+function pickBackupFile(){ var el=document.getElementById("bkFile"); if(el) el.click() }
+function renderNudge(){
+  var el=document.getElementById("nudge"); if(!el) return;
+  if(NOKEEP){
+    el.innerHTML='<div class="nudge warn"><b>このブラウザでは、閉じると記録が消えます。</b><br>'
+      +'ブラウザ側の制限で、ここでは保存を残せません。<b>「ファイルに保存」を使ってください。</b>'
+      +'そのファイルは消えません。次に開いたら「設定 → 持ち出す・戻す → ファイルから戻す」で続きから書けます。'
+      +'<button class="btn sm" style="margin-top:9px" onclick="saveBackupFile()">いますぐファイルに保存</button></div>';
+    return;
+  }
+  if(!S.parks.length){ el.innerHTML=""; return }
+  var need = !S._f || (S._t && S._t > S._f);
+  if(need){
+    el.innerHTML='<div class="nudge"><b>記録をファイルに残しておきましょう。</b><br>'
+      +'ブラウザの中の保存は、思わぬときに消えることがあります。ファイルにしておけば消えません。'
+      +'<button class="btn sm" style="margin-top:9px" onclick="goBackup()">ファイルに保存する</button></div>';
+  } else {
+    el.innerHTML='<div class="nudge ok">✓ '+new Date(S._f).toLocaleString("ja-JP")+' にファイルへ保存ずみ</div>';
+  }
+}
+function renderParks(){ document.getElementById("parks").innerHTML=
+  S.parks.map(function(p){return '<button class="chip" aria-pressed="'+(p.id===S.cur)+'" onclick="pick(\''+p.id+'\')">'+esc(p.name)+'</button>'}).join("")+
+  '<button class="chip add" onclick="toggleAdd()">＋ 園を追加</button>' }
+
+const CHICK='<svg width="44" height="44" viewBox="0 0 40 40" aria-hidden="true"><circle cx="20" cy="22" r="14" fill="var(--sun)"/><circle cx="20" cy="10" r="8.5" fill="var(--sun)"/><circle cx="17" cy="9" r="1.6" fill="#4E3A2C"/><circle cx="23" cy="9" r="1.6" fill="#4E3A2C"/><path d="M20 12.4 L23 14.6 L17 14.6 Z" fill="var(--coral)"/></svg>';
+function emptyCard(){ return '<div class="card empty">'+CHICK.replace('width="44" height="44"','width="64" height="64"')+
+  '<br>まずは見学する園を追加してね。<br>1園ずつ、見ながら埋めていけば大丈夫です。</div>' }
+
+function renderPre(){
+  const el=document.getElementById("preBody"), p=cur();
+  if(!p){ el.innerHTML=emptyCard(); return }
+  let h='<div class="card meta">'+
+    '<label><span class="lbl">園の名前</span><input type="text" value="'+esc(p.name)+'" oninput="setField(\'name\',this.value)"></label>'+
+    '<div class="g2"><label><span class="lbl">見学の予定日</span><input type="date" value="'+esc(p.date)+'" oninput="setField(\'date\',this.value)"></label>'+
+    '<label><span class="lbl">家から（分）</span><input type="text" inputmode="numeric" value="'+esc(p.mins)+'" oninput="setField(\'mins\',this.value)"></label></div>'+
+    '<label><span class="lbl">場所・行き方</span><input type="text" value="'+esc(p.addr)+'" oninput="setField(\'addr\',this.value)"></label></div>';
+  CATS.forEach(function(c){
+    const live=liveItems(c,"pre"); if(!live.length)return;
+    h+=catHTML(c,p,live,"pre") });
+  el.innerHTML=h;
+  CATS.forEach(function(c){ if(liveItems(c,"pre").length) syncCat(c.id,"pre") });
+}
+
+function renderDay(){
+  const el=document.getElementById("dayBody"), p=cur();
+  if(!p){ el.innerHTML=emptyCard(); return }
+  const sc=score(p), d=done(p);
+  let h='<div class="score">'+CHICK+'<div style="flex:1">'+
+     '<span class="n" id="scoreN">'+(sc===null?"—":sc)+'<small>'+(sc===null?"":"点")+'</small></span>'+
+     '<div class="muted" id="scoreT" style="font-size:12px;font-weight:800;margin-top:3px">'+d[0]+' / '+d[1]+' 項目</div>'+
+     '<div class="bar"><i id="scoreBar" style="width:'+(d[1]?Math.round(d[0]/d[1]*100):0)+'%"></i></div></div></div>'+
+   '<div class="card" style="padding:13px 16px"><p class="muted" style="margin:0">'+
+   'まだ聞いていない項目が上に、済んだ項目は下に下がります。順番どおりでなくて大丈夫です。</p></div>'+
+   missingHTML(p);
+  let ph="";
+  CATS.forEach(function(c){
+    const live=liveItems(c,"day"); if(!live.length)return;
+    if(c.phase!==ph){ ph=c.phase;
+      h+='<div class="phase"><b>'+ph+'</b><span>'+(c.kind==="rate"?"◎○△✕でつける":"答えを書く")+'</span></div>' }
+    h+=catHTML(c,p,live,"day") });
+  h+='<label style="display:grid;gap:5px;margin-top:6px"><span class="lbl">全体の印象</span>'+
+     '<textarea oninput="setField(\'note\',this.value)" placeholder="帰り道に、思ったことをそのまま">'+esc(p.note)+'</textarea></label>'+
+     '<button class="btn ghost" onclick="showC(\'cfDel\')">この園の記録を消す</button>'+
+     '<div class="confirm" id="cfDel"><p>「'+esc(p.name)+'」の記録を消します。</p>'+
+     '<button class="btn sm danger" onclick="delPark()">消す</button>'+
+     '<button class="btn sm ghost" onclick="hideC(\'cfDel\')">やめる</button></div>';
+  el.innerHTML=h;
+  CATS.forEach(function(c){ if(liveItems(c,"day").length) syncCat(c.id,"day") });
+}
+
+function itemHTML(c,p,it,i,showCat){
+  const k=c.id+"_"+i, v=p.r[k];
+  let h='<div class="item" data-k="'+k+'">';
+  if(showCat) h+='<span class="fromcat">'+c.name+'</span>';
+  if(c.kind==="check"){
+    h+='<label class="chk"><input type="checkbox" '+(v!==undefined?"checked":"")+' onchange="setChk(&quot;'+k+'&quot;,this.checked)">'+
+       '<span class="q">'+it[0]+'</span></label>';
+  }else{ h+='<p class="q">'+it[0]+'</p>' }
+  if(it[3]) h+='<div class="opts">'+it[3].map(function(op){
+      return '<button onclick="setOpt(&quot;'+k+'&quot;,&quot;'+op+'&quot;)">'+op+'</button>' }).join("")+'</div>';
+  if(c.kind==="rate"){
+    h+='<div class="rate">'+RATE.map(function(r){
+      return '<button data-v="'+r[0]+'" aria-pressed="'+(v===r[0])+'" onclick="setRate(&quot;'+k+'&quot;,&quot;'+r[0]+'&quot;)"><b>'+r[1]+'</b><span>'+r[2]+'</span></button>' }).join("")+'</div>'+
+      '<textarea placeholder="メモ" oninput="setMemo(&quot;'+k+'&quot;,this.value)">'+esc(p.m[k]||"")+'</textarea>';
+  }else{
+    h+='<textarea placeholder="メモ" oninput="setAns(&quot;'+k+'&quot;,this.value)">'+esc(p.a[k]||"")+'</textarea>';
+  }
+  h+='<button class="sinkBtn" onclick="toggleSink(&quot;'+k+'&quot;)">'+((p.d&&p.d[k])?"もう一度書く ↑":"書けた ↓")+'</button>';
+  return h+'</div>';
+}
+function catHTML(c,p,live,pg){
+  let h='<details class="card cat" data-cat="'+c.id+'" data-pg="'+(pg||"")+'">'+
+    '<summary><span class="dot" style="background:'+c.color+'"></span><h2>'+c.name+'</h2>'+
+    '<span class="remain" data-remain="'+c.id+'">残り '+live.length+'</span><span class="caret">▶</span></summary>';
+  if(c.tip) h+='<div class="tip">'+c.tip+'</div>';
+  if(c.kind==="rate") h+='<div class="weight">'+WEIGHTS.map(function(x){
+    return '<button aria-pressed="'+(String(w(c.id))===x[0])+'" onclick="setW(&quot;'+c.id+'&quot;,&quot;'+x[0]+'&quot;)">'+x[1]+'</button>' }).join("")+'</div>';
+  h+='<div class="items">';
+  live.forEach(function(x){ h+=itemHTML(c,p,x[0],x[1],false) });
+  return h+'</div></details>';
+}
+/* 事前で埋まらなかったもの＝当日に聞くこと */
+function missingHTML(p){
+  const rows=[];
+  CATS.forEach(function(c){
+    c.items.forEach(function(it,i){
+      const k=c.id+"_"+i;
+      if(!on(k)) return;
+      if(pageOf(c,i)!=="pre") return;
+      if(filled(p,c,i)) return;
+      rows.push(itemHTML(c,p,it,i,true));
+    });
+  });
+  if(!rows.length) return "";
+  return '<details class="card cat miss" data-cat="__miss" data-pg="day">'+
+    '<summary><span class="dot" style="background:var(--coral)"></span><h2>事前で埋まらなかったこと</h2>'+
+    '<span class="remain">'+rows.length+' 件</span><span class="caret">▶</span></summary>'+
+    '<div class="tip">ホームページに載っていなかったものです。<b>当日ここで聞いてしまいましょう。</b>書き込むと、この欄からは消えます。</div>'+
+    '<div class="items">'+rows.join("")+'</div></details>';
+}
+function delPark(){ const p=cur(); if(!p)return; snapshot();
+  S.parks=S.parks.filter(function(x){return x.id!==p.id});
+  S.cur=S.parks[0]?S.parks[0].id:null; save(); render() }
+
+/* ---- まとめ（この園） ---- */
+function sumHTML(p){
+  let h='', anyNa=0;
+  CATS.forEach(function(c){
+    const live=liveItems(c); if(!live.length)return;
+    let rows='';
+    live.forEach(function(x){
+      const it=x[0], i=x[1], k=c.id+"_"+i;
+      let v='';
+      if(c.kind==="ask"){ v = (p.a[k]&&p.a[k].trim()) ? esc(p.a[k]) : '' }
+      else if(c.kind==="check"){ v = p.r[k]!==undefined ? "確認ずみ" : '' }
+      else { const r=p.r[k];
+        v = r===undefined ? '' : RATE.filter(function(z){return z[0]===r})[0][1]+" "+RATE.filter(function(z){return z[0]===r})[0][2];
+        if(r!==undefined && p.m[k]) v+='<span class="mm">'+esc(p.m[k])+'</span>' }
+      if(!v){ anyNa++; v='<span class="na">未記入</span>' }
+      rows+='<div class="sumrow"><div class="k">'+it[0]+'</div><div class="v">'+v+'</div></div>';
+    });
+    h+='<div class="sumcat">'+c.name+'</div>'+rows;
+  });
+  return [h,anyNa];
+}
+function renderSum(){
+  const el=document.getElementById("sumOne"), p=cur();
+  if(!p){ el.innerHTML=emptyCard(); return }
+  const sc=score(p), d=done(p), r=sumHTML(p);
+  el.innerHTML='<div class="card" style="padding:17px">'+
+    '<h2>'+esc(p.name)+'</h2>'+
+    '<p class="muted" style="margin:5px 0 0">'+(p.date?esc(p.date)+'　':'')+(p.mins?'家から'+esc(p.mins)+'分':'')+'</p>'+
+    '<p class="muted" style="margin:9px 0 0;font-weight:800">総合 '+(sc===null?"—":sc+"点")+'　／　記入 '+d[0]+'/'+d[1]+'　／　未記入 '+r[1]+'</p>'+
+    (p.note?'<p class="muted" style="margin:11px 0 0">'+esc(p.note)+'</p>':'')+
+    '</div><div class="card" style="padding:6px 17px 17px">'+r[0]+'</div>';
+}
+
+function renderCmp(){
+  const el=document.getElementById("cmpBody"); if(!el)return;
+  if(!S.parks.length){ el.innerHTML='<div class="empty">園を登録すると、ここに全部の園が横に並びます。</div>'; return }
+  const memo=document.getElementById("showMemo").checked;
+  const th=S.parks.map(function(p){return '<th>'+esc(p.name)+'</th>'}).join("");
+  let rows='<tr><th>見学日</th>'+S.parks.map(function(p){return '<td>'+(esc(p.date)||"—")+'</td>'}).join("")+'</tr>'+
+           '<tr><th>家から（分）</th>'+S.parks.map(function(p){return '<td>'+(esc(p.mins)||"—")+'</td>'}).join("")+'</tr>';
+  CATS.forEach(function(c){
+    const live=liveItems(c); if(!live.length)return;
+    const ww=w(c.id);
+    rows+='<tr class="catrow"><th>'+c.name+(c.kind==="rate"?(ww==2?"（重視）":ww==0?"（対象外）":""):"")+
+      '</th><td colspan="'+S.parks.length+'"></td></tr>';
+    live.forEach(function(x){ const it=x[0], k=c.id+"_"+x[1];
+      rows+='<tr><th>'+it[0]+'</th>'+S.parks.map(function(p){
+        if(c.kind==="rate"){ const v=p.r[k];
+          const mk=v===undefined?"—":RATE.filter(function(r){return r[0]===v})[0][1];
+          const mm=(memo&&p.m[k])?'<div class="memo-cell">'+esc(p.m[k])+'</div>':'';
+          return '<td class="'+(v===undefined?"vna":"v"+v)+'">'+mk+mm+'</td>' }
+        if(c.kind==="check"){ const v=p.r[k];
+          return '<td class="'+(v===undefined?"vna":"v3")+'">'+(v===undefined?"—":"✓")+'</td>' }
+        return '<td class="ans">'+(esc(p.a[k])||'<span class="vna">—</span>')+'</td>';
+      }).join("")+'</tr>' }) });
+  rows+='<tr class="total"><th>総合（見て確かめることだけ）</th>'+S.parks.map(function(p){
+    const s=score(p); return '<td>'+(s===null?"—":s)+'</td>' }).join("")+'</tr>';
+  el.innerHTML='<table><thead><tr><th style="min-width:190px">項目</th>'+th+'</tr></thead><tbody>'+rows+'</tbody></table>';
+}
+
+function renderPick(){
+  document.getElementById("picBody").innerHTML=CATS.map(function(c){
+    const n=c.items.filter(function(_,i){return on(c.id+"_"+i)}).length;
+    return '<details class="card cat"><summary>'+
+      '<span class="dot" style="background:'+c.color+'"></span><h2>'+c.name+'</h2>'+
+      '<span class="count">'+n+'/'+c.items.length+'</span><span class="caret">▶</span></summary>'+
+      '<div style="padding:12px 16px;display:flex;gap:7px">'+
+      '<button class="btn sm ghost" onclick="toggleCat(\''+c.id+'\',true)">全部使う</button>'+
+      '<button class="btn sm ghost" onclick="toggleCat(\''+c.id+'\',false)">全部外す</button></div>'+
+      '<div class="pickcat">'+c.items.map(function(it,i){ const k=c.id+"_"+i;
+        return '<div class="pickrow"><input type="checkbox" id="pk_'+k+'" '+(on(k)?"checked":"")+
+          ' onchange="toggleItem(&quot;'+k+'&quot;,this.checked)"><div class="pickmain">'+
+          '<label for="pk_'+k+'">'+it[0]+'</label>'+
+          (it[1]?'<button class="why" onclick="toggleWhy(this)">聞く理由 ▾</button><p class="why-body">'+it[1]+'</p>':'')+
+          '</div></div>' }).join("")+
+      '</div></details>' }).join("");
+  renderPickCounts();
+}
+function renderPickCounts(){
+  const n=ALL.filter(on).length;
+  const a=document.getElementById("allN"); if(a)a.textContent=ALL.length;
+  const b=document.getElementById("onN"); if(b)b.textContent=n;
+  const c=document.getElementById("onBadge"); if(c)c.textContent=n+"/"+ALL.length;
+  const d=document.getElementById("allN2"); if(d)d.textContent=ALL.length; }
+
+/* ---- 印刷 ---- */
+function doPrint(mode){
+  const a=document.getElementById("printArea"), p=cur();
+  if(mode==="compare"){
+    if(!S.parks.length){ msg("先に園を登録してください。"); return }
+    renderCmp();
+    a.innerHTML='<p class="pTitle">園見学 比較表</p><p class="pSub">園見学ノート</p>'+document.getElementById("cmpBody").innerHTML;
+  }else if(mode==="one"){
+    if(!p){ msg("先に園を登録してください。"); return }
+    const r=sumHTML(p);
+    a.innerHTML='<p class="pTitle">'+esc(p.name)+'</p><p class="pSub">'+
+      (p.date?esc(p.date)+'　':'')+(p.mins?'家から'+esc(p.mins)+'分　':'')+'総合 '+(score(p)===null?"—":score(p)+"点")+'</p>'+
+      (p.note?'<p style="margin:0 0 10px">'+esc(p.note)+'</p>':'')+r[0];
+  }else{
+    let h='<p class="pTitle">園見学 持っていくリスト</p>'+
+      '<p class="pSub">園名：＿＿＿＿＿＿＿＿＿＿＿　見学日：＿＿月＿＿日　　家から：＿＿分</p>';
+    let ph="";
+    CATS.forEach(function(c){
+      const live=liveItems(c); if(!live.length)return;
+      if(c.phase!==ph){ ph=c.phase; h+='<p class="pCat" style="background:#333;color:#fff">'+ph+'</p>' }
+      h+='<p class="pCat">'+c.name+(c.kind==="rate"?"（◎○△✕）":"")+'</p>';
+      h+=(c.kind==="ask")?'<div>':'<div class="pCols">';
+      live.forEach(function(x){
+        h+= (c.kind==="ask")
+          ? '<div class="pItem"><span class="pQ">'+x[0][0]+'</span><span class="pLine"></span></div>'
+          : '<div class="pItem"><span class="pBox"></span><span style="flex:1">'+x[0][0]+'</span></div>' });
+      h+='</div>' });
+    h+='<p class="pCat">全体の印象</p><div class="pItem"><span class="pLine"></span></div>'+
+       '<div class="pItem"><span class="pLine"></span></div><div class="pItem"><span class="pLine"></span></div>';
+    a.innerHTML=h;
+  }
+  setTimeout(function(){ window.print() },120);
+}
+function doExport(){ document.getElementById("io").value=JSON.stringify(S); msg("書き出しました。この文字列をまるごとコピーして控えてください。") }
+function doImport(go){ const t=document.getElementById("io").value.trim();
+  if(!t){ msg("先に文字列を貼りつけてください。"); return }
+  if(!go){ showC("cfImport"); return } hideC("cfImport"); snapshot();
+  try{ const d=JSON.parse(t); if(!d||!Array.isArray(d.parks)) throw new Error("bad");
+    S=Object.assign({parks:[],cur:null,weights:{},off:{}},d);
+    if(!S.cur&&S.parks[0])S.cur=S.parks[0].id; save(); render(); msg("読みこみました。");
+  }catch(e){ msg("読みこめませんでした。文字列が途中で切れていないか確かめてください。") } }
+function wipe(){ hideC("cfWipe"); snapshot(); S={parks:[],cur:null,weights:{},off:{}}; save(); render(); msg("すべて消しました。") }
+function msg(t){ const e=document.getElementById("ioMsg"); if(e)e.textContent=t }
+function bmsg(t){ const e=document.getElementById("bkMsg"); if(e)e.textContent=t;
+  const n=document.getElementById("nudge");
+  if(n && t) n.innerHTML='<div class="nudge ok" style="font-weight:800">'+t+'</div>'; }
+let PENDING=null;
+function bkName(){ const d=new Date();
+  return "園見学ノート_"+d.getFullYear()+("0"+(d.getMonth()+1)).slice(-2)+("0"+d.getDate()).slice(-2)+".json" }
+function saveBackupFile(){
+  var blob=new Blob([JSON.stringify(S)],{type:"application/json"});
+  downloadBlob(bkName(), blob,
+    "保存しました（"+bkName()+"）。次に開いたときは「ファイルから戻す」で続きから書けます。",
+    "保存できませんでした。下の文字列をコピーして控えてください。",
+    function(t){ bmsg(t); if(t.indexOf("保存しました")===0){ S._f=Date.now(); save(); renderNudge() } });
+}
+function loadBackupFile(input){
+  const f=input.files&&input.files[0]; input.value="";
+  if(!f){ return }
+  const r=new FileReader();
+  r.onload=function(){
+    try{ const d=JSON.parse(r.result);
+      if(!d||!Array.isArray(d.parks)) throw new Error("bad");
+      PENDING=d; bmsg("ファイルを読みました（"+d.parks.length+" 園）。"); showC("cfFile");
+    }catch(e){ bmsg("このファイルは読めませんでした。園見学ノートで保存したファイルを選んでください。") }
+  };
+  r.onerror=function(){ bmsg("ファイルを開けませんでした。") };
+  r.readAsText(f);
+}
+function applyBackupFile(){
+  if(!PENDING){ hideC("cfFile"); return }
+  hideC("cfFile"); snapshot();
+  S=Object.assign({parks:[],cur:null,weights:{},off:{}},PENDING); PENDING=null;
+  if(!S.cur&&S.parks[0])S.cur=S.parks[0].id;
+  save(); render(); bmsg("戻しました。"); renderNudge();
+}
+
+
+/* ---------- 画像で保存 ---------- */
+const IMGF='"Hiragino Maru Gothic ProN","ヒラギノ丸ゴ ProN W4","M PLUS Rounded 1c","Yu Gothic","Meiryo",sans-serif';
+const IC={paper:"#FFFDF7",band:"#FFC33D",ink:"#4E3A2C",ink2:"#8B7360",ink3:"#B6A493",
+          line:"#F0E2CC",mint:"#3FBF9B",sky:"#5FBFE8",warn:"#A8730C",coral:"#FF8D72"};
+function wrapJP(ctx,text,maxW){
+  const out=[]; let line="";
+  for(const ch of String(text)){
+    if(ch==="\n"){ out.push(line); line=""; continue }
+    if(ctx.measureText(line+ch).width>maxW && line){ out.push(line); line=ch }
+    else line+=ch;
+  }
+  if(line) out.push(line); return out.length?out:[""];
+}
+function imgData(p){
+  const rows=[];
+  CATS.forEach(function(c){
+    const live=liveItems(c); const got=[];
+    live.forEach(function(x){
+      const it=x[0], i=x[1], k=c.id+"_"+i;
+      let v=null, sub=null, col=IC.ink;
+      if(c.kind==="ask"){ if(p.a[k]&&p.a[k].trim()) v=p.a[k].trim() }
+      else if(c.kind==="check"){ if(p.r[k]!==undefined) v="確認ずみ" }
+      else { const r=p.r[k];
+        if(r!==undefined){ const R=RATE.filter(function(z){return z[0]===r})[0];
+          v=R[1]+" "+R[2]; sub=p.m[k]||null;
+          col = r==="3"?IC.mint : r==="2"?IC.sky : r==="1"?IC.warn : IC.coral } }
+      if(v!==null) got.push({label:it[0],value:v,sub:sub,col:col});
+    });
+    if(got.length) rows.push({cat:c.name,color:c.color,items:got});
+  });
+  return rows;
+}
+function makeImage(){
+  const p=cur(); if(!p){ imsg("先に園を登録してください。"); return }
+  const data=imgData(p);
+  if(!data.length){ imsg("まだ何も記入されていません。"); return }
+  const W=1080, PAD=56, LW=390, GAP=26, RW=W-PAD*2-LW-GAP;
+  const cv=document.getElementById("imgCanvas"), ctx=cv.getContext("2d");
+  const d=done(p), sc=score(p);
+  /* 1回目：高さを測る */
+  let y=0;
+  y+=14;                       /* 上のバンド */
+  y+=44; ctx.font="800 52px "+IMGF; y+=52;              /* 園名 */
+  y+=14; y+=26;                                          /* 日付行 */
+  y+=10; y+=30;                                          /* 総合行 */
+  let noteLines=[];
+  if(p.note&&p.note.trim()){ ctx.font="400 26px "+IMGF;
+    noteLines=wrapJP(ctx,p.note.trim(),W-PAD*2); y+=18+noteLines.length*38 }
+  y+=30;
+  const plan=[];
+  data.forEach(function(g){
+    y+=16; ctx.font="800 32px "+IMGF; const catY=y+32; y+=44; y+=14;
+    const its=[];
+    g.items.forEach(function(it){
+      ctx.font="400 24px "+IMGF; const L=wrapJP(ctx,it.label,LW);
+      ctx.font="800 27px "+IMGF; const V=wrapJP(ctx,it.value,RW);
+      let S2=[]; if(it.sub){ ctx.font="400 22px "+IMGF; S2=wrapJP(ctx,it.sub,RW) }
+      const h=Math.max(L.length*34, V.length*38+S2.length*32)+22;
+      its.push({L:L,V:V,S:S2,col:it.col,h:h}); y+=h;
+    });
+    plan.push({cat:g.cat,color:g.color,catY:catY,items:its});
+  });
+  y+=40; const H=y+46;
+  cv.width=W; cv.height=H;
+  /* 2回目：描く */
+  ctx.textBaseline="alphabetic";
+  ctx.fillStyle=IC.paper; ctx.fillRect(0,0,W,H);
+  ctx.fillStyle=IC.band;  ctx.fillRect(0,0,W,14);
+  let yy=14+44;
+  ctx.fillStyle=IC.ink; ctx.font="800 52px "+IMGF; ctx.fillText(p.name||"（園名なし）",PAD,yy+44); yy+=52;
+  yy+=14; ctx.font="400 26px "+IMGF; ctx.fillStyle=IC.ink2;
+  const meta=[p.date?p.date:"",p.mins?"家から"+p.mins+"分":"",p.addr?p.addr:""].filter(Boolean).join("　");
+  ctx.fillText(meta,PAD,yy+22); yy+=26;
+  yy+=10; ctx.font="800 30px "+IMGF; ctx.fillStyle=IC.ink;
+  ctx.fillText("総合 "+(sc===null?"—":sc+"点")+"　／　記入 "+d[0]+" / "+d[1]+" 項目",PAD,yy+26); yy+=30;
+  if(noteLines.length){ yy+=18; ctx.font="400 26px "+IMGF; ctx.fillStyle=IC.ink2;
+    noteLines.forEach(function(l,i){ ctx.fillText(l,PAD,yy+26+i*38) }); yy+=noteLines.length*38 }
+  yy+=30;
+  plan.forEach(function(g){
+    yy+=16;
+    ctx.fillStyle=g.color.indexOf("mint")>-1?IC.mint:g.color.indexOf("sky")>-1?IC.sky:
+                  g.color.indexOf("coral")>-1?IC.coral:g.color.indexOf("grape")>-1?"#A98BE0":IC.band;
+    ctx.beginPath(); ctx.arc(PAD+9,yy+22,9,0,7); ctx.fill();
+    ctx.fillStyle=IC.ink; ctx.font="800 32px "+IMGF; ctx.fillText(g.cat,PAD+30,yy+32); yy+=44;
+    ctx.strokeStyle=IC.line; ctx.lineWidth=2;
+    ctx.beginPath(); ctx.moveTo(PAD,yy+6); ctx.lineTo(W-PAD,yy+6); ctx.stroke(); yy+=14;
+    g.items.forEach(function(it){
+      ctx.font="400 24px "+IMGF; ctx.fillStyle=IC.ink2;
+      it.L.forEach(function(l,i){ ctx.fillText(l,PAD,yy+24+i*34) });
+      ctx.font="800 27px "+IMGF; ctx.fillStyle=it.col;
+      it.V.forEach(function(l,i){ ctx.fillText(l,PAD+LW+GAP,yy+25+i*38) });
+      if(it.S.length){ ctx.font="400 22px "+IMGF; ctx.fillStyle=IC.ink2;
+        it.S.forEach(function(l,i){ ctx.fillText(l,PAD+LW+GAP,yy+25+it.V.length*38+i*32) }) }
+      yy+=it.h;
+      ctx.strokeStyle=IC.line; ctx.lineWidth=1;
+      ctx.beginPath(); ctx.moveTo(PAD,yy-9); ctx.lineTo(W-PAD,yy-9); ctx.stroke();
+    });
+  });
+  ctx.font="400 20px "+IMGF; ctx.fillStyle=IC.ink3;
+  ctx.fillText("園見学ノート　"+new Date().toLocaleDateString("ja-JP"),PAD,H-24);
+  document.getElementById("imgWrap").classList.add("on");
+  saveImage(cv,p);
+}
+function safeName(n){ return String(n||"園").replace(/[\/:*?"<>|]/g,"_").slice(0,40) }
+function saveImage(cv,p){
+  cv.toBlob(function(blob){
+    if(!blob){ imsg("画像を作れませんでした。"); return }
+    downloadBlob(safeName(p.name)+"_見学メモ.png", blob,
+      "保存しました。",
+      "保存できませんでした。下の画像を長押し（PCは右クリック）で保存してください。",
+      imsg);
+  },"image/png");
+}
+
+/* ---------- ファイルの受け渡し（普通のWebページ用） ---------- */
+function downloadBlob(filename, blob, okMsg, ngMsg, setMsg){
+  var use=(window.claude&&window.claude.use)?window.claude.use.bind(window.claude):null;
+  function anchorSave(){
+    try{
+      var url=URL.createObjectURL(blob);
+      var a=document.createElement("a");
+      a.href=url; a.download=filename; a.style.display="none";
+      document.body.appendChild(a); a.click();
+      setTimeout(function(){ URL.revokeObjectURL(url); a.remove() },1500);
+      setMsg(okMsg);
+    }catch(e){ setMsg(ngMsg) }
+  }
+  if(use){
+    setMsg("保存の確認が出たら「保存」を押してください。");
+    Promise.resolve(use("downloads")).then(function(dl){
+      if(!dl) return anchorSave();
+      return dl.save({filename:filename,data:blob})
+        .then(function(){ setMsg(okMsg) })
+        .catch(function(e){
+          if(e&&e.code==="declined"){ setMsg("保存をやめました。"); return }
+          anchorSave();
+        });
+    }).catch(anchorSave);
+    return;
+  }
+  anchorSave();
+}
+function imsg(t){ const e=document.getElementById("imgMsg"); if(e)e.textContent=t }
+
+if(!S.cur&&S.parks[0])S.cur=S.parks[0].id;
+if(!document.hasStorageAccess){ ACCESS="この端末では確認不要（枠の制限なし）" }
+if(document.hasStorageAccess){
+  ACCESS="確認中…";
+  document.hasStorageAccess().then(function(has){
+    ACCESS = has ? "許可ずみ" : "まだ許可されていません（保存ボタンを押すと確認が出ます）";
+    if(has && PROBE && !STORE){
+      PROBE(function(){return window.localStorage},"この端末に保存（ずっと残ります）");
+      storageOK=!!STORE;
+      try{ var r=STORE&&STORE.getItem(KEY); if(r){ S=Object.assign(S,JSON.parse(r)); LOADED="あり（許可後に読めました）"; render() } }catch(e){}
+    }
+  }).catch(function(){});
+}
+/* ================= カードで仕分ける ================= */
+var SORT={list:[],idx:0,hist:[],x0:0,dx:0,drag:false};
+function sortLabel(pg){ return pg==="pre" ? "いまは 事前" : "いまは 当日" }
+function sortOpen(){
+  SORT.list=[]; SORT.hist=[]; SORT.idx=0;
+  CATS.forEach(function(c){ c.items.forEach(function(it,i){ SORT.list.push({c:c,i:i,it:it}) }) });
+  document.getElementById("sortWrap").hidden=false;
+  document.body.style.overflow="hidden";
+  sortShow();
+}
+function sortClose(){
+  document.getElementById("sortWrap").hidden=true;
+  document.body.style.overflow="";
+  save(); renderPre(); renderDay(); renderPick(); renderCmp(); renderSum();
+}
+function sortShow(){
+  var card=document.getElementById("sortCard"), done=document.getElementById("sortDone");
+  var cnt=document.getElementById("sortCount");
+  if(SORT.idx>=SORT.list.length){
+    card.hidden=true; done.hidden=false;
+    done.innerHTML="ぜんぶ仕分けました。<br>おつかれさまでした。";
+    cnt.textContent=SORT.list.length+" / "+SORT.list.length;
+    return;
+  }
+  card.hidden=false; done.hidden=true;
+  var e=SORT.list[SORT.idx];
+  var pg=pageOf(e.c,e.i), used=on(e.c.id+"_"+e.i);
+  cnt.textContent=(SORT.idx+1)+" / "+SORT.list.length;
+  var h='<span class="cat">'+e.c.name+'</span><p class="q">'+e.it[0]+'</p>';
+  if(e.it[1]) h+='<span class="why">'+e.it[1]+'</span>';
+  h+='<span class="now">'+(used? sortLabel(pg) : "いまは 使わない")+'</span>';
+  card.innerHTML=h;
+  card.style.transform=""; card.style.opacity="1";
+  hintFade(0);
+}
+function hintFade(dx){
+  var l=document.querySelector(".sortHint.left"), r=document.querySelector(".sortHint.right");
+  if(l) l.style.opacity = dx<-20 ? Math.min(1,(-dx-20)/70) : 0;
+  if(r) r.style.opacity = dx> 20 ? Math.min(1,( dx-20)/70) : 0;
+}
+function sortDecide(kind){
+  if(SORT.idx>=SORT.list.length) return;
+  var e=SORT.list[SORT.idx], k=e.c.id+"_"+e.i;
+  SORT.hist.push({k:k,pg:(S.pg&&S.pg[k]), off:!!(S.off&&S.off[k]), idx:SORT.idx});
+  if(kind==="off"){ S.off[k]=1 }
+  else { delete S.off[k]; setPage(e.c,e.i,kind) }
+  save();
+  var card=document.getElementById("sortCard");
+  var to = kind==="off" ? "translateY(120%)" : (kind==="pre" ? "translateX(120%) rotate(9deg)" : "translateX(-120%) rotate(-9deg)");
+  card.style.transform=to; card.style.opacity="0";
+  SORT.idx++;
+  setTimeout(sortShow,180);
+}
+function sortUndo(){
+  var h=SORT.hist.pop(); if(!h) return;
+  if(h.pg===undefined){ if(S.pg) delete S.pg[h.k] } else { S.pg[h.k]=h.pg }
+  if(h.off){ S.off[h.k]=1 } else { delete S.off[h.k] }
+  SORT.idx=h.idx; save(); sortShow();
+}
+(function(){
+  function on2(id,fn){ var el=document.getElementById(id); if(el) el.addEventListener("click",fn) }
+  on2("sortStart",sortOpen);
+  on2("sortClose",sortClose);
+  on2("sortUndo",sortUndo);
+  on2("sortDay",function(){ sortDecide("day") });
+  on2("sortPre",function(){ sortDecide("pre") });
+  on2("sortOff",function(){ sortDecide("off") });
+  var card=document.getElementById("sortCard"); if(!card) return;
+  function start(x){ SORT.drag=true; SORT.x0=x; SORT.dx=0; card.style.transition="none" }
+  function move(x){ if(!SORT.drag)return; SORT.dx=x-SORT.x0;
+    card.style.transform="translateX("+SORT.dx+"px) rotate("+(SORT.dx/26)+"deg)"; hintFade(SORT.dx) }
+  function end(){ if(!SORT.drag)return; SORT.drag=false; card.style.transition="";
+    if(SORT.dx>90){ sortDecide("pre") }
+    else if(SORT.dx<-90){ sortDecide("day") }
+    else { card.style.transform=""; hintFade(0) } }
+  card.addEventListener("touchstart",function(ev){ start(ev.touches[0].clientX) },{passive:true});
+  card.addEventListener("touchmove", function(ev){ move(ev.touches[0].clientX) },{passive:true});
+  card.addEventListener("touchend",  end);
+  card.addEventListener("mousedown", function(ev){ start(ev.clientX); ev.preventDefault() });
+  window.addEventListener("mousemove",function(ev){ move(ev.clientX) });
+  window.addEventListener("mouseup",  end);
+})();
+render(); renderPickCounts();
+if(STORE && !S.parks.length){
+  var _n=document.getElementById("nudge");
+  if(_n) _n.innerHTML='<div class="nudge"><b>前に記録したものが見当たりません。</b><br>'
+    +'ファイルに保存してあるなら、そこから戻せます。'
+    +'<button class="btn sm" style="margin-top:9px" onclick="pickBackupFile()">ファイルから戻す</button></div>';
+}
+if(!storageOK){warnStorage();showSave("")}else{showSave("ok")}
+</script>
