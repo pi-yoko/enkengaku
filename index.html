@@ -1,5 +1,14 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#FFEFD4">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="園見学ノート">
+<meta name="format-detection" content="telephone=no">
 <title>園見学ノート</title>
-<!-- v20260821a -->
 <style>
 :root{
   --page:#FFEFD4; --sheet:#FFFDF7; --card:#FFFFFF;
@@ -44,7 +53,24 @@ button,input,textarea{font:inherit;color:inherit}
 .wrap{max-width:760px;margin:0 auto;padding:0 14px 110px}
 header{position:sticky;top:0;z-index:30;background:var(--page);padding-bottom:2px}
 .hd{max-width:760px;margin:0 auto;padding:13px 16px 2px;display:flex;align-items:center;gap:9px}
-.hd h1{font-size:19px;font-weight:800;margin:0;letter-spacing:.05em}
+.hd{flex-wrap:wrap;row-gap:8px}
+.hd h1{font-size:19px;font-weight:800;margin:0;letter-spacing:.05em;white-space:nowrap}
+@media (max-width:460px){
+  .hd{padding:11px 14px 2px}
+  .hd h1{font-size:17.5px}
+  .fileBtn,.saveBtn{margin-left:0;flex:1;text-align:center;padding:9px 8px;font-size:12.5px}
+  .fileBtn{order:3}
+  .saveBtn{order:4;flex:0 0 34%}
+  nav{padding:6px 10px 8px;gap:4px}
+  nav button{font-size:11.5px;padding:8px 1px}
+  .wrap{padding:0 11px 110px}
+  .item{padding:13px 14px}
+  .cat>summary{padding:14px 14px}
+  .meta{padding:15px 14px}
+  .secbody{padding:14px 14px 16px}
+  .sec>summary{padding:15px 14px}
+  h2{font-size:15px}
+}
 .fileBtn{margin-left:auto;background:var(--mint);color:#fff;border:0;border-radius:999px;padding:8px 15px;font-size:12.5px;font-weight:800;cursor:pointer;box-shadow:var(--pop);white-space:nowrap}
 .fileBtn:active{transform:translateY(2px);box-shadow:none}
 .saveBtn{background:var(--sun);color:#4E3A2C;border:0;border-radius:999px;
@@ -210,6 +236,7 @@ footer{padding:22px 6px;color:var(--ink-3);font-size:11px;line-height:1.9;text-a
 .sortB.off{background:var(--sheet);color:var(--ink-3);border:2px solid var(--line);box-shadow:none;flex:0 0 96px}
 .sortDone{text-align:center;font-size:16px;font-weight:800;line-height:2}
 .fromcat{display:block;font-size:10.5px;font-weight:800;letter-spacing:.08em;color:var(--ink-3);margin-bottom:4px}
+.missBtn{width:100%;border-color:var(--coral) !important;color:var(--coral) !important;font-size:13px}
 .cat.miss{border:2px solid var(--coral)}
 .cat.miss .remain{background:var(--coral-soft);color:var(--coral)}
 /* ---- 印刷 ---- */
@@ -234,6 +261,9 @@ footer{padding:22px 6px;color:var(--ink-3);font-size:11px;line-height:1.9;text-a
 }
 @media (prefers-reduced-motion:reduce){*{transition:none !important}}
 </style>
+</head>
+<body>
+
 
 <header>
   <div class="hd">
@@ -454,7 +484,7 @@ const CATS=[
  ["園庭の有無","",0,["あり","なし"]],
  ["保育理念・方針","先に読んでおくと、見学のとき「これはどういう意味ですか」と踏み込んで聞けます。",0],
  ["去年の申込状況・内定の最低指数","自治体が公表していることがあります。受かる見込みが読めます。",0]]},
-{id:"tel",page:"pre",kind:"check",phase:"電話で聞くこと",name:"電話で確認しておくこと",color:"var(--grape)",
+{id:"tel",page:"pre",kind:"ask",phase:"電話で聞くこと",name:"電話で確認しておくこと",color:"var(--grape)",
  tip:"かけるなら平日の10時過ぎ（登園が落ち着くころ）か、14時前後（お昼寝の時間帯）。行事の日を避けたいので、先にホームページを見ておくと確実です。",
  items:[
  ["見学の所要時間はどのくらいか","",1],
@@ -696,6 +726,9 @@ function filled(p,c,i){ const k=c.id+"_"+i;
 function sunk(p,c,i){ const k=c.id+"_"+i;
   if(!p.d) p.d={};
   return !!p.d[k] }
+function toggleMiss(){ const p=cur(); if(!p)return; p.showMiss=!p.showMiss; save(); renderDay();
+  const el=document.querySelector(".missBtn")||document.querySelector('[data-cat="__miss"]');
+  if(el) el.scrollIntoView({block:"center"}); }
 function toggleSink(k){
   const p=cur(); if(!p)return; if(!p.d) p.d={};
   if(p.d[k]) delete p.d[k]; else p.d[k]=1;
@@ -943,10 +976,15 @@ function missingHTML(p){
     });
   });
   if(!rows.length) return "";
-  return '<details class="card cat miss" data-cat="__miss" data-pg="day">'+
+  if(!p.showMiss){
+    return '<button class="btn ghost missBtn" onclick="toggleMiss()">'+
+      '事前で埋まらなかった '+rows.length+' 件も、ここで聞く</button>';
+  }
+  return '<details class="card cat miss" data-cat="__miss" data-pg="day" open>'+
     '<summary><span class="dot" style="background:var(--coral)"></span><h2>事前で埋まらなかったこと</h2>'+
     '<span class="remain">'+rows.length+' 件</span><span class="caret">▶</span></summary>'+
-    '<div class="tip">ホームページに載っていなかったものです。<b>当日ここで聞いてしまいましょう。</b>書き込むと、この欄からは消えます。</div>'+
+    '<div class="tip">事前タブでまだ空のものです。<b>当日ここで聞いてしまいましょう。</b>書き込むと、この欄からは消えます。'+
+    '<button class="btn sm ghost" style="margin-top:9px" onclick="toggleMiss()">この欄を閉じる</button></div>'+
     '<div class="items">'+rows.join("")+'</div></details>';
 }
 function delPark(){ const p=cur(); if(!p)return; snapshot();
@@ -1364,3 +1402,6 @@ if(STORE && !S.parks.length){
 }
 if(!storageOK){warnStorage();showSave("")}else{showSave("ok")}
 </script>
+
+</body>
+</html>
