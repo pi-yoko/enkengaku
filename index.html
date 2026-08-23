@@ -146,6 +146,7 @@ textarea{resize:vertical;min-height:56px;line-height:1.7}
 .movebar button:active{transform:translateY(2px)}
 .movebar.sm{padding:6px 0 0;justify-content:flex-end}
 .movebar.sm button{padding:5px 14px;font-size:13px;min-width:46px}
+.verline{margin:0 0 10px;font-size:11.5px;font-weight:800;color:var(--ink-3);letter-spacing:.05em}
 .wlabel{padding:8px 16px 5px;font-size:11px;font-weight:800;color:var(--ink-3)}
 .weight{display:flex;gap:5px;padding:0 16px 13px}
 .weight button{flex:1;background:var(--sheet);border:2px solid var(--line);border-radius:999px;padding:7px 3px;font-size:11.5px;font-weight:800;color:var(--ink-2);cursor:pointer}
@@ -492,9 +493,10 @@ footer{padding:22px 6px;color:var(--ink-3);font-size:11px;line-height:1.9;text-a
       <details class="card sec">
         <summary><span class="secn">5</span><h2>この道具について</h2><span class="caret">▶</span></summary>
         <div class="secbody">
+        <p class="verline">バージョン 2026-08-23a</p>
         <p class="muted" style="margin:0">
           項目は「保育士にゆとりがあるか」を軸に組んでいます。設備の新しさより、そこで働く人に余裕があるかどうかが、子どもの過ごし方に直結するからです。<br><br>
-          点数がつくのは<b>「見て確かめること」だけ</b>です。定員や料金は良し悪しではないので、点数には入れていません。<br><br>
+          点数は<b>あなたが◎○△✕を付けた項目だけ</b>で計算します。定員や料金のような事実の項目は、評価を付けなければ点数に入りません。<br><br>
           点数は園に優劣をつけるためではなく、<b>自分が何を大事にしているかを確かめる</b>ためのものです。最後は実際に見た感触で決めてくださいね。
         </p>
         </div>
@@ -1478,9 +1480,7 @@ function saveImage(cv,p){
   cv.toBlob(function(blob){
     if(!blob){ imsg("画像を作れませんでした。項目を減らすか、印刷をお使いください。"); return }
     downloadBlob(safeName(p.name)+"_見学メモ.png", blob,
-      "保存しました。",
-      "保存できませんでした。下の画像を長押し（PCは右クリック）で保存してください。",
-      imsg);
+      "保存しました。","保存できませんでした。下の画像を長押し（PCは右クリック）で保存してください。", imsg);
   },"image/png");
 }
 
