@@ -137,7 +137,17 @@ textarea{resize:vertical;min-height:56px;line-height:1.7}
   display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:800}
 .secbody{padding:15px 17px 18px}
 .sec .count{margin-left:auto}
-.weight{display:flex;gap:5px;padding:0 17px 13px}
+.searchBox{display:flex;gap:8px;align-items:center}
+.searchBox input{flex:1}
+.movebar{display:flex;align-items:center;gap:6px;padding:8px 16px 4px}
+.movebar>span{font-size:11px;font-weight:800;color:var(--ink-3);margin-right:auto}
+.movebar button{background:var(--sheet);border:2px solid var(--line);color:var(--ink-2);
+  border-radius:999px;padding:6px 13px;font-size:11.5px;font-weight:800;cursor:pointer}
+.movebar button:active{transform:translateY(2px)}
+.movebar.sm{padding:6px 0 0;justify-content:flex-end}
+.movebar.sm button{padding:5px 14px;font-size:13px;min-width:46px}
+.wlabel{padding:8px 16px 5px;font-size:11px;font-weight:800;color:var(--ink-3)}
+.weight{display:flex;gap:5px;padding:0 16px 13px}
 .weight button{flex:1;background:var(--sheet);border:2px solid var(--line);border-radius:999px;padding:7px 3px;font-size:11.5px;font-weight:800;color:var(--ink-2);cursor:pointer}
 .weight button[aria-pressed="true"]{background:var(--grape);border-color:var(--grape);color:#fff}
 .item{border-top:2px dotted var(--line);padding:14px 17px}
@@ -212,7 +222,16 @@ footer{padding:22px 6px;color:var(--ink-3);font-size:11px;line-height:1.9;text-a
 #imgWrap{display:none;margin-top:13px}
 #imgWrap.on{display:block}
 #imgWrap canvas{width:100%;height:auto;border-radius:16px;border:2px solid var(--line);display:block}
+.ages{display:grid;grid-template-columns:repeat(6,1fr);gap:5px;margin-top:10px}
+.ages label{display:grid;gap:3px;justify-items:center}
+.ages span{font-size:10.5px;font-weight:800;color:var(--ink-2)}
+.ages input{text-align:center;padding:9px 2px;font-size:15px;border-radius:11px}
+@media (max-width:460px){ .ages{grid-template-columns:repeat(3,1fr)} }
 .opts{display:flex;flex-wrap:wrap;gap:6px;margin-top:9px}
+.opts.multi button[aria-pressed="true"]{background:var(--grape);border-color:var(--grape)}
+.guide{padding:15px 17px;background:var(--sky-soft);border:2px solid var(--sky)}
+.guide p{margin:0 0 9px;font-size:13px;line-height:1.85;color:var(--ink-2)}
+.guide p:last-child{margin-bottom:0}
 .opts button{background:var(--sheet);border:2px solid var(--line);border-radius:999px;padding:7px 14px;font-size:13px;font-weight:800;color:var(--ink-2);cursor:pointer}
 .opts button[aria-pressed="true"]{background:var(--sky);border-color:var(--sky);color:#fff}
 .nudge{background:var(--sun-soft);border:2px solid var(--sun);border-radius:18px;padding:13px 16px;
@@ -250,6 +269,19 @@ footer{padding:22px 6px;color:var(--ink-3);font-size:11px;line-height:1.9;text-a
 .missBtn{width:100%;border-color:var(--coral) !important;color:var(--coral) !important;font-size:13px}
 .cat.miss{border:2px solid var(--coral)}
 .cat.miss .remain{background:var(--coral-soft);color:var(--coral)}
+.catClose{display:block;width:calc(100% - 34px);margin:12px 17px 16px;background:var(--sheet);
+  border:2px solid var(--line);color:var(--ink-2);border-radius:999px;padding:11px;font-size:12.5px;font-weight:800;cursor:pointer}
+.catClose:active{transform:translateY(2px)}
+.memoToggle{margin-top:9px;background:none;border:0;color:var(--ink-2);font-size:12px;font-weight:800;cursor:pointer;padding:2px 0;display:block}
+.item:not(.memoOn) .memoBox{display:none}
+.rateToggle{margin-top:9px;background:none;border:0;color:var(--sky);font-size:12px;font-weight:800;cursor:pointer;padding:2px 0;display:block}
+.item:not(.rateOn) .rateToggle + .rate{display:none}
+.tally{display:flex;gap:5px;flex-wrap:wrap;margin-top:7px}
+.tally span{font-size:12px;font-weight:800;padding:3px 10px;border-radius:999px;color:#fff;font-variant-numeric:tabular-nums}
+.tally .t3{background:var(--sel-good)} .tally .t2{background:var(--sel-ok)}
+.tally .t1{background:var(--sel-warn)} .tally .t0{background:var(--sel-bad)}
+.tally .tn{background:var(--line-2);color:var(--ink-2)}
+.tsub{font-family:var(--maru);font-size:10.5px;font-weight:800;color:var(--ink-2);line-height:1.5;margin-top:3px}
 /* ---- 印刷 ---- */
 #printArea{display:none}
 @media print{
@@ -308,7 +340,14 @@ footer{padding:22px 6px;color:var(--ink-3);font-size:11px;line-height:1.9;text-a
 <div class="wrap">
   <div id="storageWarn"></div>
   <section id="pre"><div id="preBody" class="stack"></div></section>
-  <section id="day" hidden><div id="dayBody" class="stack"></div></section>
+  <section id="day" hidden>
+    <div class="searchBox" style="padding:11px 0 0">
+      <input type="text" id="dayQ" placeholder="項目をさがす（例：おむつ、延長、アレルギー）" autocomplete="off" oninput="setDayQ(this.value)">
+      <button class="btn sm ghost" id="dayQClear" onclick="setDayQ(&quot;&quot;,true)" hidden>消す</button>
+    </div>
+    <p id="dayQHit" class="muted" style="margin:7px 0 0;font-size:12px;font-weight:800"></p>
+    <div id="dayBody" class="stack"></div>
+  </section>
 
   <section id="sum" hidden>
     <div class="stack" style="padding-top:11px">
@@ -353,20 +392,18 @@ footer{padding:22px 6px;color:var(--ink-3);font-size:11px;line-height:1.9;text-a
         <h2>カードで仕分ける</h2>
         <p class="muted" style="margin:8px 0 13px">
           全<b id="allN2">135</b>項目を1枚ずつ出します。スワイプでも、ボタンでも進められます。<br><br>
-          <b>①</b>で「絶対に聞くこと」だけを残します。外したものは消えるわけではなく、
-          <b>あとから「項目をえらぶ」でいつでも足せます</b>。<br>
-          <b>②</b>は、残った項目を「事前にしらべる」と「当日きく」に分けます。
+          「絶対に聞くこと」だけを残します。外したものは消えるわけではなく、
+          <b>あとから「項目をえらぶ」でいつでも足せます</b>。
         </p>
-        <button class="btn" id="sortMustStart" style="width:100%;padding:15px;margin-bottom:9px">① 絶対に聞くことを選ぶ（2択）</button>
-        <button class="btn ghost" id="sortStart" style="width:100%;padding:14px">② 事前か当日かを分ける（3択）</button>
+        <button class="btn" id="sortMustStart" style="width:100%;padding:15px">カードで仕分ける</button>
       </div>
 
       <details class="card sec">
         <summary><span class="secn">1</span><h2>使い方</h2><span class="caret">▶</span></summary>
         <div class="secbody">
         <p class="muted" style="margin:0">
-          <b>① 事前</b>　園のホームページや自治体の資料で分かることを、先に埋めておきます。電話で予約するときに聞くこともここです。<br><br>
-          <b>② 当日</b>　見学しながら記録します。記入したら<b>「書けた ↓」</b>を押してください。その項目が下に下がり、まだ聞いていないものが上に残ります。書き足したくなったら<b>「もう一度書く ↑」</b>で戻せます。<br><br>
+          <b>① 事前</b>　全部の項目が並んでいます。園のホームページ、重要事項説明書（入園のしおり）、自治体の公式サイトで<b>分かるものだけ</b>埋めてください。園によって載っている量は違うので、埋まらなくて大丈夫です。<br><br>
+          <b>② 当日</b>　<b>事前に書けなかったものだけ</b>が出ます。「見て確認すること」と「聞いて確認すること」に分かれています。見学は先に園内をまわって最後に質問、という流れが多いので、この順で使えます。書き込むと、その項目はこの画面から消えます。<br><br>
           <b>③ まとめ</b>　記入したものを一覧で見返せます。園が複数あれば横に並べて比べられます。紙に印刷したり、1枚の画像にして保存もできます。<br><br>
           各項目の<b style="color:var(--coral)">「聞く理由 ▾」</b>を押すと、なぜそこを見るのかが読めます。<br><br>
           入力は<b>自動で保存されます</b>。ただしブラウザの中の保存なので、確実に残したいときは<b>設定 →「持ち出す・戻す」→「ファイルに保存」</b>を使ってください。園はいくつでも追加できます（画面の上の「＋ 園を追加」）。
@@ -388,7 +425,13 @@ footer{padding:22px 6px;color:var(--ink-3);font-size:11px;line-height:1.9;text-a
           <button class="btn sm ghost" onclick="preset('none')">ぜんぶ外す</button>
         </div>
         <p class="muted" style="margin:11px 0 0;font-weight:800">いま使う項目：<span id="onN">0</span> 個</p>
-        <p class="muted" style="margin:6px 0 0;font-size:12px">チェックが付いているものが<b>最初から表示されます</b>。外したものは消えるわけではなく、<b>ここでいつでも足せます</b>。項目の下の<b>「聞く理由」</b>を読んでから決めてください。</p>
+        <p class="muted" style="margin:6px 0 0;font-size:12px">↑↓ で<b>並べ替え</b>できます（カテゴリごと・項目ごと）。チェックが付いているものが<b>最初から表示されます</b>。外したものは消えるわけではなく、<b>ここでいつでも足せます</b>。項目の下の<b>「聞く理由」</b>を読んでから決めてください。</p>
+        <div class="searchBox">
+          <input type="text" id="pickQ" placeholder="項目をさがす（例：おむつ、アレルギー、延長）" autocomplete="off"
+                 oninput="setPickQ(this.value)">
+          <button class="btn sm ghost" id="pickQClear" onclick="setPickQ(&quot;&quot;,true)" hidden>消す</button>
+        </div>
+        <p id="pickQHit" class="muted" style="margin:8px 0 0;font-size:12px;font-weight:800"></p>
         <div id="picBody" class="stack" style="margin-top:13px"></div>
         </div>
       </details>
@@ -493,180 +536,211 @@ const CATS=[
 {id:"prep",name:"調べれば分かること",kind:"ask",color:"var(--sky)",
  tip:"ここは見学に行く前に埋められます。先に埋めておくと、当日は「行かないと分からないこと」だけに集中できます。",
  items:[
-  {k:"prep_0", p:"pre", q:"園の種類", w:"自治体のホームページか、園のサイトに出ています。認可保育園…国の基準を満たした定員20名以上の園。0〜5歳対象、自治体の選考（点数）で入る。認可外保育園…国の認可基準には当てはまらないが、届出をして運営している施設の総称。園に直接申込め、保育料は園が決める。小規模保育…定員6〜19名、0〜2歳限定の認可。手厚くて入りやすい。企業主導型…企業がつくる認可外だが国の助成つき。従業員枠＋地域枠があり、自治体の選考を通さず直接申込める。認定こども園…保育園＋幼稚園の合体型。親が働いていてもいなくても通え、途中で退職しても在園し続けられる。家庭的保育…保育者の自宅で5名以下を見る認可。0〜2歳限定で、家庭に最も近い環境。", o:["認可保育園","認可外保育園","小規模保育","企業主導型","認定こども園","家庭的保育"]},
-  {k:"prep_1", p:"pre", q:"住所・最寄り駅・家からのルート"},
-  {k:"prep_2", p:"pre", q:"実際に保育園まで行くのにかかる時間", w:"子どもと一緒に行くと倍の時間かかります。実際のルートを歩いてみると安心です。"},
-  {k:"prep_3", p:"pre", q:"保育料", w:"認可の保育料は世帯の課税額で決まるので、自治体の表を確認しましょう。認可外と企業主導型は園が自由に決めるので、園のサイトを確認しましょう。"},
-  {k:"basic_2", p:"pre", q:"保育料のほかにかかるお金（給食費・教材費・行事費・延長料金など）"},
-  {k:"prep_4", p:"pre", q:"開所時間・標準時間・時間外"},
-  {k:"prep_5", p:"pre", q:"休園日・休園期間（年末年始・お盆）"},
-  {k:"daily_5", p:"pre", q:"延長のときの補食・夕食はあるか", w:"補食…おにぎりなどの軽食、夕食…夕ご飯"},
-  {k:"prep_6", p:"pre", q:"クラスごとの子どもの定員人数"},
-  {k:"prep_x1", p:"pre", q:"クラスごとの保育士の配置人数", w:"配置基準とは「園全体で必要な保育士の総数」なため、必要最低限の人数が書かれています。（例：0歳児3名に対して保育者1名）"},
-  {k:"prep_x2", p:"pre", q:"看護師はいるのか", w:"看護師の配置は義務ではありませんが、いると安心です。子どものけがの応急処置や体調チェック、保健だよりの作成などを行っています。保育士に向けて嘔吐処理の研修など専門的な知識を保育士に教える立場でもあります。"},
-  {k:"prep_7", p:"pre", q:"園庭の有無", w:"園庭の代わりに、テラスやガレージがある園もあります。近隣トラブルなどで、使用時間を制限している園も稀にあります。どの程度園庭遊びをするのか確認しておくと安心です。", o:["あり","なし"]},
-  {k:"bousai_0", p:"pre", q:"建物の耐震性（築年数）"},
-  {k:"prep_8", p:"pre", q:"保育理念・方針", w:"一斉保育や自由保育、モンテッソーリ教育など、園によって様々な保育理念があります。お子さまに合った園かどうか、見学前に事前に確認しておくと安心です。"},
-  {k:"basic_3", p:"pre", q:"1日のスケジュール", w:"事前に知っておくと、園と家庭の生活リズムを合わせておくことができます。合わせることで、お子さんの疲れも減ります。"},
-  {k:"items_0", p:"pre", q:"毎日の持ち物", w:"洋服の着替えセットやタオル、水筒など、園によっては多い場合もあります。"},
-  {k:"items_4", p:"pre", q:"おむつのサブスクはあるか", w:"サブスクを利用すると、おむつを持っていく・名前を書く準備が減ります。", o:["あり","なし"]},
-  {k:"items_3", p:"pre", q:"おむつは紙か布か。持参の頻度", o:["紙","布"]},
-  {k:"prep_x3", p:"pre", q:"エプロン・口拭きのサブスクはあるか", w:"サブスクを利用すると、エプロン・口拭きを持っていく、洗うなどの手間が減ります。", o:["あり","なし"]},
-  {k:"prep_x4", p:"pre", q:"何の行事があるのか"},
-  {k:"prep_9", p:"pre", q:"去年の申込状況・内定の最低指数", w:"自治体が公表していることがあります。"}
+  {k:"prep_0", q:"園の種類", w:"自治体のホームページか、園のサイトに出ています。認可保育園…国の基準を満たした定員20名以上の園。0〜5歳対象、自治体の選考（点数）で入る。認可外保育園…国の認可基準には当てはまらないが、届出をして運営している施設の総称。園に直接申込め、保育料は園が決める。小規模保育…定員6〜19名、0〜2歳限定の認可。手厚くて入りやすい。企業主導型…企業がつくる認可外だが国の助成つき。従業員枠＋地域枠があり、自治体の選考を通さず直接申込める。認定こども園…保育園＋幼稚園の合体型。親が働いていてもいなくても通え、途中で退職しても在園し続けられる。家庭的保育…保育者の自宅で5名以下を見る認可。0〜2歳限定で、家庭に最も近い環境。", o:["認可保育園","認可外保育園","小規模保育","企業主導型","認定こども園","家庭的保育"]},
+  {k:"prep_1", q:"住所・最寄り駅・家からのルート", w:"子どもと一緒に行くと倍の時間かかります。実際のルートを歩いてみると安心です。"},
+  {k:"prep_3", q:"保育料", w:"認可の保育料は世帯の課税額で決まるので、自治体の表を確認しましょう。認可外と企業主導型は園が自由に決めるので、園のサイトを確認しましょう。"},
+  {k:"basic_2", q:"保育料のほかにかかるお金（給食費・教材費・行事費・延長料金など）"},
+  {k:"prep_4", q:"開所時間・標準時間・時間外"},
+  {k:"prep_5", q:"休園日・休園期間（年末年始・お盆）"},
+  {k:"daily_5", q:"延長のときの補食・夕食はあるか", w:"補食…おにぎりなどの軽食、夕食…夕ご飯", o:["あり","なし"]},
+  {k:"prep_6", g:["0歳","1歳","2歳","3歳","4歳","5歳"], q:"クラスの定員", w:"人数が少ないほどアットホームな雰囲気があります。人数が多いほど、集団での生活を楽しむことができます。"},
+  {k:"prep_x1", q:"看護師はいるのか", w:"看護師の配置は義務ではありませんが、いると安心です。子どものけがの応急処置や体調チェック、保健だよりの作成などを行っています。保育士に向けて嘔吐処理の研修など専門的な知識を保育士に教える立場でもあります。", o:["いる","いない"]},
+  {k:"prep_7", q:"園庭の有無", w:"園庭の代わりに、テラスやガレージがある園もあります。近隣トラブルなどで、使用時間を制限している園も稀にあります。どの程度園庭遊びをするのか確認しておくと安心です。", o:["あり","なし"]},
+  {k:"bousai_0", q:"建物の耐震性（築年数）"},
+  {k:"prep_8", q:"保育理念・方針", w:"一斉保育や自由保育、モンテッソーリ教育など、園によって様々な保育理念があります。お子さまに合った園かどうか、見学前に事前に確認しておくと安心です。", o:["一斉保育","自由保育","主体的保育","コーナー保育","異年齢保育（縦割り）","少人数保育","モンテッソーリ","シュタイナー","レッジョ・エミリア","リトミック","英語","体操・運動","音楽（楽器・合唱）","絵画・造形","食育","自然・戸外遊び中心","知育・学習","発達支援に力を入れる","仏教系","キリスト教系"], m:1},
+  {k:"basic_3", q:"1日のスケジュール", w:"事前に知っておくと、園と家庭の生活リズムを合わせておくことができます。合わせることで、お子さんの疲れも減ります。"},
+  {k:"items_0", q:"毎日の持ち物", w:"洋服の着替えセットやタオル、水筒など、園によっては多い場合もあります。"},
+  {k:"items_4", q:"おむつのサブスクはあるか", w:"サブスクを利用すると、おむつを持っていく・名前を書く準備が減ります。", o:["あり","なし"]},
+  {k:"items_3", q:"おむつは紙か布か。持参の頻度", o:["紙","布"]},
+  {k:"prep_x2", q:"エプロン・口拭きのサブスクはあるか", w:"サブスクを利用すると、エプロン・口拭きを持っていく、洗うなどの手間が減ります。", o:["あり","なし"]},
+  {k:"prep_x3", q:"年間行事"},
+  {k:"prep_9", q:"去年の申込状況・内定の最低指数", w:"自治体が公表していることがあります。"}
  ]},
 {id:"tel",name:"電話で確認しておくこと",kind:"ask",color:"var(--grape)",
  tip:"かけるなら平日の10時過ぎ（登園が落ち着くころ）か、14時前後（お昼寝の時間帯）。行事の日を避けたいので、先にホームページを見ておくと確実です。",
  items:[
-  {k:"tel_0", p:"pre", q:"見学の所要時間はどのくらいか"},
-  {k:"tel_1", p:"pre", q:"子どもを連れて行ってよいか", o:["○","✕"]},
-  {k:"tel_3", p:"pre", q:"持ち物（スリッパ・筆記用具）は必要か", o:["いる","いらない"]},
-  {k:"tel_5", p:"pre", q:"車・ベビーカーで行ってよいか", w:"駐車場やベビーカーの置き場所も一緒に聞いておくと当日慌てません。", o:["○","✕"]},
-  {k:"tel_6", p:"pre", q:"入園説明会や用品購入の時期", w:"4月入園だと2月、3月あたりに行われることが多いです。"}
+  {k:"tel_0", q:"見学の所要時間はどのくらいか"},
+  {k:"tel_1", q:"子どもを連れて行ってよいか", o:["○","✕"]},
+  {k:"tel_3", q:"持ち物（スリッパ・筆記用具）は必要か", o:["いる","いらない"]},
+  {k:"tel_5", q:"車・ベビーカーで行ってよいか", w:"駐車場やベビーカーの置き場所も一緒に聞いておくと当日慌てません。", o:["○","✕"]},
+  {k:"tel_6", q:"入園説明会や用品購入の時期", w:"4月入園だと2月、3月あたりに行われることが多いです。"}
  ]},
 {id:"route",name:"通園経路・園のまわり",kind:"rate",color:"var(--sky)",
  items:[
-  {k:"route_0", p:"day", q:"送迎ルートの安全性（歩道・信号・交通量）", w:"毎日行き帰り通ります。雨の日や暗い時間も通ります。"},
-  {k:"route_1", p:"day", q:"駐輪場・駐車場の有無", w:"送迎時のみ一時的に可という園もあります。屋根がない場合は、雨の日に子どもを抱っこしたり、傘をさして通ります。"},
-  {k:"route_2", p:"day", q:"ベビーカー置き場があるか", w:"置ける場合でも、屋根の無い場所に置くパターンもあるので確認すると安心です。"},
-  {k:"route_4", p:"day", q:"入口のセキュリティ（オートロック・部外者が入れないか・防犯カメラがあるか）"}
+  {k:"route_0", q:"送迎ルートの安全性（歩道・信号・交通量）", w:"毎日行き帰り通ります。雨の日や暗い時間も通ります。"},
+  {k:"route_1", q:"駐輪場・駐車場の有無", w:"送迎時のみ一時的に可という園もあります。屋根がない場合は、雨の日に子どもを抱っこしたり、傘をさして通ります。"},
+  {k:"route_2", q:"ベビーカー置き場があるか", w:"置ける場合でも、屋根の無い場所に置くパターンもあるので確認すると安心です。"},
+  {k:"route_4", q:"入口のセキュリティ（オートロック・部外者が入れないか・防犯カメラがあるか）"}
  ]},
 {id:"env",name:"保育室・環境",kind:"rate",color:"var(--mint)",
  items:[
-  {k:"env_0", p:"day", q:"部屋に入ったときのにおい", w:"保育室をこまめに掃除、換気しているかが分かります。"},
-  {k:"env_1", p:"day", q:"掃除が行き届いてるか", w:"保育室や廊下などが綺麗に保たれている園は、人手が足りていて、余裕がある園であることが多いです。"},
-  {k:"env_2", p:"day", q:"おもちゃが子どもの手の届く高さにあるか（主に幼児クラス）", w:"0～2歳頃までは、玩具が見えない（取れない）ようになっていた方が逆に安心して過ごせる場合もあります。3歳～5歳は、好きな玩具を自分で選べる方が、じっくりと遊べる環境になりやすいです。棚の上にしまわれている園は、大人が出し入れを管理する保育になりがちです。"},
-  {k:"env_3", p:"day", q:"おもちゃの数と、年齢に合っているか", w:"0、1歳児クラスの玩具は、安全のためにしまわれていることも多いです。どんな玩具があるか気になる場合は、質問してみるのも良いと思います。"},
-  {k:"env_4", p:"day", q:"絵本の数と種類"},
-  {k:"env_5", p:"day", q:"保育室の広さ", w:"子どもの人数に比べて保育室が狭い場合は、子ども同士のトラブルも起きやすいです。自由に遊べるスペースと食事スペースが分かれている場合は、広々と使えるため、保育に余裕がある場合が多いです。"},
-  {k:"env_12", p:"day", q:"保育室がクラスごとで分かれているか、ワンフロアか", w:"ワンフロアの場合、仕切りで仕切れる場合もあります。ワンフロアの場合、他学年と一緒に過ごす時間が多いです。落ち着いて過ごしたいお子さんは、クラスごとで分かれている方が安心です。"},
-  {k:"env_6", p:"day", q:"風通し・空調・日当たり"},
-  {k:"env_7", p:"day", q:"掲示物が新しいものになっているかどうか", w:"クラスだよりや献立表などが変わっていない場合は、そこまで手が回っていないサインです"},
-  {k:"env_8", p:"day", q:"飾ってある装飾が華美かどうか", w:"基本的に装飾は全て保育士が作っています。ラミネートされた物などであれば、毎年使いまわしている可能性もありますが、手作り感のある物がたくさん飾ってある場合は、準備に時間を取られている分、子どもを見る余裕が削られている場合もあります。多ければよいとは限りません。"},
-  {k:"env_10", p:"day", q:"沐浴・シャワーの設備", w:"0歳児クラスは、沐浴槽で汗を流すことがあります。また、夏場や汚れたときに使います。"},
-  {k:"env_11", p:"day", q:"昼寝の環境（空調・照明・カーテン）", w:"13時～15時頃はお昼寝の時間です。部屋が暗すぎると、子どもの顔が見えにくく、呼吸の確認などがしずらいです。"},
-  {k:"env_x1", p:"day", q:"保育士の休憩室があるかどうか", w:"休憩室や作業部屋がある園は、息抜きができ、保育士の心に余裕が生まれやすいです。"}
+  {k:"env_0", q:"部屋に入ったときのにおい", w:"保育室をこまめに掃除、換気しているかが分かります。"},
+  {k:"env_1", q:"掃除が行き届いてるか", w:"保育室や廊下などが綺麗に保たれている園は、人手が足りていて、余裕がある園であることが多いです。"},
+  {k:"env_2", q:"おもちゃが子どもの手の届く高さにあるか（主に幼児クラス）", w:"0～2歳頃までは、玩具が見えない（取れない）ようになっていた方が逆に安心して過ごせる場合もあります。3歳～5歳は、好きな玩具を自分で選べる方が、じっくりと遊べる環境になりやすいです。棚の上にしまわれている園は、大人が出し入れを管理する保育になりがちです。"},
+  {k:"env_3", q:"おもちゃの数と、年齢に合っているか", w:"0、1歳児クラスの玩具は、安全のためにしまわれていることも多いです。どんな玩具があるか気になる場合は、質問してみるのも良いと思います。"},
+  {k:"env_4", q:"絵本の数と種類"},
+  {k:"env_5", q:"保育室の広さ", w:"子どもの人数に比べて保育室が狭い場合は、子ども同士のトラブルも起きやすいです。自由に遊べるスペースと食事スペースが分かれている場合は、広々と使えるため、保育に余裕がある場合が多いです。"},
+  {k:"env_12", q:"保育室がクラスごとで分かれているか、ワンフロアか", w:"ワンフロアの場合、仕切りで仕切れる場合もあります。ワンフロアの場合、他学年と一緒に過ごす時間が多いです。落ち着いて過ごしたいお子さんは、クラスごとで分かれている方が安心です。"},
+  {k:"env_6", q:"風通し・空調・日当たり"},
+  {k:"env_7", q:"掲示物が新しいものになっているかどうか", w:"クラスだよりや献立表などが変わっていない場合は、そこまで手が回っていないサインです"},
+  {k:"env_8", q:"飾ってある装飾が華美かどうか", w:"基本的に装飾は全て保育士が作っています。ラミネートされた物などであれば、毎年使いまわしている可能性もありますが、手作り感のある物がたくさん飾ってある場合は、準備に時間を取られている分、子どもを見る余裕が削られている場合もあります。多ければよいとは限りません。"},
+  {k:"env_10", q:"沐浴・シャワーの設備", w:"0歳児クラスは、沐浴槽で汗を流すことがあります。また、夏場や汚れたときに使います。"},
+  {k:"env_11", q:"昼寝の環境（空調・照明・カーテン）", w:"13時～15時頃はお昼寝の時間です。部屋が暗すぎると、子どもの顔が見えにくく、呼吸の確認などがしずらいです。"},
+  {k:"env_x1", q:"保育士の休憩室があるかどうか", w:"休憩室や作業部屋がある園は、息抜きができ、保育士の心に余裕が生まれやすいです。"}
  ]},
 {id:"safe",name:"安全",kind:"rate",color:"var(--coral)",
  items:[
-  {k:"safe_0", p:"day", q:"指はさみ・棚の転倒防止・角の保護", w:"安全対策をしっかりしている園は、けがが起こりにくいです。"},
-  {k:"safe_1", p:"day", q:"危険な場所や死角がないか"},
-  {k:"safe_2", p:"day", q:"階段・ベランダ・玄関の柵と施錠", w:"子どもの転落や抜け出し防止の管理ができているか。鍵が子どもの手の届かない位置にあるかを見ます。"}
+  {k:"safe_0", q:"指はさみ・棚の転倒防止・角の保護", w:"安全対策をしっかりしている園は、けがが起こりにくいです。"},
+  {k:"safe_1", q:"危険な場所や死角がないか"},
+  {k:"safe_2", q:"階段・ベランダ・玄関の柵と施錠", w:"子どもの転落や抜け出し防止の管理ができているか。鍵が子どもの手の届かない位置にあるかを見ます。"}
  ]},
 {id:"staff",name:"保育者の様子",kind:"rate",color:"var(--sun)",
  items:[
-  {k:"staff_1", p:"day", q:"保育者の言葉のかけ方（優しい／丁寧／冷たい／威圧的など）", w:"子どもは優しい保育者が大好きです。余裕がないほど声掛けが威圧的になってしまいがちです。"},
-  {k:"staff_2", p:"day", q:"職員同士の会話の内容とトーン", w:"子どもの前での私語や、指示の飛び方。職場の空気がいちばん出るところです。"},
-  {k:"staff_4", p:"day", q:"子どもをしっかり見ているか", w:"保育中は子どもに目を向けることが大前提です。"},
-  {k:"staff_5", p:"day", q:"保育者の表情や見学者に挨拶をしてくれるか", w:"疲れが出ていないか。見学者に挨拶をする余裕があるかどうかも含めて見ます。"},
-  {k:"staff_6", p:"day", q:"身だしなみ", w:"洋服や爪や髪など。子どもに触れる仕事なので、ここは安全にも関わります。"},
-  {k:"staff_7", p:"day", q:"園長（主任など）の様子（話しやすいか）", w:"何か大きなことがあったときに相談するのは園長や主任です。安心して相談できる相手かどうかは大事です。"},
-  {k:"staff_8", p:"day", q:"見学者への説明が適切か、質問に答えているか", w:"園長や主任が詳しくクラスの保育について答えられる場合は、園一丸となって子どもに向き合っていることが多いです。はぐらかされる場合は、園長にも余裕がなく、現場の保育者の立場を理解してないことが多いです。"}
+  {k:"staff_1", q:"保育者の言葉のかけ方（優しい／丁寧／冷たい／威圧的など）", w:"子どもは優しい保育者が大好きです。余裕がないほど声掛けが威圧的になってしまいがちです。"},
+  {k:"staff_2", q:"職員同士の会話の内容とトーン", w:"子どもの前での私語や、指示の飛び方。職場の空気がいちばん出るところです。"},
+  {k:"staff_4", q:"子どもをしっかり見ているか", w:"保育中は子どもに目を向けることが大前提です。"},
+  {k:"staff_5", q:"保育者の表情や見学者に挨拶をしてくれるか", w:"疲れが出ていないか。見学者に挨拶をする余裕があるかどうかも含めて見ます。"},
+  {k:"staff_6", q:"身だしなみ", w:"洋服や爪や髪など。子どもに触れる仕事なので、ここは安全にも関わります。"},
+  {k:"staff_7", q:"園長（主任など）の様子（話しやすいか）", w:"何か大きなことがあったときに相談するのは園長や主任です。安心して相談できる相手かどうかは大事です。"},
+  {k:"staff_8", q:"見学者への説明が適切か、質問に答えているか", w:"園長や主任が詳しくクラスの保育について答えられる場合は、園一丸となって子どもに向き合っていることが多いです。はぐらかされる場合は、園長にも余裕がなく、現場の保育者の立場を理解してないことが多いです。"}
  ]},
 {id:"kids",name:"子どもの様子",kind:"rate",color:"var(--grape)",
  items:[
-  {k:"kids_1", p:"day", q:"子どもが安心して過ごしているか", w:"保育者との信頼関係が築けている場合は、安心した表情で過ごしています。"},
-  {k:"kids_5", p:"day", q:"どのように子どもが遊んでいるか（一斉保育、自由遊び、コーナー保育など）", w:"保育理念で主体的保育と書いてあっても、実際には余裕がなく、現場では一斉保育になってるなど、ギャップがある場合もあります。"}
+  {k:"kids_1", q:"子どもが安心して過ごしているか", w:"保育者との信頼関係が築けている場合は、安心した表情で過ごしています。"},
+  {k:"kids_5", q:"どのように子どもが遊んでいるか（一斉保育、自由遊び、コーナー保育など）", w:"保育理念で主体的保育と書いてあっても、実際には余裕がなく、現場では一斉保育になってるなど、ギャップがある場合もあります。"}
  ]},
 {id:"taisei",name:"保育体制",kind:"ask",color:"var(--grape)",
  items:[
-  {k:"taisei_x1", p:"day", q:"クラスごとの担任の人数", w:"クラスの書類などは担任がほとんど行っています。複数担任だと、仕事を分担することができるため、子どもに向き合う時間が多くなり、保育に余裕がうまれやすいです。"},
-  {k:"taisei_x2", p:"day", q:"フリー保育士は何人いるのか", w:"フリー保育士とは、様々なクラスに入る保育士のことです。保育士の人数に余裕があると配置されることが多いため、余裕のある園の可能性が大きいです。"},
-  {k:"taisei_x3", p:"day", q:"パート保育士は何人いるのか", w:"パート保育士の中にも、有資格者と無資格者に分かれます。"},
-  {k:"taisei_x4", p:"day", q:"男性保育士は何人いるのか", w:"男性保育士がいると、園に活気がうまれやすいです。園によっては、男性保育士はおむつ替えを行わないという所もあります。"},
-  {k:"taisei_x5", p:"day", q:"保育士の年齢層はどうか", w:"中年層の保育士（30代位）がいる園は長く働きやすい印象です。新人しかいない園は少し頼りがいが無いかもしれません。また、ベテランしかいない園は若い保育士がやめてしまうという園です。", o:["○","△","✕"]}
+  {k:"taisei_x1", g:["0歳","1歳","2歳","3歳","4歳","5歳"], q:"クラスごとの担任の人数", w:"クラスの書類などは担任がほとんど行っています。複数担任だと、仕事を分担することができるため、子どもに向き合う時間が多くなり、保育に余裕がうまれやすいです。"},
+  {k:"taisei_x2", q:"フリー保育士は何人いるのか", w:"フリー保育士とは、様々なクラスに入る保育士のことです。保育士の人数に余裕があると配置されることが多いため、余裕のある園の可能性が大きいです。"},
+  {k:"taisei_x3", q:"パート保育士は何人いるのか", w:"パート保育士の中にも、有資格者と無資格者に分かれます。"},
+  {k:"taisei_x4", q:"男性保育士は何人いるのか", w:"男性保育士がいると、園に活気がうまれやすいです。園によっては、男性保育士はおむつ替えを行わないという所もあります。"},
+  {k:"taisei_x5", q:"保育士の年齢層はどうか", w:"中年層の保育士（30代位）がいる園は長く働きやすい印象です。新人しかいない園は少し頼りがいが無いかもしれません。また、ベテランしかいない園は若い保育士がやめてしまうという園です。", o:["○","△","✕"]}
  ]},
 {id:"daily",name:"登園・お迎え",kind:"ask",color:"var(--mint)",
  items:[
-  {k:"daily_0", p:"day", q:"登園は何時までか"},
-  {k:"daily_1", p:"day", q:"欠席や遅刻の連絡は何時までか。電話かアプリか", w:"アプリで欠席・遅刻の連絡ができると便利です。"},
-  {k:"daily_2", p:"day", q:"親が休みの日（通院・リフレッシュなど）でも預けられるか", w:"9時～16時（例）ならOK（保育者の体制が手厚い時間帯）という場合もあります。", o:["○","△","✕"]},
-  {k:"daily_4", p:"day", q:"延長保育の当日申込はできるか、何時までの連絡か", w:"園によっては、記載されている保育時間ではなく、その日の1番遅い子が帰るまでの時間で職員のシフトを組んでいることがあります。当日急遽延長保育を利用する場合に、この時間までなら大丈夫といわれる場合もあります。延長保育を利用される場合は、大体何時頃まで園を開けているのか確認すると安心です。"},
-  {k:"daily_6", p:"day", q:"土曜保育：いつまでに申込か、お弁当は必要か"},
-  {k:"daily_7", p:"day", q:"お迎えに行く人が変更する時の手続き", w:"送迎者リストに載っていない人が行く場合、名前や顔写真を求められる場合があります。"},
-  {k:"daily_9", p:"day", q:"登園時に何を支度するか（親がやること）", w:"子どもの検温、連絡帳、衣類・オムツの補充など。確認しておくと、毎朝行うことなので、どの程度時間がかかりそうか見通しをもつことができます。"}
+  {k:"daily_0", q:"登園は何時までか"},
+  {k:"daily_1", q:"欠席や遅刻の連絡は何時までか。電話かアプリか", w:"アプリで欠席・遅刻の連絡ができると便利です。"},
+  {k:"daily_2", q:"親が休みの日（通院・リフレッシュなど）でも預けられるか", w:"9時～16時（例）ならOK（保育者の体制が手厚い時間帯）という場合もあります。", o:["○","△","✕"]},
+  {k:"daily_4", q:"延長保育の当日申込はできるか、何時までの連絡か", w:"園によっては、記載されている保育時間ではなく、その日の1番遅い子が帰るまでの時間で職員のシフトを組んでいることがあります。当日急遽延長保育を利用する場合に、この時間までなら大丈夫といわれる場合もあります。延長保育を利用される場合は、大体何時頃まで園を開けているのか確認すると安心です。"},
+  {k:"daily_6", q:"土曜保育：いつまでに申込か、お弁当は必要か"},
+  {k:"daily_7", q:"お迎えに行く人が変更する時の手続き", w:"送迎者リストに載っていない人が行く場合、名前や顔写真を求められる場合があります。"},
+  {k:"daily_9", q:"登園時に何を支度するか（親がやること）", w:"子どもの検温、連絡帳、衣類・オムツの補充など。確認しておくと、毎朝行うことなので、どの程度時間がかかりそうか見通しをもつことができます。"}
  ]},
 {id:"items",name:"持ち物・保護者の負担",kind:"ask",color:"var(--coral)",
  items:[
-  {k:"items_1", p:"day", q:"週はじめ・週おわりに持っていくもの、持ち帰るもの", w:"園によっては、荷物が多い場合があります。"},
-  {k:"items_2", p:"day", q:"持ち物の置き場所", o:["ロッカー","手渡し"]},
-  {k:"items_5", p:"day", q:"使用済みおむつは持ち帰りか", o:["持ち帰り","園で処分"]},
-  {k:"items_6", p:"day", q:"布団・シーツは持参か。持ち帰りの頻度", w:"敷布団なのか、コットなのかによって、使用するものが変わります。毎週末の持ち帰りで良い場合は楽です。"},
-  {k:"items_7", p:"day", q:"服の指定（キャラもの・フード・ひも・ボタンのNG）", w:"事故や誤飲防止のために洋服の装飾など一切NGという園もあります。保育園用の洋服を買う際は、確認してからがおすすめです。", o:["あり","なし"]},
-  {k:"items_8", p:"day", q:"手作りが必要なものと、サイズ指定", w:"入園前の作業量がここで決まります。", o:["あり","なし"]},
-  {k:"items_10", p:"day", q:"名前つけの方法（手書き・シール・ハンコ）", w:"おむつ、エプロン、タオル、靴、靴下など、全ての持ち物に名前を付けます。"},
-  {k:"items_11", p:"day", q:"連絡帳は紙かアプリか", w:"手書きの場合は、保育者の負担が大きい場合があります。アプリだと、保護者自身も手軽に書くことができて便利です。", o:["紙","アプリ","両方"]},
-  {k:"items_12", p:"day", q:"保護者会はあるか。年に何回か", w:"年に2回ほど行う園が多いです。", o:["あり","なし"]},
-  {k:"items_x1", p:"day", q:"PTAなどの役員はあるか。年に何回か", w:"各クラス1名ずつ保護者が参加することが多いです。", o:["あり","なし"]},
-  {k:"items_13", p:"day", q:"保護者が平日に参加する行事はあるか", w:"平日開催が多いと、仕事の調整が必要になります。", o:["あり","なし"]},
-  {k:"items_14", p:"day", q:"保護者主催の行事はあるか", o:["あり","なし"]}
+  {k:"items_1", q:"週はじめ・週おわりに持っていくもの、持ち帰るもの", w:"園によっては、荷物が多い場合があります。"},
+  {k:"items_2", q:"持ち物の置き場所", o:["ロッカー","手渡し"]},
+  {k:"items_5", q:"使用済みおむつは持ち帰りか", o:["持ち帰り","園で処分"]},
+  {k:"items_6", q:"布団・シーツは持参か。持ち帰りの頻度", w:"敷布団なのか、コットなのかによって、使用するものが変わります。毎週末の持ち帰りで良い場合は楽です。"},
+  {k:"items_7", q:"服の指定（キャラもの・フード・ひも・ボタンのNG）", w:"事故や誤飲防止のために洋服の装飾など一切NGという園もあります。保育園用の洋服を買う際は、確認してからがおすすめです。", o:["あり","なし"]},
+  {k:"items_8", q:"手作りが必要なものと、サイズ指定", w:"入園前の作業量がここで決まります。", o:["あり","なし"]},
+  {k:"items_10", q:"名前つけの方法（手書き・シール・ハンコ）", w:"おむつ、エプロン、タオル、靴、靴下など、全ての持ち物に名前を付けます。"},
+  {k:"items_11", q:"連絡帳は紙かアプリか", w:"手書きの場合は、保育者の負担が大きい場合があります。アプリだと、保護者自身も手軽に書くことができて便利です。", o:["紙","アプリ","両方"]},
+  {k:"items_12", q:"保護者会はあるか。年に何回か", w:"年に2回ほど行う園が多いです。", o:["あり","なし"]},
+  {k:"items_x1", q:"PTAなどの役員はあるか。年に何回か", w:"各クラス1名ずつ保護者が参加することが多いです。", o:["あり","なし"]},
+  {k:"items_13", q:"保護者が平日に参加する行事はあるか", w:"平日開催が多いと、仕事の調整が必要になります。", o:["あり","なし"]},
+  {k:"items_14", q:"保護者主催の行事はあるか", o:["あり","なし"]}
  ]},
 {id:"food",name:"食事・離乳食",kind:"ask",color:"var(--sun)",
  items:[
-  {k:"food_0", p:"day", q:"自園調理か外部搬入か", w:"認可保育園は基本的には自園調理です。自園調理の場合、管理栄養士が献立を自由に決めることが多いため、行事メニューのアレンジがあったり、子どものリクエストメニューがあったりとバリエーションが増えます。認可外や企業主導型の場合、外部搬入の場合もあります。", o:["自園調理","外部搬入"]},
-  {k:"food_x1", p:"day", q:"完全給食か（主食・ごはんの持参はあるか）", w:"完全給食とは主食＋副食＋おやつを、園が全部出してくれること。3歳以上は主食（ごはん）を持参の園もあります。", o:["○","△","✕"]},
-  {k:"food_2", p:"day", q:"離乳食の進め方は家庭と相談できるか", w:"園が形態を決めるのか、家庭と合わせるのか。ここは園ごとにかなり違います。", o:["○","△","✕"]},
-  {k:"food_3", p:"day", q:"食材チェック表の運用（家庭で何回食べていればOKか）", w:"基準が園によって違います。入園前に何を食べさせておくべきか基準がある場合には、確認しましょう。"},
-  {k:"food_4", p:"day", q:"食物アレルギーの対応（除去か代替か）。診断書は必要か", w:"除去食とは、アレルゲン（原因食材）を取り除いた食事のこと。代替食とは、別の食材で置き換えた食事のことを指します。", o:["除去食","代替食"]},
-  {k:"food_5", p:"day", q:"ミルク・冷凍母乳の持ち込みはできるか。園のミルクのメーカーはなにか", o:["○","△","✕"]},
-  {k:"food_8", p:"day", q:"献立表はあるか。使用食材まで分かるか", o:["○","△","✕"]},
-  {k:"food_10", p:"day", q:"お弁当が必要な日はあるか", w:"遠足のみお弁当持参の園などもあります。", o:["○","△","✕"]}
+  {k:"food_0", q:"自園調理か外部搬入か", w:"認可保育園は基本的には自園調理です。自園調理の場合、管理栄養士が献立を自由に決めることが多いため、行事メニューのアレンジがあったり、子どものリクエストメニューがあったりとバリエーションが増えます。認可外や企業主導型の場合、外部搬入の場合もあります。", o:["自園調理","外部搬入","その他"]},
+  {k:"food_x1", q:"完全給食か（主食・ごはんの持参はあるか）", w:"完全給食とは主食＋副食＋おやつを、園が全部出してくれること。3歳以上は主食（ごはん）を持参の園もあります。", o:["○","△","✕"]},
+  {k:"food_2", q:"離乳食の進め方は家庭と相談できるか", w:"園が形態を決めるのか、家庭と合わせるのか。ここは園ごとにかなり違います。", o:["○","△","✕"]},
+  {k:"food_3", q:"食材チェック表の運用（家庭で何回食べていればOKか）", w:"基準が園によって違います。入園前に何を食べさせておくべきか基準がある場合には、確認しましょう。"},
+  {k:"food_4", q:"食物アレルギーの対応（除去か代替か）。診断書は必要か", w:"除去食とは、アレルゲン（原因食材）を取り除いた食事のこと。代替食とは、別の食材で置き換えた食事のことを指します。", o:["除去食","代替食"]},
+  {k:"food_5", q:"ミルク・冷凍母乳の持ち込みはできるか。園のミルクのメーカーはなにか", o:["○","△","✕"]},
+  {k:"food_8", q:"献立表はあるか。使用食材まで分かるか", o:["○","△","✕"]},
+  {k:"food_10", q:"お弁当が必要な日はあるか", w:"遠足のみお弁当持参の園などもあります。", o:["○","△","✕"]}
  ]},
 {id:"nap",name:"お昼寝",kind:"ask",color:"var(--grape)",
  items:[
-  {k:"nap_0", p:"day", q:"SIDS対策（何分おきの呼吸チェック、記録の方法）", w:"0歳児クラスでいちばん大事な質問です。どのように記録しているかまで確認できると安心です。"},
-  {k:"nap_1", p:"day", q:"昼寝は何時から何時までか", w:"1日のスケジュールに書いてある場合もあります。5歳児は就学に向けてお昼寝を無くしていく園もあります。"},
-  {k:"nap_3", p:"day", q:"寝ない子・早く起きた子はどうしているか", w:"そのまま布団で横になり休息の時間とする園や、起きて待っていても良い園などがあります。"},
-  {k:"nap_4", p:"day", q:"お昼寝はコットか、布団か", o:["コット","布団"]}
+  {k:"nap_0", q:"SIDS対策（何分おきの呼吸チェック、記録の方法）", w:"0歳児クラスでいちばん大事な質問です。どのように記録しているかまで確認できると安心です。"},
+  {k:"nap_1", q:"昼寝は何時から何時までか", w:"1日のスケジュールに書いてある場合もあります。5歳児は就学に向けてお昼寝を無くしていく園もあります。"},
+  {k:"nap_3", q:"寝ない子・早く起きた子はどうしているか", w:"そのまま布団で横になり休息の時間とする園や、起きて待っていても良い園などがあります。"},
+  {k:"nap_4", q:"お昼寝はコットか、布団か", o:["コット","布団"]}
  ]},
 {id:"sick",name:"病気・ケガ",kind:"ask",color:"var(--coral)",
  items:[
-  {k:"sick_0", p:"day", q:"呼び出しの基準（何度以上か、下痢・嘔吐のとき）", w:"この基準は園によってかなり差があります。復職後の生活に直結します。"},
-  {k:"sick_1", p:"day", q:"解熱後、いつから登園できるか", w:"園によって基準がかなり違います。"},
-  {k:"sick_2", p:"day", q:"熱以外で登園できない例", w:"予防接種のあと、けがなど。"},
-  {k:"sick_3", p:"day", q:"薬の対応（飲み薬・塗り薬・目薬・点鼻薬）"},
-  {k:"sick_4", p:"day", q:"日焼け止め・虫よけ・保湿剤を塗ってもらえるか", o:["○","△","✕"]},
-  {k:"sick_5", p:"day", q:"看護師は常勤か", w:"看護師の配置は義務にはなっていませんが、特に0歳児クラスでは、常勤看護師がいると安心です。", o:["常勤","非常勤","いない"]},
-  {k:"sick_6", p:"day", q:"病児・病後児保育はあるか", o:["○","△","✕"]},
-  {k:"sick_7", p:"day", q:"ケガをしたときの対応と、連絡の流れ"},
-  {k:"sick_8", p:"day", q:"子ども同士のトラブルのとき、相手の名前は伝えるか", w:"園の方針が分かれるところです。", o:["○","△","✕"]},
-  {k:"sick_9", p:"day", q:"職員は救急法を学んでいるか", o:["○","△","✕"]}
+  {k:"sick_0", q:"呼び出しの基準（何度以上か、下痢・嘔吐のとき）", w:"この基準は園によってかなり差があります。復職後の生活に直結します。"},
+  {k:"sick_1", q:"解熱後、いつから登園できるか", w:"園によって基準がかなり違います。"},
+  {k:"sick_2", q:"熱以外で登園できない例", w:"予防接種のあと、けがなど。"},
+  {k:"sick_3", q:"薬の対応（飲み薬・塗り薬・目薬・点鼻薬）"},
+  {k:"sick_4", q:"日焼け止め・虫よけ・保湿剤を塗ってもらえるか", o:["○","△","✕"]},
+  {k:"sick_5", q:"看護師は常勤か", w:"看護師の配置は義務にはなっていませんが、特に0歳児クラスでは、常勤看護師がいると安心です。", o:["常勤","非常勤","いない"]},
+  {k:"sick_6", q:"病児・病後児保育はあるか", o:["○","△","✕"]},
+  {k:"sick_7", q:"ケガをしたときの対応と、連絡の流れ"},
+  {k:"sick_8", q:"子ども同士のトラブルのとき、相手の名前は伝えるか", w:"園の方針が分かれるところです。", o:["○","△","✕"]},
+  {k:"sick_9", q:"職員は救急法を学んでいるか", o:["○","△","✕"]}
  ]},
 {id:"play",name:"遊び・生活",kind:"ask",color:"var(--mint)",
  items:[
-  {k:"play_0", p:"day", q:"外遊び・散歩の頻度と、よく行く公園"},
-  {k:"play_1", p:"day", q:"園庭がない場合、外遊びはどうしているか"},
-  {k:"play_3", p:"day", q:"プール・水遊びはあるのか", w:"プールのように入水する園や、タライに水を入れて触れる程度の水遊びのみという園など様々です。ただし、年々気温が上がっているため、予定はしていても実施できないという園が増えています。", o:["○","△","✕"]},
-  {k:"play_4", p:"day", q:"どろんこ遊びはあるか。汚れた服は下洗いしてもらえるか", w:"毎日の洗濯量が変わります。", o:["○","△","✕"]},
-  {k:"play_5", p:"day", q:"室内遊びは何をしているか", w:"園にある玩具だけでなく、絵の具遊びや体操遊びなど、様々な活動を行えると楽しく過ごせます。"},
-  {k:"play_6", p:"day", q:"トイレトレーニングの時期と進め方", w:"2歳児クラスで行うことが多いです。家庭と園で一緒に進めていきます。"},
-  {k:"play_7", p:"day", q:"着替えの頻度"},
-  {k:"play_8", p:"day", q:"縦割り保育はあるか", w:"縦割り保育とは、3・4・5歳を同じクラスに混ぜて過ごす保育。"},
-  {k:"play_x1", p:"day", q:"低月齢児と高月齢児で活動は分かれるのか（1歳児クラス）", w:"1歳児クラスから子どもの人数が多くなることが多いですが、月齢によって遊び方が変わるため、トラブルも多いです。月齢や興味に合わせて遊び場を変えてくれると、安心して遊び込むことができます。"},
-  {k:"play_9", p:"day", q:"習い事・外部講師（リトミック・英語など）の頻度"},
-  {k:"play_10", p:"day", q:"カメラやアプリで日中の様子が見れるか"}
+  {k:"play_0", q:"外遊び・散歩の頻度と、よく行く公園"},
+  {k:"play_1", q:"園庭がない場合、外遊びはどうしているか"},
+  {k:"play_3", q:"プール・水遊びはあるのか", w:"プールのように入水する園や、タライに水を入れて触れる程度の水遊びのみという園など様々です。ただし、年々気温が上がっているため、予定はしていても実施できないという園が増えています。", o:["○","△","✕"]},
+  {k:"play_4", q:"どろんこ遊びはあるか。汚れた服は下洗いしてもらえるか", w:"毎日の洗濯量が変わります。", o:["○","△","✕"]},
+  {k:"play_5", q:"室内遊びは何をしているか", w:"園にある玩具だけでなく、絵の具遊びや体操遊びなど、様々な活動を行えると楽しく過ごせます。"},
+  {k:"play_6", q:"トイレトレーニングの時期と進め方", w:"2歳児クラスで行うことが多いです。家庭と園で一緒に進めていきます。"},
+  {k:"play_7", q:"着替えの頻度"},
+  {k:"play_8", q:"縦割り保育はあるか", w:"縦割り保育とは、3・4・5歳を同じクラスに混ぜて過ごす保育。"},
+  {k:"play_x1", q:"低月齢児と高月齢児で活動は分かれるのか（1歳児クラス）", w:"1歳児クラスから子どもの人数が多くなることが多いですが、月齢によって遊び方が変わるため、トラブルも多いです。月齢や興味に合わせて遊び場を変えてくれると、安心して遊び込むことができます。"},
+  {k:"play_9", q:"習い事・外部講師（リトミック・英語など）の頻度"},
+  {k:"play_10", q:"カメラやアプリで日中の様子が見れるか"}
  ]},
 {id:"bousai",name:"防災・防犯",kind:"ask",color:"var(--sky)",
  items:[
-  {k:"bousai_1", p:"day", q:"避難訓練の頻度と、毎回どんな想定でやるか", w:"回数より中身です。同じ想定の繰り返しだと、形だけになっていることがあります。"},
-  {k:"bousai_7", p:"day", q:"不審者訓練・防犯カメラ・防犯対策", o:["○","△","✕"]}
+  {k:"bousai_1", q:"避難訓練の頻度と、毎回どんな想定でやるか", w:"回数より中身です。同じ想定の繰り返しだと、形だけになっていることがあります。"},
+  {k:"bousai_7", q:"不審者訓練・防犯カメラ・防犯対策", o:["○","△","✕"]}
  ]},
 {id:"narashi",name:"慣らし保育・入園準備",kind:"ask",color:"var(--sun)",
  items:[
-  {k:"narashi_0", p:"day", q:"慣らし保育の期間とスケジュール", w:"復職日をいつにするかが、これで決まります。"},
-  {k:"narashi_1", p:"day", q:"慣らし保育が延びるのはどんなときか", w:"ここまで聞いておくと、あとで慌てません。"},
-  {k:"narashi_3", p:"day", q:"入園までにやっておくとよいこと", w:"寝かしつけの方法、哺乳瓶、生活リズムなど。園に合わせておくことで、お子さんも安心して園生活をスタートさせることができます。"},
-  {k:"narashi_4", p:"day", q:"入園前の健康診断は必要か", o:["○","△","✕"]},
-  {k:"narashi_5", p:"day", q:"入園説明会・用品購入の時期"}
+  {k:"narashi_0", q:"慣らし保育の期間とスケジュール", w:"復職日をいつにするかが、これで決まります。"},
+  {k:"narashi_1", q:"慣らし保育が延びるのはどんなときか", w:"ここまで聞いておくと、あとで慌てません。"},
+  {k:"narashi_3", q:"入園までにやっておくとよいこと", w:"寝かしつけの方法、哺乳瓶、生活リズムなど。園に合わせておくことで、お子さんも安心して園生活をスタートさせることができます。"},
+  {k:"narashi_4", q:"入園前の健康診断は必要か", o:["○","△","✕"]},
+  {k:"narashi_5", q:"入園説明会・用品購入の時期"}
  ]},
 ];
-const DEFAULT_OFF={"prep_2": 1, "daily_5": 1, "bousai_0": 1, "prep_9": 1, "tel_0": 1, "tel_1": 1, "tel_6": 1, "route_0": 1, "route_4": 1, "env_0": 1, "env_2": 1, "env_3": 1, "env_4": 1, "env_12": 1, "env_6": 1, "env_7": 1, "env_8": 1, "env_10": 1, "env_11": 1, "env_x1": 1, "safe_0": 1, "staff_2": 1, "staff_8": 1, "kids_5": 1, "taisei_x5": 1, "daily_0": 1, "daily_1": 1, "daily_4": 1, "daily_6": 1, "daily_7": 1, "items_10": 1, "items_14": 1, "food_0": 1, "food_x1": 1, "food_2": 1, "food_3": 1, "food_4": 1, "food_5": 1, "food_8": 1, "nap_3": 1, "sick_2": 1, "sick_3": 1, "sick_4": 1, "sick_5": 1, "sick_6": 1, "sick_7": 1, "sick_8": 1, "sick_9": 1, "play_1": 1, "play_6": 1, "play_7": 1, "play_8": 1, "play_x1": 1, "play_10": 1, "bousai_1": 1, "bousai_7": 1, "narashi_1": 1, "narashi_4": 1, "narashi_5": 1};
+const DEFAULT_OFF={"daily_5": 1, "prep_x1": 1, "bousai_0": 1, "prep_9": 1, "tel_0": 1, "tel_1": 1, "tel_6": 1, "route_0": 1, "route_4": 1, "env_0": 1, "env_2": 1, "env_3": 1, "env_4": 1, "env_12": 1, "env_6": 1, "env_7": 1, "env_8": 1, "env_10": 1, "env_11": 1, "env_x1": 1, "safe_0": 1, "staff_2": 1, "staff_8": 1, "kids_5": 1, "taisei_x5": 1, "daily_0": 1, "daily_1": 1, "daily_4": 1, "daily_6": 1, "daily_7": 1, "items_10": 1, "items_14": 1, "food_0": 1, "food_x1": 1, "food_2": 1, "food_3": 1, "food_4": 1, "food_5": 1, "food_8": 1, "food_10": 1, "nap_3": 1, "sick_2": 1, "sick_3": 1, "sick_4": 1, "sick_5": 1, "sick_6": 1, "sick_7": 1, "sick_8": 1, "sick_9": 1, "play_1": 1, "play_6": 1, "play_7": 1, "play_8": 1, "play_x1": 1, "play_10": 1, "bousai_1": 1, "bousai_7": 1, "narashi_1": 1, "narashi_4": 1, "narashi_5": 1};
 const RATE=[["3","◎","よい"],["2","○","ふつう"],["1","△","気になる"],["0","✕","合わない"]];
 const WEIGHTS=[["2","重視する"],["1","ふつう"],["0","気にしない"]];
 const KEY="engakunote.v3";
+function applyOrder(){
+  if(S.catOrder && S.catOrder.length){
+    var pos={}; S.catOrder.forEach(function(id,i){ pos[id]=i });
+    CATS.sort(function(a,b){ return (pos[a.id]===undefined?9999:pos[a.id])-(pos[b.id]===undefined?9999:pos[b.id]) });
+  }
+  if(S.itemOrder){
+    CATS.forEach(function(c){
+      var ord=S.itemOrder[c.id]; if(!ord||!ord.length) return;
+      var pos={}; ord.forEach(function(k,i){ pos[k]=i });
+      c.items.sort(function(a,b){ return (pos[a.k]===undefined?9999:pos[a.k])-(pos[b.k]===undefined?9999:pos[b.k]) });
+    });
+  }
+}
+function saveOrder(){
+  S.catOrder=CATS.map(function(c){return c.id});
+  S.itemOrder={}; CATS.forEach(function(c){ S.itemOrder[c.id]=c.items.map(function(it){return it.k}) });
+  save();
+}
+function moveCat(id,dir){
+  var i=-1; CATS.forEach(function(c,n){ if(c.id===id) i=n });
+  var j=i+dir; if(i<0||j<0||j>=CATS.length) return;
+  var t=CATS[i]; CATS[i]=CATS[j]; CATS[j]=t;
+  saveOrder(); renderPick(); renderPre(); renderDay(); renderCmp(); renderSum();
+  var el=document.querySelector('[data-pcat="'+id+'"]'); if(el) el.scrollIntoView({block:"center"});
+}
+function moveItem(cid,k,dir){
+  var c=catOf(cid); if(!c) return;
+  var i=-1; c.items.forEach(function(it,n){ if(it.k===k) i=n });
+  var j=i+dir; if(i<0||j<0||j>=c.items.length) return;
+  var t=c.items[i]; c.items[i]=c.items[j]; c.items[j]=t;
+  saveOrder(); renderPick(); renderPre(); renderDay();
+  var el=document.getElementById("pk_"+k); if(el) el.scrollIntoView({block:"center"});
+}
 const ALL=[]; CATS.forEach(function(c){c.items.forEach(function(it){ALL.push(it.k)})});
 
-let S={parks:[],cur:null,weights:{},off:Object.assign({},DEFAULT_OFF),pg:{}}, storageOK=true, sumView="one";
+let S={parks:[],cur:null,weights:{},off:Object.assign({},DEFAULT_OFF),pg:{},catOrder:null,itemOrder:{}}, storageOK=true, sumView="one";
 let STORE=null, STORE_KIND="なし", STORE_ERR="", LOADED="（保存が使えません）", PROBE=null, ACCESS="未確認", NOKEEP=false;
 (function(){
   var probe=function(get,name){
@@ -731,17 +805,17 @@ const cur=function(){ for(var i=0;i<S.parks.length;i++) if(S.parks[i].id===S.cur
 const w=function(id){ return S.weights[id]===undefined?1:+S.weights[id] };
 const on=function(k){ return !S.off[k] };
 function esc(s){ return String(s==null?"":s).replace(/[&<>"]/g,function(m){return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[m]}) }
-function pageOf(it){ return (S.pg&&S.pg[it.k])||it.p }
-function setPage(it,pg){ if(!S.pg)S.pg={};
-  if(pg===it.p){ delete S.pg[it.k] } else { S.pg[it.k]=pg } }
-function liveItems(c,page){ const r=[]; c.items.forEach(function(it){
+function pageOf(it){ return "all" }
+function setPage(it,pg){ /* 事前・当日の区分は使わなくなりました */ }
+function liveItems(c,page,p){ const r=[]; c.items.forEach(function(it){
   if(!on(it.k)) return;
-  if(page && pageOf(it)!==page) return;
+  if(page==="day" && p && filled(p,c,it)) return;   /* 当日は「まだ書けていないもの」だけ */
   r.push(it) }); return r }
 function catOf(cid){ for(var i=0;i<CATS.length;i++) if(CATS[i].id===cid) return CATS[i]; return null }
 /* その項目が入力済みか */
 function filled(p,c,it){ const k=it.k;
-  return (c.kind==="ask") ? !!(p.a[k]&&p.a[k].trim()) : p.r[k]!==undefined }
+  if(p.r[k]!==undefined) return true;
+  return !!(p.a[k]&&p.a[k].trim()) }
 /* 下に沈めるかどうか。「聞く」欄は自分でボタンを押したときだけ沈む */
 function sunk(p,it){ if(!p.d) p.d={}; return !!p.d[it.k] }
 function toggleMiss(){ const p=cur(); if(!p)return; p.showMiss=!p.showMiss; save(); renderDay();
@@ -769,17 +843,45 @@ function renderParkName(){ const el=document.getElementById("parkNowName"); if(!
   const p=cur(); el.textContent = p ? p.name : "園を追加してね"; }
 function setField(k,v){ const p=cur(); if(!p)return; p[k]=v; save(); if(k==="name"){renderParks();renderParkName()} }
 function setAns(k,v){ const p=cur(); if(!p)return; if(v)p.a[k]=v; else delete p.a[k]; save() }
-function setOpt(k,v){ const p=cur(); if(!p)return;
-  if(p.a[k]===v){ delete p.a[k] } else { p.a[k]=v }
+function gridParse(sv){ var m={};
+  (sv||"").split("／").forEach(function(t){ t=t.trim(); if(!t)return;
+    var i=t.indexOf(" "); if(i<0) return; m[t.slice(0,i)]=t.slice(i+1).trim() });
+  return m }
+function setGrid(k,label,v){ const p=cur(); if(!p)return;
+  var m=gridParse(p.a[k]); v=(v||"").trim();
+  if(v) m[label]=v; else delete m[label];
+  var it=null; CATS.forEach(function(c){c.items.forEach(function(x){ if(x.k===k) it=x })});
+  var order=(it&&it.g)||Object.keys(m);
+  var out=order.filter(function(lb){return m[lb]}).map(function(lb){return lb+" "+m[lb]});
+  if(out.length) p.a[k]=out.join("／"); else delete p.a[k];
+  save(); }
+function setOpt(k,v,multi){ const p=cur(); if(!p)return;
+  if(multi){
+    var cur_=(p.a[k]||"").split("／").map(function(t){return t.trim()}).filter(Boolean);
+    var i=cur_.indexOf(v);
+    if(i>-1) cur_.splice(i,1); else cur_.push(v);
+    if(cur_.length) p.a[k]=cur_.join("／"); else delete p.a[k];
+  } else if(p.a[k]===v){ delete p.a[k] } else { p.a[k]=v }
   save();
   const el=document.querySelector('[data-k="'+k+'"]');
   if(el){ const ta=el.querySelector("textarea"); if(ta) ta.value=p.a[k]||"";
+    var sel=(p.a[k]||"").split("／").map(function(t){return t.trim()});
     el.querySelectorAll(".opts button").forEach(function(b){
-      b.setAttribute("aria-pressed", String(b.textContent===p.a[k])) }) }
+      b.setAttribute("aria-pressed", String(sel.indexOf(b.textContent)>-1)) }) }
   syncCat(k.slice(0,k.lastIndexOf("_"))); syncScore(); }
 function setMemo(k,v){ const p=cur(); if(!p)return; if(v)p.m[k]=v; else delete p.m[k]; save() }
-function setW(cid,v){ S.weights[cid]=v; save(); syncScore(); }
+function setW(cid,v){ S.weights[cid]=v; save(); syncScore(); renderPick(); renderSum(); }
 function toggleWhy(el){ el.parentNode.classList.toggle("open") }
+function closeCat(btn){ var d=btn.closest("details"); if(!d)return;
+  d.open=false; d.scrollIntoView({block:"start"}); }
+function toggleMemo(btn){ var it=btn.closest(".item"); if(!it)return;
+  it.classList.toggle("memoOn");
+  var open=it.classList.contains("memoOn");
+  btn.textContent = open ? "メモを閉じる" : "＋ メモ";
+  if(open){ var ta=it.querySelector(".memoBox"); if(ta) ta.focus() } }
+function toggleRate(btn){ var it=btn.closest(".item"); if(!it)return;
+  it.classList.toggle("rateOn");
+  btn.textContent = it.classList.contains("rateOn") ? "評価をやめる" : "評価をつける"; }
 function ensureStorageAccess(){
   return new Promise(function(done){
     if(!document.hasStorageAccess){ ACCESS="この端末では確認不要"; return done(true) }
@@ -859,10 +961,22 @@ function syncScore(){
   if(bar) bar.style.width=(d[1]?Math.round(d[0]/d[1]*100):0)+"%";
 }
 function score(p){ let got=0,max=0;
-  CATS.forEach(function(c){ if(c.kind!=="rate")return; const ww=w(c.id); if(!ww)return;
+  CATS.forEach(function(c){ const ww=w(c.id); if(!ww)return;
     c.items.forEach(function(it){ if(!on(it.k))return; const v=p.r[it.k];
       if(v===undefined)return; got+=(+v)*ww; max+=3*ww }) });
   return max? Math.round(got/max*100):null }
+/* ◎○△✕ の内訳 */
+function tally(p){ var t={3:0,2:0,1:0,0:0,n:0};
+  CATS.forEach(function(c){ if(!w(c.id))return;
+    c.items.forEach(function(it){ if(!on(it.k))return; var v=p.r[it.k];
+      if(v===undefined)return; t[v]++; t.n++ }) });
+  return t }
+function tallyHTML(p){ var t=tally(p);
+  if(!t.n) return '<div class="tally"><span class="tn">まだ評価がありません</span></div>';
+  return '<div class="tally">'
+    +'<span class="t3">◎ '+t[3]+'</span><span class="t2">○ '+t[2]+'</span>'
+    +'<span class="t1">△ '+t[1]+'</span><span class="t0">✕ '+t[0]+'</span>'
+    +'<span class="tn">'+t.n+'問を評価</span></div>' }
 function done(p){ let n=0,t=0;
   CATS.forEach(function(c){ c.items.forEach(function(it){ if(!on(it.k))return; t++;
     if(filled(p,c,it)) n++ }) }); return [n,t] }
@@ -917,68 +1031,117 @@ function renderPre(){
   const el=document.getElementById("preBody"), p=cur();
   if(!p){ el.innerHTML=emptyCard(); return }
   let h='<div class="card meta">'+
-    '<label><span class="lbl">園の名前</span><input type="text" value="'+esc(p.name)+'" oninput="setField(\'name\',this.value)"></label>'+
-    '<div class="g2"><label><span class="lbl">見学の予定日</span><input type="date" value="'+esc(p.date)+'" oninput="setField(\'date\',this.value)"></label>'+
-    '<label><span class="lbl">家から（分）</span><input type="text" inputmode="numeric" value="'+esc(p.mins)+'" oninput="setField(\'mins\',this.value)"></label></div>'+
-    '<label><span class="lbl">場所・行き方</span><input type="text" value="'+esc(p.addr)+'" oninput="setField(\'addr\',this.value)"></label></div>';
-  CATS.forEach(function(c){
-    const live=liveItems(c,"pre"); if(!live.length)return;
-    h+=catHTML(c,p,live,"pre") });
+    '<label><span class="lbl">園の名前</span><input type="text" value="'+esc(p.name)+'" oninput="setField(&quot;name&quot;,this.value)"></label>'+
+    '<div class="g2"><label><span class="lbl">見学の予定日</span><input type="date" value="'+esc(p.date)+'" oninput="setField(&quot;date&quot;,this.value)"></label>'+
+    '<label><span class="lbl">家から（分）</span><input type="text" inputmode="numeric" value="'+esc(p.mins)+'" oninput="setField(&quot;mins&quot;,this.value)"></label></div>'+
+    '<label><span class="lbl">場所・行き方</span><input type="text" value="'+esc(p.addr)+'" oninput="setField(&quot;addr&quot;,this.value)"></label></div>';
+  h+='<div class="card guide">'+
+     '<p><b>調べられることは、この「事前」の中で見学前に先に記入しておきましょう。</b></p>'+
+     '<p>見学は<b>先に園内をまわって、最後に質問という流れが多く、質問できる時間はあまりありません。</b>'+
+     '事前にまとめておくと、当日は聞きたいことだけに集中できます。</p>'+
+     '<p>園のホームページ、重要事項説明書（入園のしおり）、自治体の公式サイトに載っていることが多いです。'+
+     'ここで書ききれなかった項目は、「当日」の方に表示されるので、全て埋められなくても大丈夫です。</p></div>';
+  ["rate","ask"].forEach(function(kind){
+    var any=CATS.some(function(c){ return c.kind===kind && liveItems(c).length });
+    if(!any) return;
+    h+='<div class="phase"><b>'+(kind==="rate"?"見て確認すること":"聞いて確認すること")+'</b>'+
+       '<span>'+(kind==="rate"?"当日そのまま使えます":"サイトに載っていることが多い")+'</span></div>';
+    CATS.forEach(function(c){ if(c.kind!==kind)return;
+      var live=liveItems(c); if(!live.length)return;
+      h+=catHTML(c,p,live,"pre") });
+  });
   el.innerHTML=h;
-  CATS.forEach(function(c){ if(liveItems(c,"pre").length) syncCat(c.id,"pre") });
+  CATS.forEach(function(c){ if(liveItems(c).length) syncCat(c.id,"pre") });
 }
 
+var DAYQ="";
+function setDayQ(v,clearInput){
+  DAYQ=(v||"").trim();
+  if(clearInput){ var el=document.getElementById("dayQ"); if(el) el.value="" }
+  var c=document.getElementById("dayQClear"); if(c) c.hidden=!DAYQ;
+  renderDay();
+}
+function hitDay(cat,it){
+  if(!DAYQ) return true;
+  var q=DAYQ.toLowerCase();
+  return (it.q+" "+(it.w||"")+" "+cat.name+" "+(it.o?it.o.join(" "):"")).toLowerCase().indexOf(q)>-1;
+}
 function renderDay(){
   const el=document.getElementById("dayBody"), p=cur();
   if(!p){ el.innerHTML=emptyCard(); return }
-  const sc=score(p), d=done(p);
-  let h=missingHTML(p);
-  let ph="";
-  CATS.forEach(function(c){
-    const live=liveItems(c,"day"); if(!live.length)return;
-    if(c.phase!==ph){ ph=c.phase;
-      h+='<div class="phase"><b>'+ph+'</b><span>'+(c.kind==="rate"?"◎○△✕でつける":"答えを書く")+'</span></div>' }
-    h+=catHTML(c,p,live,"day") });
+  let h='<div class="card guide">'+
+     '<p><b>ここには、事前に書けなかったものだけが表示されています。</b></p>'+
+     '<p>調べられることは、「事前」の中で見学前に先に記入しておきましょう。'+
+     '見学は<b>先に園内をまわって、最後に質問という流れが多いです。</b></p>'+
+     '<p>「見て確認すること」を歩きながら、「聞いて確認すること」は見学中や質問タイムの時間に聞いてみましょう。</p></div>';
+  var dayHit=0;
+  ["rate","ask"].forEach(function(kind){
+    var sec="", n=0;
+    CATS.forEach(function(c){ if(c.kind!==kind)return;
+      var live=liveItems(c,"day",p).filter(function(it){return hitDay(c,it)});
+      if(!live.length)return;
+      n+=live.length; sec+=catHTML(c,p,live,"day") });
+    if(!n) return;
+    dayHit+=n;
+    h+='<div class="phase"><b>'+(kind==="rate"?"見て確認すること":"聞いて確認すること")+'</b>'+
+       '<span>のこり '+n+' 件</span></div>'+sec;
+  });
+  if(!dayHit) h+='<div class="card empty">'+(DAYQ
+     ? "見つかりませんでした。<br>別の言葉で探してみてください。"
+     : "書けていないものはありません。<br>おつかれさまでした。")+'</div>';
   h+='<label style="display:grid;gap:5px;margin-top:6px"><span class="lbl">全体の印象</span>'+
-     '<textarea oninput="setField(\'note\',this.value)" placeholder="帰り道に、思ったことをそのまま">'+esc(p.note)+'</textarea></label>'+
-     '<button class="btn ghost" onclick="showC(\'cfDel\')">この園の記録を消す</button>'+
+     '<textarea oninput="setField(&quot;note&quot;,this.value)" placeholder="帰り道に、思ったことをそのまま">'+esc(p.note)+'</textarea></label>'+
+     '<button class="btn ghost" onclick="showC(&quot;cfDel&quot;)">この園の記録を消す</button>'+
      '<div class="confirm" id="cfDel"><p>「'+esc(p.name)+'」の記録を消します。</p>'+
      '<button class="btn sm danger" onclick="delPark()">消す</button>'+
-     '<button class="btn sm ghost" onclick="hideC(\'cfDel\')">やめる</button></div>';
+     '<button class="btn sm ghost" onclick="hideC(&quot;cfDel&quot;)">やめる</button></div>';
   el.innerHTML=h;
-  CATS.forEach(function(c){ if(liveItems(c,"day").length) syncCat(c.id,"day") });
+  var hp=document.getElementById("dayQHit");
+  if(hp) hp.textContent = DAYQ ? ("「"+DAYQ+"」に一致：" + dayHit + " 件") : "";
+  CATS.forEach(function(c){ if(liveItems(c,"day",p).length) syncCat(c.id,"day") });
 }
 
 function itemHTML(c,p,it,showCat){
   const k=it.k, v=p.r[k];
-  let h='<div class="item" data-k="'+k+'">';
+  const rated = v!==undefined;
+  const hasMemo = !!((c.kind==="rate"? p.m[k] : p.a[k])||"").trim();
+  let h='<div class="item'+((c.kind!=="rate"&&rated)?" rateOn":"")+(hasMemo?" memoOn":"")+'" data-k="'+k+'">';
   if(showCat) h+='<span class="fromcat">'+c.name+'</span>';
-  if(c.kind==="check"){
-    h+='<label class="chk"><input type="checkbox" '+(v!==undefined?"checked":"")+' onchange="setChk(&quot;'+k+'&quot;,this.checked)">'+
-       '<span class="q">'+it.q+'</span></label>';
-  }else{ h+='<p class="q">'+it.q+'</p>' }
-  if(it.o) h+='<div class="opts">'+it.o.map(function(op){
-      return '<button onclick="setOpt(&quot;'+k+'&quot;,&quot;'+op+'&quot;)">'+op+'</button>' }).join("")+'</div>';
+  h+='<p class="q">'+it.q+'</p>';
+  if(it.g){
+    var gv=gridParse(p.a[k]);
+    h+='<div class="ages">'+it.g.map(function(lb){
+      return '<label><span>'+lb+'</span><input type="text" inputmode="numeric" value="'+esc(gv[lb]||"")+'"'+
+             ' oninput="setGrid(&quot;'+k+'&quot;,&quot;'+lb+'&quot;,this.value)"></label>' }).join("")+'</div>';
+  }
+  if(it.o){
+    var cur_=(p.a[k]||"").split("／").map(function(t){return t.trim()}).filter(Boolean);
+    h+='<div class="opts'+(it.m?" multi":"")+'">'+it.o.map(function(op){
+      var onx = it.m ? (cur_.indexOf(op)>-1) : (p.a[k]===op);
+      return '<button aria-pressed="'+onx+'" onclick="setOpt(&quot;'+k+'&quot;,&quot;'+op+'&quot;,'+(it.m?1:0)+')">'+op+'</button>' }).join("")+'</div>';
+  }
+  const rateHTML='<div class="rate">'+RATE.map(function(r){
+      return '<button data-v="'+r[0]+'" aria-pressed="'+(v===r[0])+'" onclick="setRate(&quot;'+k+'&quot;,&quot;'+r[0]+'&quot;)"><b>'+r[1]+'</b><span>'+r[2]+'</span></button>' }).join("")+'</div>';
   if(c.kind==="rate"){
-    h+='<div class="rate">'+RATE.map(function(r){
-      return '<button data-v="'+r[0]+'" aria-pressed="'+(v===r[0])+'" onclick="setRate(&quot;'+k+'&quot;,&quot;'+r[0]+'&quot;)"><b>'+r[1]+'</b><span>'+r[2]+'</span></button>' }).join("")+'</div>'+
-      '<textarea placeholder="メモ" oninput="setMemo(&quot;'+k+'&quot;,this.value)">'+esc(p.m[k]||"")+'</textarea>';
+    h+=rateHTML+'<button class="memoToggle" onclick="toggleMemo(this)">'+((p.m[k]&&p.m[k].trim())?"メモを閉じる":"＋ メモ")+'</button>'+
+       '<textarea class="memoBox" placeholder="メモ" oninput="setMemo(&quot;'+k+'&quot;,this.value)">'+esc(p.m[k]||"")+'</textarea>';
   }else{
-    h+='<textarea placeholder="メモ" oninput="setAns(&quot;'+k+'&quot;,this.value)">'+esc(p.a[k]||"")+'</textarea>';
+    h+='<button class="memoToggle" onclick="toggleMemo(this)">'+((p.a[k]&&p.a[k].trim())?"メモを閉じる":"＋ メモ")+'</button>';
+    h+='<textarea class="memoBox" placeholder="メモ" oninput="setAns(&quot;'+k+'&quot;,this.value)">'+esc(p.a[k]||"")+'</textarea>';
+    h+='<button class="rateToggle" onclick="toggleRate(this)">'+(rated?"評価をやめる":"評価をつける")+'</button>'+rateHTML;
   }
   h+='<button class="sinkBtn" onclick="toggleSink(&quot;'+k+'&quot;)">'+((p.d&&p.d[k])?"もう一度書く ↑":"書けた ↓")+'</button>';
   return h+'</div>';
 }
 function catHTML(c,p,live,pg){
-  let h='<details class="card cat" data-cat="'+c.id+'" data-pg="'+(pg||"")+'">'+
+  let h='<details class="card cat" data-cat="'+c.id+'" data-pg="'+(pg||"")+'"'+((pg==="day"&&DAYQ)?' open':'')+'>'+
     '<summary><span class="dot" style="background:'+c.color+'"></span><h2>'+c.name+'</h2>'+
     '<span class="remain" data-remain="'+c.id+'">残り '+live.length+'</span><span class="caret">▶</span></summary>';
   if(c.tip) h+='<div class="tip">'+c.tip+'</div>';
-  if(c.kind==="rate") h+='<div class="weight">'+WEIGHTS.map(function(x){
-    return '<button aria-pressed="'+(String(w(c.id))===x[0])+'" onclick="setW(&quot;'+c.id+'&quot;,&quot;'+x[0]+'&quot;)">'+x[1]+'</button>' }).join("")+'</div>';
   h+='<div class="items">';
   live.forEach(function(it){ h+=itemHTML(c,p,it,false) });
-  return h+'</div></details>';
+  h+='</div><button class="catClose" onclick="closeCat(this)">▲ 「'+c.name+'」を閉じる</button>';
+  return h+'</details>';
 }
 /* 事前で埋まらなかったもの＝当日に聞くこと */
 function missingHTML(p){
@@ -1034,8 +1197,8 @@ function renderSum(){
   const sc=score(p), d=done(p), r=sumHTML(p);
   el.innerHTML='<div class="score" style="margin-bottom:13px">'+CHICK+'<div style="flex:1">'+
       '<span class="n" id="scoreN">'+(sc===null?"—":sc)+'<small>'+(sc===null?"":"点")+'</small></span>'+
-      '<div class="muted" id="scoreT" style="font-size:12px;font-weight:800;margin-top:3px">'+d[0]+' / '+d[1]+' 項目</div>'+
-      '<div class="bar"><i id="scoreBar" style="width:'+(d[1]?Math.round(d[0]/d[1]*100):0)+'%"></i></div></div></div>'+
+      '<div class="muted" id="scoreT" style="font-size:12px;font-weight:800;margin-top:3px">'+d[0]+' / '+d[1]+' 項目に記入</div>'+
+      tallyHTML(p)+'</div></div>'+
     '<div class="card" style="padding:17px">'+
     '<h2>'+esc(p.name)+'</h2>'+
     '<p class="muted" style="margin:5px 0 0">'+(p.date?esc(p.date)+'　':'')+(p.mins?'家から'+esc(p.mins)+'分':'')+'</p>'+
@@ -1049,7 +1212,10 @@ function renderCmp(){
   if(!S.parks.length){ el.innerHTML='<div class="empty">園を登録すると、ここに全部の園が横に並びます。</div>'; return }
   const memo=document.getElementById("showMemo").checked;
   const th=S.parks.map(function(p){return '<th>'+esc(p.name)+'</th>'}).join("");
-  let rows='<tr><th>見学日</th>'+S.parks.map(function(p){return '<td>'+(esc(p.date)||"—")+'</td>'}).join("")+'</tr>'+
+  let rows='<tr class="total"><th>総合</th>'+S.parks.map(function(p){
+    const sc=score(p), t=tally(p);
+    return '<td>'+(sc===null?"—":sc)+'<div class="tsub">◎'+t[3]+' ○'+t[2]+' △'+t[1]+' ✕'+t[0]+'<br>'+t.n+'問</div></td>' }).join("")+'</tr>'+
+    '<tr><th>見学日</th>'+S.parks.map(function(p){return '<td>'+(esc(p.date)||"—")+'</td>'}).join("")+'</tr>'+
            '<tr><th>家から（分）</th>'+S.parks.map(function(p){return '<td>'+(esc(p.mins)||"—")+'</td>'}).join("")+'</tr>';
   CATS.forEach(function(c){
     const live=liveItems(c); if(!live.length)return;
@@ -1066,27 +1232,57 @@ function renderCmp(){
           return '<td class="'+(v===undefined?"vna":"v3")+'">'+(v===undefined?"—":"✓")+'</td>' }
         return '<td class="ans">'+(esc(p.a[k])||'<span class="vna">—</span>')+'</td>';
       }).join("")+'</tr>' }) });
-  rows+='<tr class="total"><th>総合（見て確かめることだけ）</th>'+S.parks.map(function(p){
-    const s=score(p); return '<td>'+(s===null?"—":s)+'</td>' }).join("")+'</tr>';
+  rows+='<tr class="total"><th>総合</th>'+S.parks.map(function(p){
+    const sc=score(p), t=tally(p);
+    return '<td>'+(sc===null?"—":sc)+'<div class="tsub">◎'+t[3]+' ○'+t[2]+' △'+t[1]+' ✕'+t[0]+'<br>'+t.n+'問</div></td>' }).join("")+'</tr>';
   el.innerHTML='<table><thead><tr><th style="min-width:190px">項目</th>'+th+'</tr></thead><tbody>'+rows+'</tbody></table>';
 }
 
+var PICKQ="";
+function setPickQ(v,clearInput){
+  PICKQ=(v||"").trim();
+  if(clearInput){ var el=document.getElementById("pickQ"); if(el) el.value="" }
+  var c=document.getElementById("pickQClear"); if(c) c.hidden=!PICKQ;
+  renderPick();
+}
+function hitItem(cat,it){
+  if(!PICKQ) return true;
+  var q=PICKQ.toLowerCase();
+  return (it.q+" "+(it.w||"")+" "+cat.name+" "+(it.o?it.o.join(" "):"")).toLowerCase().indexOf(q)>-1;
+}
 function renderPick(){
+  var hitTotal=0;
   document.getElementById("picBody").innerHTML=CATS.map(function(c){
+    const shown=c.items.filter(function(it){return hitItem(c,it)});
+    if(!shown.length) return "";
+    hitTotal+=shown.length;
     const n=c.items.filter(function(it){return on(it.k)}).length;
-    return '<details class="card cat"><summary>'+
+    return '<details class="card cat" data-pcat="'+c.id+'"'+(PICKQ?" open":"")+'><summary>'+
       '<span class="dot" style="background:'+c.color+'"></span><h2>'+c.name+'</h2>'+
       '<span class="count">'+n+'/'+c.items.length+'</span><span class="caret">▶</span></summary>'+
+      (PICKQ?"":'<div class="movebar"><span>カテゴリの順番</span>'+
+        '<button onclick="moveCat(&quot;'+c.id+'&quot;,-1)">↑ 上へ</button>'+
+        '<button onclick="moveCat(&quot;'+c.id+'&quot;,1)">↓ 下へ</button></div>')+
       '<div style="padding:12px 16px;display:flex;gap:7px">'+
       '<button class="btn sm ghost" onclick="toggleCat(\''+c.id+'\',true)">全部使う</button>'+
       '<button class="btn sm ghost" onclick="toggleCat(\''+c.id+'\',false)">全部外す</button></div>'+
-      '<div class="pickcat">'+c.items.map(function(it){ const k=it.k;
+      '<div class="wlabel">このカテゴリを点数でどれくらい重くみるか</div>'+
+      '<div class="weight">'+WEIGHTS.map(function(x){
+        return '<button aria-pressed="'+(String(w(c.id))===x[0])+'" onclick="setW(&quot;'+c.id+'&quot;,&quot;'+x[0]+'&quot;)">'+x[1]+'</button>' }).join("")+'</div>'+
+      '<div class="pickcat">'+shown.map(function(it){ const k=it.k;
         return '<div class="pickrow"><input type="checkbox" id="pk_'+k+'" '+(on(k)?"checked":"")+
           ' onchange="toggleItem(&quot;'+k+'&quot;,this.checked)"><div class="pickmain">'+
           '<label for="pk_'+k+'">'+it.q+'</label>'+
           (it.w?'<button class="why" onclick="toggleWhy(this)">聞く理由 ▾</button><p class="why-body">'+it.w+'</p>':'')+
+          (PICKQ?"":'<div class="movebar sm">'+
+            '<button onclick="moveItem(&quot;'+c.id+'&quot;,&quot;'+k+'&quot;,-1)">↑</button>'+
+            '<button onclick="moveItem(&quot;'+c.id+'&quot;,&quot;'+k+'&quot;,1)">↓</button></div>')+
           '</div></div>' }).join("")+
       '</div></details>' }).join("");
+  var hp=document.getElementById("pickQHit");
+  if(hp) hp.textContent = PICKQ ? ("「"+PICKQ+"」に一致：" + hitTotal + " 件") : "";
+  if(PICKQ && !hitTotal) document.getElementById("picBody").innerHTML=
+    '<div class="card empty">見つかりませんでした。<br>別の言葉で探してみてください。</div>';
   renderPickCounts();
 }
 function renderPickCounts(){
@@ -1134,7 +1330,7 @@ function doImport(go){ const t=document.getElementById("io").value.trim();
   if(!t){ msg("先に文字列を貼りつけてください。"); return }
   if(!go){ showC("cfImport"); return } hideC("cfImport"); snapshot();
   try{ const d=JSON.parse(t); if(!d||!Array.isArray(d.parks)) throw new Error("bad");
-    S=Object.assign({parks:[],cur:null,weights:{},off:{}},d);
+    S=Object.assign({parks:[],cur:null,weights:{},off:{}},d); applyOrder();
     if(!S.cur&&S.parks[0])S.cur=S.parks[0].id; save(); render(); msg("読みこみました。");
   }catch(e){ msg("読みこめませんでした。文字列が途中で切れていないか確かめてください。") } }
 function wipe(){ hideC("cfWipe"); snapshot(); S={parks:[],cur:null,weights:{},off:Object.assign({},DEFAULT_OFF),pg:{}}; save(); render(); msg("すべて消しました。") }
@@ -1168,7 +1364,7 @@ function loadBackupFile(input){
 function applyBackupFile(){
   if(!PENDING){ hideC("cfFile"); return }
   hideC("cfFile"); snapshot();
-  S=Object.assign({parks:[],cur:null,weights:{},off:{}},PENDING); PENDING=null;
+  S=Object.assign({parks:[],cur:null,weights:{},off:{}},PENDING); PENDING=null; applyOrder();
   if(!S.cur&&S.parks[0])S.cur=S.parks[0].id;
   save(); render(); bmsg("戻しました。"); renderNudge();
 }
@@ -1307,10 +1503,7 @@ function downloadBlob(filename, blob, okMsg, ngMsg, setMsg){
       if(!dl) return anchorSave();
       return dl.save({filename:filename,data:blob})
         .then(function(){ setMsg(okMsg) })
-        .catch(function(e){
-          if(e&&e.code==="declined"){ setMsg("保存をやめました。"); return }
-          anchorSave();
-        });
+        .catch(function(e){ if(e&&e.code==="declined"){ setMsg("保存をやめました。"); return } anchorSave() });
     }).catch(anchorSave);
     return;
   }
@@ -1405,7 +1598,6 @@ function sortUndo(){
 }
 (function(){
   function on2(id,fn){ var el=document.getElementById(id); if(el) el.addEventListener("click",fn) }
-  on2("sortStart",function(){ sortOpen("split") });
   on2("sortMustStart",function(){ sortOpen("must") });
   on2("sortLater",function(){ sortDecide("later") });
   on2("sortMust", function(){ sortDecide("must") });
@@ -1429,6 +1621,7 @@ function sortUndo(){
   window.addEventListener("mousemove",function(ev){ move(ev.clientX) });
   window.addEventListener("mouseup",  end);
 })();
+applyOrder();
 render(); renderPickCounts();
 if(!S.parks.length) togglePicker(true);
 if(STORE && !S.parks.length){
