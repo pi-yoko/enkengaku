@@ -16,6 +16,8 @@
 <!-- v20260824c -->
 <!-- v20260824d -->
 <!-- v20260824e -->
+<!-- v20260824f -->
+<!-- v20260824g -->
 <style>
 :root{
   --page:#FFEFD4; --sheet:#FFFDF7; --card:#FFFFFF;
@@ -93,7 +95,7 @@ nav button[aria-selected="true"]{background:var(--sun);color:#4E3A2C;box-shadow:
 h2{font-size:15.5px;font-weight:800;margin:0;letter-spacing:.03em}
 .lbl{font-size:11px;letter-spacing:.11em;color:var(--ink-2);font-weight:800}
 .muted{color:var(--ink-2);font-size:13.5px;line-height:1.75}
-.btn{background:var(--sun);color:#4E3A2C;border:0;border-radius:999px;padding:12px 19px;font-weight:800;font-size:15px;cursor:pointer;box-shadow:var(--pop)}
+.btn{background:var(--sun);color:#4E3A2C;border:2px solid var(--sun);border-radius:999px;padding:12px 19px;font-weight:800;font-size:15px;cursor:pointer;box-shadow:var(--pop)}
 .btn.chosen{background:var(--sun);color:#4E3A2C;border:2px solid var(--sun);box-shadow:var(--pop)}
 .btn.chosen::before{content:"\2713\3000";font-weight:800}
 .btn.ghost{background:var(--sheet);color:var(--ink-2);box-shadow:none;border:2px solid var(--line)}
@@ -152,6 +154,9 @@ textarea{resize:vertical;min-height:56px;line-height:1.7}
 .movebar button:active{transform:translateY(2px)}
 .movebar.sm{padding:6px 0 0;justify-content:flex-end}
 .movebar.sm button{padding:5px 14px;font-size:13px;min-width:46px}
+.plist{margin:0 0 11px;padding-left:22px;font-size:13px;line-height:1.75;color:var(--ink-2)}
+.plist li{margin:0 0 7px}
+.plist b{color:var(--ink)}
 .grp{margin:0 0 9px;font-size:13px;font-weight:800;color:var(--ink);letter-spacing:.06em;border-left:5px solid var(--sun);padding-left:9px;line-height:1.4}
 .grp + .muted{padding-left:14px}
 .verline{margin:0 0 10px;font-size:11.5px;font-weight:800;color:var(--ink-3);letter-spacing:.05em}
@@ -264,6 +269,7 @@ footer{padding:22px 6px;color:var(--ink-3);font-size:11px;line-height:1.9;text-a
 /* ---- 印刷 ---- */
 /* 印刷の紙面。画面では隠しているが、A4に収める倍率を測るときだけ表に出す */
 #printArea{display:none;width:190mm;overflow:hidden;background:#fff;color:#000;font-size:10.5px;line-height:1.5}
+#printArea.multi{overflow:visible}
 body.measuring #printArea{display:block;position:fixed;left:-10000px;top:0;visibility:hidden;overflow:visible}
 #printFit{transform-origin:top left}
 #printArea .pTitle{font-size:16px;font-weight:800;margin:0 0 2px}
@@ -278,6 +284,8 @@ body.measuring #printArea{display:block;position:fixed;left:-10000px;top:0;visib
 #printArea table{font-size:9px;width:100%;table-layout:fixed;border-collapse:collapse;line-height:1.25}
 #printArea table th,#printArea table td{font-size:9px;line-height:1.25;padding:1.5px 4px;min-width:0 !important;word-break:break-word}
 #printArea table th:first-child{width:42%}
+#printArea thead{display:table-header-group}
+#printArea tr{break-inside:avoid}
 #printArea thead th{position:static;border-bottom:1.5px solid #333;background:none;text-align:left}
 #printArea th,#printArea td{border-bottom:1px solid #DDD;padding:1.5px 4px;text-align:left;vertical-align:top}
 #printArea .catrow th{background:#EEE;font-weight:800}
@@ -367,14 +375,19 @@ body.measuring #printArea{display:block;position:fixed;left:-10000px;top:0;visib
           <p class="muted" style="margin:9px 0 0;font-size:12px">保存できないときは、この画像を長押し（PCは右クリック）しても保存できます。</p></div>
         <hr style="border:0;border-top:2px dotted var(--line);margin:15px 0">
         <h2>紙に印刷する</h2>
-        <p class="muted" style="margin:7px 0 11px">
-          どれも<b>A4タテ1枚</b>に収まるように、はみ出す分だけ自動で小さくします。<br>
-          <b>持っていく用</b>は、えらんだ項目が空欄で並んだ紙です。<b>まとめ</b>はこの園の記録、<b>比較表</b>は全部の園を並べた紙です。
-        </p>
+        <p class="muted" style="margin:7px 0 4px">4種類あります。どれも<b>A4タテ</b>です。</p>
+        <ol class="plist">
+          <li><b>できあがり（1園分）</b><br>いま選んでいる園の、記入した内容をまとめた完成版。園名・見学日入り。</li>
+          <li><b>見学に持っていく（ぜんぶ）</b><br>使う項目が<b>全部</b>、空欄で並んだ紙。園名も空欄なので、どの園でも使えます。</li>
+          <li><b>見学に持っていく（まだの分）</b><br>その園で<b>まだ書けていない項目だけ</b>。園名・見学日入り。当日はこれ1枚で足ります。</li>
+          <li><b>比較表</b><br>全部の園を横に並べた表。<b>4園までなら1枚</b>、それ以上は原寸のまま複数枚に分けます（園名は毎ページの上に出ます）。</li>
+        </ol>
+        <p class="muted" style="margin:0 0 11px;font-size:12px">①②③は、はみ出す分だけ自動で小さくして1枚に収めます。</p>
         <div class="row" style="gap:7px;flex-wrap:wrap">
-          <button class="btn sm" onclick="doPrint('list')">持っていく用</button>
-          <button class="btn sm ghost" onclick="doPrint('one')">この園のまとめ</button>
-          <button class="btn sm ghost" onclick="doPrint('compare')">比較表</button>
+          <button class="btn sm" onclick="doPrint('one')">① できあがり</button>
+          <button class="btn sm ghost" onclick="doPrint('list')">② 持っていく（ぜんぶ）</button>
+          <button class="btn sm ghost" onclick="doPrint('todo')">③ 持っていく（まだの分）</button>
+          <button class="btn sm ghost" onclick="doPrint('compare')">④ 比較表</button>
         </div>
         <p id="printMsg" class="muted" style="margin:10px 0 0"></p>
       </div>
@@ -400,7 +413,9 @@ body.measuring #printArea{display:block;position:fixed;left:-10000px;top:0;visib
         <p class="muted" style="margin:0 0 15px">
           <b>① 事前</b>　全部の項目が並んでいます。園のホームページ、重要事項説明書（入園のしおり）、自治体の公式サイトで<b>分かるものだけ</b>埋めてください。園によって載っている量は違うので、埋まらなくて大丈夫です。<br><br>
           <b>② 当日</b>　<b>事前に書けなかったものだけ</b>が出ます。上から<b>「見て確認すること」</b>、下に<b>「聞いて確認すること」</b>の順です。見学は先に園内をまわって最後に質問、という流れが多いので、この順で使えます。書き込むと、その項目はこの画面から消えます。<br><br>
-          <b>③ まとめ</b>　記入したものを一覧で見返せます。園が複数あれば横に並べて比べられます。<b>A4タテ1枚の画像にして保存</b>したり、<b>A4タテ1枚に印刷</b>したりもできます（このタブのいちばん上）。<br><br>
+          <b>③ まとめ</b>　記入したものを一覧で見返せます。園が複数あれば横に並べて比べられます。
+          <b>A4タテ1枚の画像にして保存</b>したり、<b>紙に印刷</b>したりもできます（このタブのいちばん上）。
+          印刷は4種類あります。当日は<b>「③ 持っていく（まだの分）」</b>が便利です。まだ書けていない項目だけを、園名入りで刷れます。<br><br>
           <b>④ 設定</b>　いま開いている画面です。中身は下にまとめました。
         </p>
 
@@ -525,7 +540,7 @@ body.measuring #printArea{display:block;position:fixed;left:-10000px;top:0;visib
       <details class="card sec">
         <summary><span class="secn">6</span><h2>このツールについて</h2><span class="caret">▶</span></summary>
         <div class="secbody">
-        <p class="verline">バージョン 2026-08-24e</p>
+        <p class="verline">バージョン 2026-08-24g</p>
         <p class="muted" style="margin:0">
           項目は「保育士にゆとりがあるか」を軸に組んでいます。設備の新しさより、そこで働く人に余裕があるかどうかが、子どもの過ごし方に直結するからです。<br><br>
           <b>事前</b>には全部の項目が、<b>聞いて確認すること</b>から順に並んでいます。<b>当日</b>には、事前に書けなかったものだけが、<b>見て確認すること</b>・<b>聞いて確認すること</b>の順で出ます。<br><br>
@@ -1354,7 +1369,10 @@ function doPrint(mode){
   if(mode==="compare"){
     if(!S.parks.length){ msg("先に園を登録してください。"); return }
     renderCmp();
-    a.innerHTML='<p class="pTitle">園見学 比較表</p><p class="pSub">園見学ノート</p>'+document.getElementById("cmpBody").innerHTML;
+    /* 園が多いほど、項目名の列を細くして園の欄を広く取る */
+    const lw=Math.max(24, 44-S.parks.length*3);
+    a.innerHTML='<p class="pTitle">園見学 比較表</p><p class="pSub">園見学ノート</p>'+
+      document.getElementById("cmpBody").innerHTML.replace('min-width:190px','min-width:0;width:'+lw+'%');
   }else if(mode==="one"){
     if(!p){ msg("先に園を登録してください。"); return }
     const r=sumHTML(p);
@@ -1363,11 +1381,21 @@ function doPrint(mode){
       (p.note?'<p style="margin:0 0 10px">'+esc(p.note)+'</p>':'')+
       '<div class="p2">'+r[0]+'</div>';
   }else{
-    let h='<p class="pTitle">園見学 持っていくリスト</p>'+
-      '<p class="pSub">園名：＿＿＿＿＿＿＿＿＿＿＿　見学日：＿＿月＿＿日　　家から：＿＿分</p><div class="p2">';
+    /* mode==="todo" は、その園でまだ書けていない項目だけ */
+    const only = (mode==="todo");
+    if(only && !p){ msg("先に園を登録してください。"); return }
+    let n0=0;
+    let h = only
+      ? '<p class="pTitle">'+esc(p.name)+'　まだ聞けていないこと</p>'+
+        '<p class="pSub">見学日：'+(p.date?esc(p.date):'＿＿月＿＿日')+'　　家から：'+(p.mins?esc(p.mins)+'分':'＿＿分')+'</p><div class="p2">'
+      : '<p class="pTitle">園見学 持っていくリスト</p>'+
+        '<p class="pSub">園名：＿＿＿＿＿＿＿＿＿＿＿　見学日：＿＿月＿＿日　　家から：＿＿分</p><div class="p2">';
     CATS.forEach(function(c){
-      const live=liveItems(c); if(!live.length)return;
-      h+='<p class="pCat">'+c.name+(useRate()?"（◎○△✕）":"")+'</p>';
+      let live=liveItems(c);
+      if(only) live=live.filter(function(it){ return !filled(p,c,it) });
+      if(!live.length)return;
+      n0+=live.length;
+      h+='<p class="pCat">'+c.name+'</p>';
       h+='<div>';
       live.forEach(function(x){
         h+= (c.kind==="ask")
@@ -1376,13 +1404,15 @@ function doPrint(mode){
       h+='</div>' });
     h+='</div><p class="pCat">全体の印象</p><div class="pItem"><span class="pLine"></span></div>'+
        '<div class="pItem"><span class="pLine"></span></div><div class="pItem"><span class="pLine"></span></div>';
+    if(only && !n0){ pmsg("この園は、ぜんぶ記入ずみです。印刷するものがありません。"); return }
     a.innerHTML=h;
   }
   a.innerHTML='<div id="printFit">'+a.innerHTML+'</div>';
-  const k=fitPrint();
-  pmsg(k>=0.999 ? "A4タテ1枚に収まります。"
-     : k>=0.7   ? "A4タテ1枚に収めるため、"+Math.round(k*100)+"% に縮めました。"
-     :            "項目が多いので "+Math.round(k*100)+"% まで縮めました。字が小さいときは、設定で項目を減らしてください。");
+  const r=fitPrint({multi: mode==="compare"});
+  pmsg(r.pages>1 ? "1枚に収めると字が小さくなりすぎるので、原寸のままA4タテ "+r.pages+" 枚に分けました。園の名前は毎ページの上に出ます。"
+     : r.k>=0.999 ? "A4タテ1枚に収まります。"
+     : r.k>=0.7   ? "A4タテ1枚に収めるため、"+Math.round(r.k*100)+"% に縮めました。"
+     :              "項目が多いので "+Math.round(r.k*100)+"% まで縮めました。字が小さいときは、設定で項目を減らしてください。");
   setTimeout(function(){ window.print() },120);
 }
 function pmsg(t){ const e=document.getElementById("printMsg"); if(e)e.textContent=t }
@@ -1392,14 +1422,16 @@ function pmsg(t){ const e=document.getElementById("printMsg"); if(e)e.textConten
      （縮小率 k で組む幅 w のとき w×k = 紙幅 になる w を数回で求める）
    ・それでもはみ出す分だけ、最後に全体を縮める */
 const PAGE_W=190/25.4*96, PAGE_H=277/25.4*96;
-function fitPrint(){
+function fitPrint(opt){
+  opt=opt||{};
   const a=document.getElementById("printArea"), inner=document.getElementById("printFit");
-  if(!inner) return 1;
+  if(!inner) return {k:1,pages:1};
   const box=inner.querySelector(".p2");
-  inner.style.transform="none"; inner.style.width=""; a.style.height="";
+  a.classList.remove("multi");
+  inner.style.zoom=""; inner.style.width=""; a.style.height="";
   document.body.classList.add("measuring");
 
-  /* 組む幅 w で作ったとき、紙に収めるのに必要な倍率
+  /* 組む幅 w で作ったとき、A4タテ1枚に収めるのに必要な倍率
      （タテもヨコもはみ出さないこと。ヨコは w×k ≦ 紙幅） */
   function at(w){
     inner.style.width=Math.round(w)+"px";
@@ -1431,14 +1463,23 @@ function fitPrint(){
   }else{
     fin=solve();
   }
+
+  /* 1枚に押しこむと小さくなりすぎるものは、原寸のままA4を複数枚に分ける */
+  if(opt.multi && fin.k < 0.8){
+    inner.style.width=Math.round(PAGE_W)+"px";
+    const h=inner.getBoundingClientRect().height;
+    document.body.classList.remove("measuring");
+    inner.style.zoom=""; a.style.height=""; a.classList.add("multi");
+    return {k:1, pages:Math.max(1,Math.ceil(h/PAGE_H))};
+  }
+
   inner.style.width=Math.round(fin.w)+"px";
-  const h=inner.getBoundingClientRect().height;
   document.body.classList.remove("measuring");
-  if(fin.k<1){ inner.style.transform="scale("+fin.k.toFixed(4)+")";
-               a.style.height=Math.ceil(h*fin.k)+"px" }
-  else { inner.style.width=""; a.style.height=Math.ceil(h)+"px" }
-  return fin.k;
+  if(fin.k<1){ inner.style.zoom=fin.k.toFixed(4) }
+  else { inner.style.width="" }
+  return {k:fin.k, pages:1};
 }
+
 function doExport(){ document.getElementById("io").value=JSON.stringify(S); msg("書き出しました。この文字列をまるごとコピーして控えてください。") }
 function doImport(go){ const t=document.getElementById("io").value.trim();
   if(!t){ msg("先に文字列を貼りつけてください。"); return }
