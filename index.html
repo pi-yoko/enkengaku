@@ -9,13 +9,15 @@
 <meta name="apple-mobile-web-app-title" content="園見学ノート">
 <meta name="format-detection" content="telephone=no">
 <title>園見学ノート</title>
+<!-- v20260821a -->
+<!-- v20260824a -->
 <style>
 :root{
   --page:#FFEFD4; --sheet:#FFFDF7; --card:#FFFFFF;
   --ink:#4E3A2C; --ink-2:#7A6350; --ink-3:#8A7663;
   --line:#F0E2CC; --line-2:#F7EEDF;
   --sun:#FFC33D;  --sun-soft:#FFF3D0;
-  --coral:#FF8D72;--coral-soft:#FFEDE7;
+  --coral:#FF8D72;--coral-soft:#FFEDE7;--danger-ink:#B8452C;
   --mint:#3FBF9B; --mint-soft:#E4F7F1;
   --sky:#5FBFE8;  --sky-soft:#E6F4FC;
   --grape:#A98BE0;--grape-soft:#F0EAFB;
@@ -29,7 +31,7 @@
   --page:#241E1A; --sheet:#332B25; --card:#3E352D;
   --ink:#FBEEDD; --ink-2:#C4AF9B; --ink-3:#907E6D;
   --line:#4E4238; --line-2:#463B33;
-  --sun:#FFCF5E; --sun-soft:#4A3B24; --coral:#FFA48C; --coral-soft:#4A2F28;
+  --sun:#FFCF5E; --sun-soft:#4A3B24; --coral:#FFA48C; --coral-soft:#4A2F28; --danger-ink:#FFA48C;
   --mint:#6BD5B4; --mint-soft:#20403A; --sky:#86D2F2; --sky-soft:#22394A;
   --grape:#C0A6EE; --grape-soft:#332A45;
   --sel-good:#6BD5B4; --sel-ok:#86D2F2; --sel-warn:#E5B84A; --sel-bad:#FF9A85; --sel-ink:#14201C;
@@ -40,7 +42,7 @@
   --page:#241E1A; --sheet:#332B25; --card:#3E352D;
   --ink:#FBEEDD; --ink-2:#C4AF9B; --ink-3:#907E6D;
   --line:#4E4238; --line-2:#463B33;
-  --sun:#FFCF5E; --sun-soft:#4A3B24; --coral:#FFA48C; --coral-soft:#4A2F28;
+  --sun:#FFCF5E; --sun-soft:#4A3B24; --coral:#FFA48C; --coral-soft:#4A2F28; --danger-ink:#FFA48C;
   --mint:#6BD5B4; --mint-soft:#20403A; --sky:#86D2F2; --sky-soft:#22394A;
   --grape:#C0A6EE; --grape-soft:#332A45;
   --sel-good:#6BD5B4; --sel-ok:#86D2F2; --sel-warn:#E5B84A; --sel-bad:#FF9A85; --sel-ink:#14201C;
@@ -98,7 +100,7 @@ h2{font-size:15.5px;font-weight:800;margin:0;letter-spacing:.03em}
 .muted{color:var(--ink-2);font-size:13.5px;line-height:1.75}
 .btn{background:var(--sun);color:#4E3A2C;border:0;border-radius:999px;padding:12px 19px;font-weight:800;font-size:15px;cursor:pointer;box-shadow:var(--pop)}
 .btn.ghost{background:var(--sheet);color:var(--ink-2);box-shadow:none;border:2px solid var(--line)}
-.btn.danger{background:var(--coral-soft);color:var(--coral);box-shadow:none;border:2px solid var(--coral)}
+.btn.danger{background:var(--coral-soft);color:var(--danger-ink);box-shadow:none;border:2px solid var(--coral)}
 .btn.sm{padding:8px 14px;font-size:12.5px}
 .btn:active{transform:translateY(2px);box-shadow:none}
 input[type=text],input[type=date],textarea{width:100%;background:var(--sheet);border:2px solid var(--line);border-radius:14px;padding:10px 13px;font-size:16px}
@@ -108,6 +110,13 @@ textarea{resize:vertical;min-height:56px;line-height:1.7}
 .chip[aria-pressed="true"]{background:var(--sun);border-color:var(--sun);color:#4E3A2C;box-shadow:var(--pop)}
 .chip.add{color:var(--coral);border-color:var(--coral);border-style:dashed;background:transparent}
 .addbox{display:none;gap:8px;padding:3px 2px 9px}
+.prow{display:flex;justify-content:space-between;align-items:center;gap:9px;padding:0 2px 9px}
+.pmsg{font-size:12.5px;font-weight:800;color:var(--mint);min-height:1em}
+.mini{background:none;border:0;color:var(--ink-2);font:inherit;font-size:13px;font-weight:800;padding:9px 12px;cursor:pointer;border-radius:11px}
+.mini:hover{color:var(--ink)}
+.mini.on{color:var(--ink);background:var(--coral-soft);box-shadow:inset 0 0 0 2px var(--coral)}
+.chip.del{border-color:var(--coral);color:var(--ink);background:var(--coral-soft)}
+.chip.del::before{content:"\2715\3000";font-weight:800;color:var(--danger-ink)}
 .addbox.on{display:flex}
 .addbox input{flex:1}
 .meta{padding:17px;display:grid;gap:12px}
@@ -305,9 +314,6 @@ footer{padding:22px 6px;color:var(--ink-3);font-size:11px;line-height:1.9;text-a
 }
 @media (prefers-reduced-motion:reduce){*{transition:none !important}}
 </style>
-</head>
-<body>
-
 
 <header>
   <div class="hd">
@@ -327,6 +333,10 @@ footer{padding:22px 6px;color:var(--ink-3);font-size:11px;line-height:1.9;text-a
       <button class="btn sm" onclick="commitPark()">追加</button>
       <button class="btn sm ghost" onclick="toggleAdd(false)">やめる</button>
     </div>
+    <div class="prow" id="prow" hidden><span class="pmsg" id="pmsg"></span><button class="mini" id="delToggle" onclick="toggleDel()">園を消す</button></div>
+    <div class="confirm" id="cfPark"><p id="cfParkT" style="margin:0"></p>
+      <button class="btn sm danger" onclick="delParkId()">消す</button>
+      <button class="btn sm ghost" onclick="hideC(&quot;cfPark&quot;)">やめる</button></div>
   </div>
   <nav role="tablist">
     <button role="tab" id="t-pre" aria-selected="true"  onclick="setTab('pre')">事前</button>
@@ -422,7 +432,8 @@ footer{padding:22px 6px;color:var(--ink-3);font-size:11px;line-height:1.9;text-a
         <p class="muted" style="margin:0 0 11px"><b>「事前」で分かることは、先にホームページなどで調べてまとめておきましょう。</b>当日は、行かないと分からないことだけに集中できます。</p>
         <p class="muted" style="margin:0 0 11px">1つずつ選ぶのが大変なときは、<b>この画面のいちばん上にある「カードで仕分ける」</b>が早いです。</p>
         <div class="row" style="gap:7px;flex-wrap:wrap">
-          <button class="btn sm" onclick="preset('all')">ぜんぶ使う</button>
+          <button class="btn sm" onclick="preset('rec')">おすすめに戻す</button>
+          <button class="btn sm ghost" onclick="preset('all')">ぜんぶ使う</button>
           <button class="btn sm ghost" onclick="preset('none')">ぜんぶ外す</button>
         </div>
         <p class="muted" style="margin:11px 0 0;font-weight:800">いま使う項目：<span id="onN">0</span> 個</p>
@@ -493,7 +504,7 @@ footer{padding:22px 6px;color:var(--ink-3);font-size:11px;line-height:1.9;text-a
       <details class="card sec">
         <summary><span class="secn">5</span><h2>この道具について</h2><span class="caret">▶</span></summary>
         <div class="secbody">
-        <p class="verline">バージョン 2026-08-23a</p>
+        <p class="verline">バージョン 2026-08-24a</p>
         <p class="muted" style="margin:0">
           項目は「保育士にゆとりがあるか」を軸に組んでいます。設備の新しさより、そこで働く人に余裕があるかどうかが、子どもの過ごし方に直結するからです。<br><br>
           点数は<b>あなたが◎○△✕を付けた項目だけ</b>で計算します。定員や料金のような事実の項目は、評価を付けなければ点数に入りません。<br><br>
@@ -535,7 +546,7 @@ footer{padding:22px 6px;color:var(--ink-3);font-size:11px;line-height:1.9;text-a
 
 <script>
 const CATS=[
-{id:"prep",name:"調べれば分かること",kind:"ask",color:"var(--sky)",
+{id:"prep",name:"基本の情報",kind:"ask",color:"var(--sky)",
  tip:"ここは見学に行く前に埋められます。先に埋めておくと、当日は「行かないと分からないこと」だけに集中できます。",
  items:[
   {k:"prep_0", q:"園の種類", w:"自治体のホームページか、園のサイトに出ています。認可保育園…国の基準を満たした定員20名以上の園。0〜5歳対象、自治体の選考（点数）で入る。認可外保育園…国の認可基準には当てはまらないが、届出をして運営している施設の総称。園に直接申込め、保育料は園が決める。小規模保育…定員6〜19名、0〜2歳限定の認可。手厚くて入りやすい。企業主導型…企業がつくる認可外だが国の助成つき。従業員枠＋地域枠があり、自治体の選考を通さず直接申込める。認定こども園…保育園＋幼稚園の合体型。親が働いていてもいなくても通え、途中で退職しても在園し続けられる。家庭的保育…保育者の自宅で5名以下を見る認可。0〜2歳限定で、家庭に最も近い環境。", o:["認可保育園","認可外保育園","小規模保育","企業主導型","認定こども園","家庭的保育"]},
@@ -546,38 +557,36 @@ const CATS=[
   {k:"prep_5", q:"休園日・休園期間（年末年始・お盆）"},
   {k:"daily_5", q:"延長のときの補食・夕食はあるか", w:"補食…おにぎりなどの軽食、夕食…夕ご飯", o:["あり","なし"]},
   {k:"prep_6", g:["0歳","1歳","2歳","3歳","4歳","5歳"], q:"クラスの定員", w:"人数が少ないほどアットホームな雰囲気があります。人数が多いほど、集団での生活を楽しむことができます。"},
-  {k:"prep_x1", q:"看護師はいるのか", w:"看護師の配置は義務ではありませんが、いると安心です。子どものけがの応急処置や体調チェック、保健だよりの作成などを行っています。保育士に向けて嘔吐処理の研修など専門的な知識を保育士に教える立場でもあります。", o:["いる","いない"]},
   {k:"prep_7", q:"園庭の有無", w:"園庭の代わりに、テラスやガレージがある園もあります。近隣トラブルなどで、使用時間を制限している園も稀にあります。どの程度園庭遊びをするのか確認しておくと安心です。", o:["あり","なし"]},
   {k:"bousai_0", q:"建物の耐震性（築年数）"},
-  {k:"prep_8", q:"保育理念・方針", w:"一斉保育や自由保育、モンテッソーリ教育など、園によって様々な保育理念があります。お子さまに合った園かどうか、見学前に事前に確認しておくと安心です。", o:["一斉保育","自由保育","主体的保育","コーナー保育","異年齢保育（縦割り）","少人数保育","モンテッソーリ","シュタイナー","レッジョ・エミリア","リトミック","英語","体操・運動","音楽（楽器・合唱）","絵画・造形","食育","自然・戸外遊び中心","知育・学習","発達支援に力を入れる","仏教系","キリスト教系"], m:1},
-  {k:"basic_3", q:"1日のスケジュール", w:"事前に知っておくと、園と家庭の生活リズムを合わせておくことができます。合わせることで、お子さんの疲れも減ります。"},
-  {k:"items_0", q:"毎日の持ち物", w:"洋服の着替えセットやタオル、水筒など、園によっては多い場合もあります。"},
-  {k:"items_4", q:"おむつのサブスクはあるか", w:"サブスクを利用すると、おむつを持っていく・名前を書く準備が減ります。", o:["あり","なし"]},
+  {k:"prep_8", q:"保育理念・方針", w:"園によって様々な保育理念があります。お子さまに合った園かどうか、見学前に事前に確認しておくと安心です。", o:["一斉保育","自由保育","主体的保育","コーナー保育","異年齢保育（縦割り）","少人数保育","モンテッソーリ","シュタイナー","レッジョ・エミリア","リトミック","英語","体操・運動","音楽（楽器・合唱）","絵画・造形","食育","自然・戸外遊び中心","知育・学習","発達支援に力を入れる","仏教系","キリスト教系"], m:1},
+  {k:"basic_3", q:"1日のスケジュール", w:"事前に知っておくと、園と家庭の生活リズムを合わせておくことができます。"},
+  {k:"items_0", q:"毎日の持ち物", w:"洋服の着替えセットやタオル、水筒など、園によって違います。荷物の少ない方が負担が減ります。"},
+  {k:"items_4", q:"おむつのサブスクはあるか", w:"サブスクを利用すると、おむつを持っていく・名前を書く手間が減ります。", o:["あり","なし"]},
   {k:"items_3", q:"おむつは紙か布か。持参の頻度", o:["紙","布"]},
   {k:"prep_x2", q:"エプロン・口拭きのサブスクはあるか", w:"サブスクを利用すると、エプロン・口拭きを持っていく、洗うなどの手間が減ります。", o:["あり","なし"]},
   {k:"prep_x3", q:"年間行事"},
   {k:"prep_9", q:"去年の申込状況・内定の最低指数", w:"自治体が公表していることがあります。"}
  ]},
-{id:"tel",name:"電話で確認しておくこと",kind:"ask",color:"var(--grape)",
+{id:"tel",name:"見学前に電話で確認しておくこと",kind:"ask",color:"var(--grape)",
  tip:"かけるなら平日の10時過ぎ（登園が落ち着くころ）か、14時前後（お昼寝の時間帯）。行事の日を避けたいので、先にホームページを見ておくと確実です。",
  items:[
   {k:"tel_0", q:"見学の所要時間はどのくらいか"},
   {k:"tel_1", q:"子どもを連れて行ってよいか", o:["○","✕"]},
   {k:"tel_3", q:"持ち物（スリッパ・筆記用具）は必要か", o:["いる","いらない"]},
-  {k:"tel_5", q:"車・ベビーカーで行ってよいか", w:"駐車場やベビーカーの置き場所も一緒に聞いておくと当日慌てません。", o:["○","✕"]},
-  {k:"tel_6", q:"入園説明会や用品購入の時期", w:"4月入園だと2月、3月あたりに行われることが多いです。"}
+  {k:"tel_5", q:"車・ベビーカーで行ってよいか", w:"駐車場やベビーカーの置き場所も一緒に聞いておくと当日慌てません。見学中は園内を回るため、抱っこ紐がおすすめです。", o:["○","✕"]}
  ]},
 {id:"route",name:"通園経路・園のまわり",kind:"rate",color:"var(--sky)",
  items:[
   {k:"route_0", q:"送迎ルートの安全性（歩道・信号・交通量）", w:"毎日行き帰り通ります。雨の日や暗い時間も通ります。"},
   {k:"route_1", q:"駐輪場・駐車場の有無", w:"送迎時のみ一時的に可という園もあります。屋根がない場合は、雨の日に子どもを抱っこしたり、傘をさして通ります。"},
-  {k:"route_2", q:"ベビーカー置き場があるか", w:"置ける場合でも、屋根の無い場所に置くパターンもあるので確認すると安心です。"},
+  {k:"route_2", q:"ベビーカー置き場があるか", w:"屋根の無い場所に置く園もあるので、確認しておくと安心です。"},
   {k:"route_4", q:"入口のセキュリティ（オートロック・部外者が入れないか・防犯カメラがあるか）"}
  ]},
 {id:"env",name:"保育室・環境",kind:"rate",color:"var(--mint)",
  items:[
   {k:"env_0", q:"部屋に入ったときのにおい", w:"保育室をこまめに掃除、換気しているかが分かります。"},
-  {k:"env_1", q:"掃除が行き届いてるか", w:"保育室や廊下などが綺麗に保たれている園は、人手が足りていて、余裕がある園であることが多いです。"},
+  {k:"env_1", q:"清潔さ、整理整頓されているか", w:"保育室や廊下などが綺麗に保たれている園は、人手が足りていて、余裕がある園であることが多いです。"},
   {k:"env_2", q:"おもちゃが子どもの手の届く高さにあるか（主に幼児クラス）", w:"0～2歳頃までは、玩具が見えない（取れない）ようになっていた方が逆に安心して過ごせる場合もあります。3歳～5歳は、好きな玩具を自分で選べる方が、じっくりと遊べる環境になりやすいです。棚の上にしまわれている園は、大人が出し入れを管理する保育になりがちです。"},
   {k:"env_3", q:"おもちゃの数と、年齢に合っているか", w:"0、1歳児クラスの玩具は、安全のためにしまわれていることも多いです。どんな玩具があるか気になる場合は、質問してみるのも良いと思います。"},
   {k:"env_4", q:"絵本の数と種類"},
@@ -669,7 +678,7 @@ const CATS=[
   {k:"sick_2", q:"熱以外で登園できない例", w:"予防接種のあと、けがなど。"},
   {k:"sick_3", q:"薬の対応（飲み薬・塗り薬・目薬・点鼻薬）"},
   {k:"sick_4", q:"日焼け止め・虫よけ・保湿剤を塗ってもらえるか", o:["○","△","✕"]},
-  {k:"sick_5", q:"看護師は常勤か", w:"看護師の配置は義務にはなっていませんが、特に0歳児クラスでは、常勤看護師がいると安心です。", o:["常勤","非常勤","いない"]},
+  {k:"sick_5", q:"看護師はいるのか、常勤か", w:"看護師の配置は義務ではありませんが、いると安心です。子どものけがの応急処置や体調チェック、保健だよりの作成などを行っています。保育士に向けて嘔吐処理の研修など専門的な知識を保育士に教える立場でもあります。", o:["常勤","非常勤","いない"]},
   {k:"sick_6", q:"病児・病後児保育はあるか", o:["○","△","✕"]},
   {k:"sick_7", q:"ケガをしたときの対応と、連絡の流れ"},
   {k:"sick_8", q:"子ども同士のトラブルのとき、相手の名前は伝えるか", w:"園の方針が分かれるところです。", o:["○","△","✕"]},
@@ -701,10 +710,13 @@ const CATS=[
   {k:"narashi_3", q:"入園までにやっておくとよいこと", w:"寝かしつけの方法、哺乳瓶、生活リズムなど。園に合わせておくことで、お子さんも安心して園生活をスタートさせることができます。"},
   {k:"narashi_4", q:"入園前の健康診断は必要か", o:["○","△","✕"]},
   {k:"narashi_5", q:"入園説明会・用品購入の時期"}
- ]},
+ ]}
 ];
-const DEFAULT_OFF={"daily_5": 1, "prep_x1": 1, "bousai_0": 1, "prep_9": 1, "tel_0": 1, "tel_1": 1, "tel_6": 1, "route_0": 1, "route_4": 1, "env_0": 1, "env_2": 1, "env_3": 1, "env_4": 1, "env_12": 1, "env_6": 1, "env_7": 1, "env_8": 1, "env_10": 1, "env_11": 1, "env_x1": 1, "safe_0": 1, "staff_2": 1, "staff_8": 1, "kids_5": 1, "taisei_x5": 1, "daily_0": 1, "daily_1": 1, "daily_4": 1, "daily_6": 1, "daily_7": 1, "items_10": 1, "items_14": 1, "food_0": 1, "food_x1": 1, "food_2": 1, "food_3": 1, "food_4": 1, "food_5": 1, "food_8": 1, "food_10": 1, "nap_3": 1, "sick_2": 1, "sick_3": 1, "sick_4": 1, "sick_5": 1, "sick_6": 1, "sick_7": 1, "sick_8": 1, "sick_9": 1, "play_1": 1, "play_6": 1, "play_7": 1, "play_8": 1, "play_x1": 1, "play_10": 1, "bousai_1": 1, "bousai_7": 1, "narashi_1": 1, "narashi_4": 1, "narashi_5": 1};
+const DEFAULT_OFF={"daily_5": 1, "bousai_0": 1, "prep_9": 1, "tel_0": 1, "tel_1": 1, "tel_3": 1, "tel_5": 1, "route_0": 1, "route_4": 1, "env_0": 1, "env_2": 1, "env_3": 1, "env_4": 1, "env_12": 1, "env_6": 1, "env_7": 1, "env_8": 1, "env_10": 1, "env_11": 1, "env_x1": 1, "safe_0": 1, "staff_2": 1, "staff_5": 1, "staff_6": 1, "staff_8": 1, "kids_5": 1, "taisei_x4": 1, "taisei_x5": 1, "daily_0": 1, "daily_1": 1, "daily_4": 1, "daily_6": 1, "daily_7": 1, "items_2": 1, "items_6": 1, "items_10": 1, "items_x1": 1, "items_14": 1, "food_0": 1, "food_x1": 1, "food_2": 1, "food_3": 1, "food_4": 1, "food_5": 1, "food_8": 1, "food_10": 1, "nap_3": 1, "sick_2": 1, "sick_3": 1, "sick_4": 1, "sick_5": 1, "sick_6": 1, "sick_7": 1, "sick_8": 1, "sick_9": 1, "play_1": 1, "play_6": 1, "play_7": 1, "play_8": 1, "play_x1": 1, "play_10": 1, "bousai_1": 1, "bousai_7": 1, "narashi_1": 1, "narashi_4": 1, "narashi_5": 1};
 const RATE=[["3","◎","よい"],["2","○","ふつう"],["1","△","気になる"],["0","✕","合わない"]];
+/* 変な値が入っていても画面が壊れないように */
+function rateOf(v){ if(v===undefined||v===null) return null;
+  var t=String(v); for(var i=0;i<RATE.length;i++) if(RATE[i][0]===t) return RATE[i]; return null }
 const WEIGHTS=[["2","重視する"],["1","ふつう"],["0","気にしない"]];
 const KEY="engakunote.v3";
 function applyOrder(){
@@ -917,7 +929,7 @@ function showC(id){ document.getElementById(id).classList.add("on") }
 function hideC(id){ document.getElementById(id).classList.remove("on") }
 function toggleItem(k,v){ if(v) delete S.off[k]; else S.off[k]=1; save(); renderPickCounts(); renderPre(); renderDay() }
 function toggleCat(cid,v){ const c=catOf(cid); if(!c)return;
-  c.items.forEach(function(_,i){ if(v) delete S.off[cid+"_"+i]; else S.off[cid+"_"+i]=1 }); save(); renderPick(); renderPre(); renderDay() }
+  c.items.forEach(function(it){ if(v) delete S.off[it.k]; else S.off[it.k]=1 }); save(); renderPick(); renderPre(); renderDay() }
 function preset(mode){ S.off={};
   if(mode==="rec"){ S.off=Object.assign({},DEFAULT_OFF); save(); renderPick(); renderPre(); renderDay(); return }
   if(mode==="none") ALL.forEach(function(k){ S.off[k]=1 }); save(); renderPick(); renderPre(); renderDay() }
@@ -927,32 +939,39 @@ function setRate(k,v){ const p=cur(); if(!p)return;
   if(p.r[k]===v) delete p.r[k]; else p.r[k]=v; save(); syncItem(k) }
 function setChk(k,v){ const p=cur(); if(!p)return;
   if(v)p.r[k]="3"; else delete p.r[k]; save(); syncItem(k) }
+/* 項目キーから、その項目が実際に入っているカテゴリを引く
+   （キーの頭とカテゴリIDは一致しないものがあるため） */
+function ownerOf(k){ for(var i=0;i<CATS.length;i++){ var c=CATS[i];
+    for(var j=0;j<c.items.length;j++) if(c.items[j].k===k) return {c:c,it:c.items[j]} }
+  return null }
 function syncItem(k){
   const p=cur(); if(!p)return;
-  const cid=k.slice(0,k.lastIndexOf("_")), i=+k.slice(k.lastIndexOf("_")+1), c=catOf(cid); if(!c)return;
-  const f=filled(p,c,i);
+  const o=ownerOf(k); if(!o)return;
+  const f=filled(p,o.c,o.it);
   document.querySelectorAll('[data-k="'+k+'"]').forEach(function(el){
     el.classList.toggle("done",f);
     el.querySelectorAll(".rate button").forEach(function(b){
       b.setAttribute("aria-pressed", String(p.r[k]===b.getAttribute("data-v"))) });
   });
-  syncCat(cid); syncScore();
+  syncCat(o.c.id); syncScore();
 }
 /* 未記入を上、記入済みを下へ */
 function syncCat(cid,pg){
   const p=cur(), c=catOf(cid); if(!p||!c)return;
   const sel='[data-cat="'+cid+'"]'+(pg?'[data-pg="'+pg+'"]':'');
-  const box=document.querySelector(sel); if(!box)return;
-  const live=liveItems(c,pg); let remain=0;
-  live.forEach(function(it,pos){
-    const k=it.k, f=filled(p,c,it), sk=sunk(p,it);
-    if(!f) remain++;
-    const el=box.querySelector('[data-k="'+k+'"]');
-    if(el){ el.style.order = sk ? (500+pos) : pos; el.classList.toggle("done",f) }
+  document.querySelectorAll(sel).forEach(function(box){
+    let remain=0, pos=0;
+    c.items.forEach(function(it){
+      const el=box.querySelector('[data-k="'+it.k+'"]'); if(!el)return;
+      const f=filled(p,c,it), sk=sunk(p,it);
+      if(!f) remain++;
+      el.style.order = sk ? (500+pos) : pos; pos++;
+      el.classList.toggle("done",f);
+    });
+    const b=box.querySelector('[data-remain="'+cid+'"]');
+    if(b){ b.textContent = remain? ("残り "+remain) : "ぜんぶ済み";
+           b.classList.toggle("zero", remain===0) }
   });
-  const b=box.querySelector('[data-remain="'+cid+'"]');
-  if(b){ b.textContent = remain? ("残り "+remain) : "ぜんぶ済み";
-         b.classList.toggle("zero", remain===0) }
 }
 function syncScore(){
   const p=cur(); if(!p)return;
@@ -1021,9 +1040,34 @@ function renderNudge(){
     el.innerHTML='<div class="nudge ok">✓ '+new Date(S._f).toLocaleString("ja-JP")+' にファイルへ保存ずみ</div>';
   }
 }
-function renderParks(){ renderParkName(); document.getElementById("parks").innerHTML=
-  S.parks.map(function(p){return '<button class="chip" aria-pressed="'+(p.id===S.cur)+'" onclick="pick(\''+p.id+'\')">'+esc(p.name)+'</button>'}).join("")+
-  '<button class="chip add" onclick="toggleAdd()">＋ 園を追加</button>' }
+var PDEL=0, PDELID=null;
+function renderParks(){ renderParkName();
+  document.getElementById("parks").innerHTML=
+    S.parks.map(function(p){
+      if(PDEL) return '<button class="chip del" onclick="askDel(\''+p.id+'\')">'+esc(p.name)+'</button>';
+      return '<button class="chip" aria-pressed="'+(p.id===S.cur)+'" onclick="pick(\''+p.id+'\')">'+esc(p.name)+'</button>' }).join("")+
+    (PDEL?'':'<button class="chip add" onclick="toggleAdd()">＋ 園を追加</button>');
+  var r=document.getElementById("prow"); if(r) r.hidden = !S.parks.length; }
+function toggleDel(){ PDEL=!PDEL; PDELID=null; hideC("cfPark");
+  if(PDEL) toggleAdd(false);
+  var b=document.getElementById("delToggle");
+  if(b){ b.classList.toggle("on",!!PDEL); b.textContent = PDEL ? "やめる" : "園を消す" }
+  renderParks(); }
+function askDel(id){ PDELID=id;
+  var nm=""; S.parks.forEach(function(x){ if(x.id===id) nm=x.name });
+  document.getElementById("cfParkT").innerHTML='「'+esc(nm)+'」の記録を、書いたものごと消します。';
+  showC("cfPark"); }
+function delParkId(){ if(!PDELID)return; snapshot();
+  S.parks=S.parks.filter(function(x){return x.id!==PDELID});
+  if(S.cur===PDELID) S.cur = S.parks[0] ? S.parks[0].id : null;
+  PDELID=null; hideC("cfPark");
+  if(!S.parks.length){ PDEL=0; var b=document.getElementById("delToggle");
+    if(b){ b.classList.remove("on"); b.textContent="園を消す" } }
+  save(); render();
+  var m=document.getElementById("pmsg");
+  if(m){ m.textContent="消しました。上の「元にもどす」で戻せます。";
+    setTimeout(function(){ if(m) m.textContent="" },6000) }
+  togglePicker(true); }
 
 const CHICK='<svg width="44" height="44" viewBox="0 0 40 40" aria-hidden="true"><circle cx="20" cy="22" r="14" fill="var(--sun)"/><circle cx="20" cy="10" r="8.5" fill="var(--sun)"/><circle cx="17" cy="9" r="1.6" fill="#4E3A2C"/><circle cx="23" cy="9" r="1.6" fill="#4E3A2C"/><path d="M20 12.4 L23 14.6 L17 14.6 Z" fill="var(--coral)"/></svg>';
 function emptyCard(){ return '<div class="card empty">'+CHICK.replace('width="44" height="44"','width="64" height="64"')+
@@ -1184,7 +1228,8 @@ function sumHTML(p){
       if(c.kind==="ask"){ v = (p.a[k]&&p.a[k].trim()) ? esc(p.a[k]) : '' }
       else if(c.kind==="check"){ v = p.r[k]!==undefined ? "確認ずみ" : '' }
       else { const r=p.r[k];
-        v = r===undefined ? '' : RATE.filter(function(z){return z[0]===r})[0][1]+" "+RATE.filter(function(z){return z[0]===r})[0][2];
+        const R=rateOf(r);
+        v = R ? R[1]+" "+R[2] : '';
         if(r!==undefined && p.m[k]) v+='<span class="mm">'+esc(p.m[k])+'</span>' }
       if(!v){ anyNa++; v='<span class="na">未記入</span>' }
       rows+='<div class="sumrow"><div class="k">'+it.q+'</div><div class="v">'+v+'</div></div>';
@@ -1227,7 +1272,7 @@ function renderCmp(){
     live.forEach(function(it){ const k=it.k;
       rows+='<tr><th>'+it.q+'</th>'+S.parks.map(function(p){
         if(c.kind==="rate"){ const v=p.r[k];
-          const mk=v===undefined?"—":RATE.filter(function(r){return r[0]===v})[0][1];
+          const R0=rateOf(v), mk=R0?R0[1]:"—";
           const mm=(memo&&p.m[k])?'<div class="memo-cell">'+esc(p.m[k])+'</div>':'';
           return '<td class="'+(v===undefined?"vna":"v"+v)+'">'+mk+mm+'</td>' }
         if(c.kind==="check"){ const v=p.r[k];
@@ -1395,7 +1440,7 @@ function imgData(p){
       if(c.kind==="ask"){ if(p.a[k]&&p.a[k].trim()) v=p.a[k].trim() }
       else if(c.kind==="check"){ if(p.r[k]!==undefined) v="確認ずみ" }
       else { const r=p.r[k];
-        if(r!==undefined){ const R=RATE.filter(function(z){return z[0]===r})[0];
+        if(rateOf(r)){ const R=rateOf(r);
           v=R[1]+" "+R[2]; sub=p.m[k]||null;
           col = r==="3"?IC.mint : r==="2"?IC.sky : r==="1"?IC.warn : IC.coral } }
       if(v!==null) got.push({label:it.q,value:v,sub:sub,col:col});
