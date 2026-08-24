@@ -19,6 +19,7 @@
 <!-- v20260824f -->
 <!-- v20260824g -->
 <!-- v20260824g -->
+<!-- v20260824h -->
 <style>
 :root{
   --page:#FFEFD4; --sheet:#FFFDF7; --card:#FFFFFF;
@@ -308,7 +309,8 @@ body.measuring #printArea{display:block;position:fixed;left:-10000px;top:0;visib
 #printArea .card{box-shadow:none;background:none;padding:0;border-radius:0}
 #printArea .scroller{overflow:visible}
 @media print{
-  header,nav,.parks,.addbox,.io,.btn,footer,.why,.confirm,.banner,.wrap>section,.tip{display:none !important}
+  header,nav,.parks,.addbox,.io,.btn,footer,.why,.confirm,.banner,.wrap>section,.tip,
+  .saveState,#nudge{display:none !important}
   body{background:#fff;color:#000}
   .wrap{max-width:none;padding:0}
   #printArea{display:block !important;position:static;visibility:visible}
@@ -541,7 +543,7 @@ body.measuring #printArea{display:block;position:fixed;left:-10000px;top:0;visib
       <details class="card sec">
         <summary><span class="secn">6</span><h2>このツールについて</h2><span class="caret">▶</span></summary>
         <div class="secbody">
-        <p class="verline">バージョン 2026-08-24g</p>
+        <p class="verline">バージョン 2026-08-24h</p>
         <p class="muted" style="margin:0">
           項目は「保育士にゆとりがあるか」を軸に組んでいます。設備の新しさより、そこで働く人に余裕があるかどうかが、子どもの過ごし方に直結するからです。<br><br>
           <b>事前</b>には全部の項目が、<b>聞いて確認すること</b>から順に並んでいます。<b>当日</b>には、事前に書けなかったものだけが、<b>見て確認すること</b>・<b>聞いて確認すること</b>の順で出ます。<br><br>
@@ -1422,7 +1424,9 @@ function pmsg(t){ const e=document.getElementById("printMsg"); if(e)e.textConten
    ・縮めたあとに紙の幅いっぱいになるよう、組む幅もひろげる
      （縮小率 k で組む幅 w のとき w×k = 紙幅 になる w を数回で求める）
    ・それでもはみ出す分だけ、最後に全体を縮める */
-const PAGE_W=190/25.4*96, PAGE_H=277/25.4*96;
+/* 紙の中身が入る範囲。1%ほど余裕をみておかないと、
+   丸めのわずかなはみ出しで2枚目の白紙が出てしまう */
+const PAGE_W=190/25.4*96*0.995, PAGE_H=277/25.4*96*0.985;
 function fitPrint(opt){
   opt=opt||{};
   const a=document.getElementById("printArea"), inner=document.getElementById("printFit");
@@ -1478,6 +1482,9 @@ function fitPrint(opt){
   document.body.classList.remove("measuring");
   if(fin.k<1){ inner.style.zoom=fin.k.toFixed(4) }
   else { inner.style.width="" }
+  /* 収まると分かっているので、紙1枚ぶんに高さを固定してしまう。
+     こうしないと 1px 未満のはみ出しで白紙の2枚目が出ることがある */
+  a.style.height=Math.floor(PAGE_H)+"px";
   return {k:fin.k, pages:1};
 }
 
