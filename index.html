@@ -13,6 +13,7 @@
 <!-- v20260824a -->
 <!-- v20260824a -->
 <!-- v20260824a -->
+<!-- v20260824c -->
 <style>
 :root{
   --page:#FFEFD4; --sheet:#FFFDF7; --card:#FFFFFF;
@@ -65,7 +66,6 @@ header{position:sticky;top:0;z-index:30;background:var(--page);padding-bottom:2p
 @media (max-width:460px){
   .hd{padding:11px 14px 2px}
   .hd h1{font-size:17.5px}
-  .saveBtn{margin-left:0;order:3;flex:0 0 34%;text-align:center;padding:9px 8px;font-size:12.5px}
   nav{padding:6px 10px 8px;gap:4px}
   nav button{font-size:11.5px;padding:8px 1px}
   .wrap{padding:0 11px 110px}
@@ -76,16 +76,11 @@ header{position:sticky;top:0;z-index:30;background:var(--page);padding-bottom:2p
   .sec>summary{padding:15px 14px}
   h2{font-size:15px}
 }
-.parkNow{background:none;border:0;padding:2px 0;font-size:17px;font-weight:800;letter-spacing:.03em;
+.parkNow{flex:1;min-width:0;background:none;border:0;padding:2px 0;font-size:17px;font-weight:800;letter-spacing:.03em;
   color:var(--ink);cursor:pointer;max-width:52%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;text-align:left}
 .parkNow .caretd{color:var(--ink-3);font-size:12px}
 #picker{max-width:760px;margin:0 auto;padding:0 14px}
 #picker[hidden]{display:none}
-.saveBtn{margin-left:auto;background:var(--sun);color:#4E3A2C;border:0;border-radius:999px;
-  padding:8px 18px;font-size:13.5px;font-weight:800;cursor:pointer;box-shadow:var(--pop);white-space:nowrap}
-.saveBtn:active{transform:translateY(2px);box-shadow:none}
-.saveBtn.done{background:var(--mint);color:#fff}
-.saveBtn.bad{background:var(--coral-soft);color:var(--coral);border:2px solid var(--coral);box-shadow:none}
 .hd .sub2{font-size:10.5px;color:var(--ink-3);font-weight:800;margin-left:auto}
 nav{max-width:760px;margin:0 auto;padding:8px 12px 9px;display:flex;gap:5px}
 nav button{flex:1;background:var(--sheet);border:0;border-radius:999px;padding:11px 2px;cursor:pointer;color:var(--ink-2);font-size:13px;font-weight:800}
@@ -155,11 +150,9 @@ textarea{resize:vertical;min-height:56px;line-height:1.7}
 .movebar button:active{transform:translateY(2px)}
 .movebar.sm{padding:6px 0 0;justify-content:flex-end}
 .movebar.sm button{padding:5px 14px;font-size:13px;min-width:46px}
+.grp{margin:0 0 9px;font-size:13px;font-weight:800;color:var(--ink);letter-spacing:.06em;border-left:5px solid var(--sun);padding-left:9px;line-height:1.4}
+.grp + .muted{padding-left:14px}
 .verline{margin:0 0 10px;font-size:11.5px;font-weight:800;color:var(--ink-3);letter-spacing:.05em}
-.wlabel{padding:8px 16px 5px;font-size:11px;font-weight:800;color:var(--ink-3)}
-.weight{display:flex;gap:5px;padding:0 16px 13px}
-.weight button{flex:1;background:var(--sheet);border:2px solid var(--line);border-radius:999px;padding:7px 3px;font-size:11.5px;font-weight:800;color:var(--ink-2);cursor:pointer}
-.weight button[aria-pressed="true"]{background:var(--grape);border-color:var(--grape);color:#fff}
 .item{border-top:2px dotted var(--line);padding:14px 17px}
 .item .q{font-size:14.5px;font-weight:800;line-height:1.6;margin:0}
 .why{background:none;border:0;padding:2px 0 0;color:var(--coral);font-size:11.5px;font-weight:800;cursor:pointer}
@@ -225,6 +218,7 @@ footer{padding:22px 6px;color:var(--ink-3);font-size:11px;line-height:1.9;text-a
 .sumrow .k{flex:0 0 46%;font-size:12.5px;color:var(--ink-2);line-height:1.6}
 .sumrow .v{flex:1;font-size:13.5px;font-weight:800;line-height:1.6;word-break:break-word}
 .sumrow .v.na{color:var(--ink-3);font-weight:600}
+.rmk{color:var(--ink);font-size:15px}
 .sumrow .v .mm{display:block;font-size:11.5px;font-weight:600;color:var(--ink-2);margin-top:2px}
 .saveState{max-width:760px;margin:0 auto;padding:0 16px 4px;font-size:11px;font-weight:800;color:var(--ink-3);display:flex;align-items:center;gap:8px;min-height:18px}
 .saveState .ok{color:var(--mint)}
@@ -250,31 +244,6 @@ footer{padding:22px 6px;color:var(--ink-3);font-size:11px;line-height:1.9;text-a
 .nudge.thin .btn{margin-left:auto;flex:0 0 auto}
 .nudge.ok{background:var(--mint-soft);border-color:var(--mint);font-size:12px;font-weight:800;color:var(--mint)}
 .nudge.warn{background:var(--coral-soft);border-color:var(--coral)}
-#sortWrap{position:fixed;inset:0;z-index:200;background:var(--page);display:flex;flex-direction:column}
-#sortWrap[hidden]{display:none}
-.sortTop{display:flex;align-items:center;gap:10px;padding:14px 16px 6px;max-width:640px;margin:0 auto;width:100%}
-.sortTop span{flex:1;text-align:center;font-size:12.5px;font-weight:800;color:var(--ink-3);font-variant-numeric:tabular-nums}
-.sortStage{flex:1;position:relative;display:flex;align-items:center;justify-content:center;padding:8px 18px}
-.sortCard{width:100%;max-width:460px;background:var(--card);border-radius:26px;box-shadow:var(--shadow);
-  padding:26px 24px;touch-action:pan-y;user-select:none;transition:transform .25s ease,opacity .25s ease}
-.sortCard .cat{font-size:12px;font-weight:800;letter-spacing:.1em;color:var(--ink-3);display:block;margin-bottom:9px}
-.sortCard .q{font-size:21px;font-weight:800;line-height:1.55;margin:0}
-.sortCard .why{display:block;margin-top:14px;padding:13px 15px;background:var(--coral-soft);border-radius:16px;
-  font-size:13px;line-height:1.85;color:var(--ink-2);border:0;text-align:left;width:100%}
-.sortCard .now{display:inline-block;margin-top:15px;font-size:11.5px;font-weight:800;padding:4px 12px;border-radius:999px;
-  background:var(--line-2);color:var(--ink-3)}
-.sortHint{position:absolute;top:50%;transform:translateY(-50%);font-size:13px;font-weight:800;opacity:0;transition:opacity .15s;pointer-events:none}
-.sortHint.left{left:8px;color:var(--sky)}
-.sortHint.right{right:8px;color:var(--mint)}
-.sortBtns{display:flex;gap:9px;padding:10px 18px 26px;max-width:520px;margin:0 auto;width:100%}
-.sortB{flex:1;border:0;border-radius:999px;padding:16px 6px;font-size:14px;font-weight:800;cursor:pointer;box-shadow:var(--pop)}
-.sortB:active{transform:translateY(2px);box-shadow:none}
-.sortB.day{background:var(--sky);color:#fff}
-.sortB.pre{background:var(--mint);color:#fff}
-.sortB.off{background:var(--sheet);color:var(--ink-2);border:2px solid var(--line);box-shadow:none;flex:0 0 104px}
-.sortB.later{background:var(--sheet);color:var(--ink-2);border:2px solid var(--line);box-shadow:none}
-.sortB.must{background:var(--sel-good);color:#fff}
-.sortDone{text-align:center;font-size:16px;font-weight:800;line-height:2}
 .fromcat{display:block;font-size:10.5px;font-weight:800;letter-spacing:.08em;color:var(--ink-3);margin-bottom:4px}
 .missBtn{width:100%;border-color:var(--coral) !important;color:var(--coral) !important;font-size:13px}
 .cat.miss{border:2px solid var(--coral)}
@@ -284,8 +253,6 @@ footer{padding:22px 6px;color:var(--ink-3);font-size:11px;line-height:1.9;text-a
 .catClose:active{transform:translateY(2px)}
 .memoToggle{margin-top:9px;background:none;border:0;color:var(--ink-2);font-size:12px;font-weight:800;cursor:pointer;padding:2px 0;display:block}
 .item:not(.memoOn) .memoBox{display:none}
-.rateToggle{margin-top:9px;background:none;border:0;color:var(--sky);font-size:12px;font-weight:800;cursor:pointer;padding:2px 0;display:block}
-.item:not(.rateOn) .rateToggle + .rate{display:none}
 .tally{display:flex;gap:5px;flex-wrap:wrap;margin-top:7px}
 .tally span{font-size:12px;font-weight:800;padding:3px 10px;border-radius:999px;color:#fff;font-variant-numeric:tabular-nums}
 .tally .t3{background:var(--sel-good)} .tally .t2{background:var(--sel-ok)}
@@ -295,7 +262,7 @@ footer{padding:22px 6px;color:var(--ink-3);font-size:11px;line-height:1.9;text-a
 /* ---- 印刷 ---- */
 #printArea{display:none}
 @media print{
-  header,nav,.parks,.addbox,.io,.btn,footer,.why,.weight,.confirm,.banner,.wrap>section,.tip{display:none !important}
+  header,nav,.parks,.addbox,.io,.btn,footer,.why,.confirm,.banner,.wrap>section,.tip{display:none !important}
   body{background:#fff;color:#000;font-size:10.5px;line-height:1.5}
   .wrap{max-width:none;padding:0}
   #printArea{display:block !important}
@@ -322,7 +289,6 @@ footer{padding:22px 6px;color:var(--ink-3);font-size:11px;line-height:1.9;text-a
       <circle cx="17" cy="9" r="1.6" fill="#4E3A2C"/><circle cx="23" cy="9" r="1.6" fill="#4E3A2C"/>
       <path d="M20 12.4 L23 14.6 L17 14.6 Z" fill="var(--coral)"/></svg>
     <button class="parkNow" id="parkNow" onclick="togglePicker()"><span id="parkNowName">園見学ノート</span> <span class="caretd">▾</span></button>
-    <button class="saveBtn" id="saveBtn" onclick="manualSave()">保存</button>
   </div>
   <div id="picker" hidden>
     <div class="parks" id="parks"></div>
@@ -398,27 +364,32 @@ footer{padding:22px 6px;color:var(--ink-3);font-size:11px;line-height:1.9;text-a
   <section id="set" hidden>
     <div class="stack io" style="padding-top:11px">
 
-      <div class="card" style="padding:18px;background:var(--sun-soft);border:2px solid var(--sun)">
-        <h2>カードで仕分ける</h2>
-        <p class="muted" style="margin:8px 0 13px">
-          全<b id="allN2">135</b>項目を1枚ずつ出します。スワイプでも、ボタンでも進められます。<br><br>
-          「絶対に聞くこと」だけを残します。外したものは消えるわけではなく、
-          <b>あとから「項目をえらぶ」でいつでも足せます</b>。
-        </p>
-        <button class="btn" id="sortMustStart" style="width:100%;padding:15px">カードで仕分ける</button>
-      </div>
-
       <details class="card sec">
         <summary><span class="secn">1</span><h2>使い方</h2><span class="caret">▶</span></summary>
         <div class="secbody">
-        <p class="muted" style="margin:0">
+        <p class="grp">タブについて</p>
+        <p class="muted" style="margin:0 0 15px">
           <b>① 事前</b>　全部の項目が並んでいます。園のホームページ、重要事項説明書（入園のしおり）、自治体の公式サイトで<b>分かるものだけ</b>埋めてください。園によって載っている量は違うので、埋まらなくて大丈夫です。<br><br>
           <b>② 当日</b>　<b>事前に書けなかったものだけ</b>が出ます。上から<b>「見て確認すること」</b>、下に<b>「聞いて確認すること」</b>の順です。見学は先に園内をまわって最後に質問、という流れが多いので、この順で使えます。書き込むと、その項目はこの画面から消えます。<br><br>
           <b>③ まとめ</b>　記入したものを一覧で見返せます。園が複数あれば横に並べて比べられます。紙に印刷したり、1枚の画像にして保存もできます。<br><br>
-          各項目の<b style="color:var(--coral)">「聞く理由 ▾」</b>を押すと、なぜそこを見るのかが読めます。<br><br>
-          入力は<b>自動で保存されます</b>。上の<b>「保存」</b>ボタンは、ちゃんと保存できているかの確認用です（押すと緑になります）。<br><br>
+          <b>④ 設定</b>　いま開いている画面です。中身は下にまとめました。
+        </p>
+
+        <p class="grp">設定について</p>
+        <p class="muted" style="margin:0 0 15px">
+          <b>① 使い方</b>　いま読んでいるところです。<br><br>
+          <b>② 評価（◎○△✕）</b>　見た印象を4段階で残すかどうかを決めます。<b>最初はオフ</b>で、メモだけで記録できます。<br><br>
+          <b>③ 項目をえらぶ</b>　使う項目を足したり外したり、順番を入れかえたりできます。<b style="color:var(--coral)">各項目の「聞く理由」（なぜそれを確認するのか）も、ここで読めます。</b><br><br>
+          <b>④ 保存について</b>　保存のしくみと、うまく保存されないときの調べ方。<br><br>
+          <b>⑤ 持ち出す・戻す</b>　記録をファイルにして残したり、別の端末へ移したりできます。<br><br>
+          <b>⑥ この道具について</b>　どんな考えで項目を選んだか。
+        </p>
+
+        <p class="grp">保存と、園の追加</p>
+        <p class="muted" style="margin:0">
+          入力は<b>書いたそばから自動で保存されます</b>。保存ボタンはありません。<br><br>
           園はいくつでも追加できます。<b>画面の上の園名（▾）</b>を押すと、園の切りかえ・追加・削除ができます。<br><br>
-          念のためファイルにも残したいときは<b>この設定の「持ち出す・戻す」→「ファイルに保存」</b>を使ってください。
+          念のためファイルにも残したいときは<b>「⑤ 持ち出す・戻す」→「ファイルに保存」</b>を使ってください。
         </p>
         </div>
       </details>
@@ -431,19 +402,17 @@ footer{padding:22px 6px;color:var(--ink-3);font-size:11px;line-height:1.9;text-a
           <b>◎ よい</b>　<b>○ ふつう</b>　<b>△ 気になる</b>　<b>✕ 合わない</b>
         </p>
         <p class="muted" style="margin:0 0 11px">
-          つけると<b>「まとめ」に点数が出て</b>、園が複数あるとき横に並べて比べられます。
-          点数がつくのは<b>「見て確認すること」だけ</b>です。定員や料金は良し悪しではないので、点数には入れていません。
+          オンにすると、<b>すべての項目</b>に◎○△✕のボタンが出ます。付けても付けなくても大丈夫です。<b>付けたものだけ</b>で点数を出します。
         </p>
         <p class="muted" style="margin:0 0 11px">
-          カテゴリごとに<b>「点数でどれくらい重くみるか」</b>も決められます（下の「項目をえらぶ」の中に出ます）。
-          たとえば「保育者の様子」を<b>重視する</b>にすると、その項目の◎が点数に強くひびきます。
+          点数は<b>「まとめ」</b>に出ます。園が複数あるときは、横に並べて比べられます。
         </p>
         <p class="muted" style="margin:0 0 13px">
           点数は園に優劣をつけるためではなく、<b>自分が何を大事にしているかを確かめる</b>ためのものです。最後は実際に見た感触で決めてくださいね。
         </p>
         <div class="confirm on" style="background:var(--sky-soft);display:flex">
           <p style="margin:0;flex:1;min-width:150px"><b>いまは<span id="rateNow">使わない</span>設定です。</b><br>
-            <span style="font-size:12.5px">評価を使わなくても、メモだけで記録できます。</span></p>
+            <span style="font-size:12.5px">オフにしても、付けた評価は消えません。オンに戻せばそのまま出ます。</span></p>
           <button class="btn sm" id="rateBtn" onclick="setShowRate(!useRate())">評価を使う</button>
         </div>
         </div>
@@ -457,7 +426,6 @@ footer{padding:22px 6px;color:var(--ink-3);font-size:11px;line-height:1.9;text-a
           使う項目を先に絞っておくと、当日ラクになります。外した項目は記録画面にも印刷にも出ません。
         </p>
         <p class="muted" style="margin:0 0 11px"><b>「事前」で分かることは、先にホームページなどで調べてまとめておきましょう。</b>当日は、行かないと分からないことだけに集中できます。</p>
-        <p class="muted" style="margin:0 0 11px">1つずつ選ぶのが大変なときは、<b>この画面のいちばん上にある「カードで仕分ける」</b>が早いです。</p>
         <div class="row" style="gap:7px;flex-wrap:wrap">
           <button class="btn sm ghost" id="ps_rec" onclick="preset('rec')">おすすめに戻す</button>
           <button class="btn sm ghost" id="ps_all" onclick="preset('all')">ぜんぶ使う</button>
@@ -479,17 +447,14 @@ footer{padding:22px 6px;color:var(--ink-3);font-size:11px;line-height:1.9;text-a
         <summary><span class="secn">4</span><h2>保存について</h2><span class="caret">▶</span></summary>
         <div class="secbody">
         <p class="muted" style="margin:0 0 11px">
-          入力するたびに<b>自動で保存されます</b>。念のため確かめたいときは、画面いちばん上の<b>「保存」ボタン</b>を押してください。押すと緑色になります。<br>
-          まちがえて消してしまったときは、上に出る<b>「元にもどす」</b>を押してください。
+          入力するたびに<b>自動で保存されます</b>。保存ボタンを押す必要はありません。<br>
+          まちがえて消してしまったときは、画面の上に出る<b>「元にもどす」</b>を押してください。
         </p>
         <p class="muted" style="margin:0 0 13px;font-size:12.5px">
           記録は<b>ブラウザごとに別々に</b>保存されます。前回と違うブラウザで開くと出てきません。いつも同じところから開いてください。
         </p>
         <hr style="border:0;border-top:2px dotted var(--line);margin:0 0 13px">
         <p class="muted" style="margin:0 0 10px;font-weight:800">うまく保存されないとき</p>
-        <p class="muted" style="margin:0 0 10px;font-size:12.5px">
-          <b>先に画面いちばん上の「保存」を1回押してから</b>、下のボタンを押してください。保存を押したときに、ブラウザへ保存の許可を求めます。
-        </p>
         <p class="muted" style="margin:0 0 10px;font-size:12.5px">下のボタンを押して、出てきた文字をそのまま伝えてもらえれば原因が分かります。</p>
         <button class="btn sm" onclick="document.getElementById('diag').textContent=diagText()">しらべる</button>
         <pre id="diag" style="white-space:pre-wrap;font-size:12px;line-height:1.8;color:var(--ink-2);margin:11px 0 0;font-family:inherit"></pre>
@@ -531,40 +496,17 @@ footer{padding:22px 6px;color:var(--ink-3);font-size:11px;line-height:1.9;text-a
       <details class="card sec">
         <summary><span class="secn">6</span><h2>この道具について</h2><span class="caret">▶</span></summary>
         <div class="secbody">
-        <p class="verline">バージョン 2026-08-24a</p>
+        <p class="verline">バージョン 2026-08-24c</p>
         <p class="muted" style="margin:0">
           項目は「保育士にゆとりがあるか」を軸に組んでいます。設備の新しさより、そこで働く人に余裕があるかどうかが、子どもの過ごし方に直結するからです。<br><br>
           <b>事前</b>には全部の項目が、<b>聞いて確認すること</b>から順に並んでいます。<b>当日</b>には、事前に書けなかったものだけが、<b>見て確認すること</b>・<b>聞いて確認すること</b>の順で出ます。<br><br>
-          ◎○△✕の評価と点数については、上の<b>「2 評価（◎○△✕）」</b>を読んでみてください。最初はオフになっています。
+          ◎○△✕の評価と点数については、上の<b>「② 評価（◎○△✕）」</b>を読んでみてください。最初はオフになっています。
         </p>
         </div>
       </details>
 
     </div>
   </section>
-
-  <div id="sortWrap" hidden>
-    <div class="sortTop">
-      <button class="btn sm ghost" id="sortClose">とじる</button>
-      <span id="sortCount"></span>
-      <button class="btn sm ghost" id="sortUndo">ひとつ戻す</button>
-    </div>
-    <div class="sortStage">
-      <div class="sortHint left">当日きく</div>
-      <div class="sortHint right">事前にしらべる</div>
-      <div class="sortCard" id="sortCard"></div>
-      <div class="sortDone" id="sortDone" hidden></div>
-    </div>
-    <div class="sortBtns" id="sortBtnsMust" hidden>
-      <button class="sortB later" id="sortLater">← あとでいい</button>
-      <button class="sortB must" id="sortMust">絶対きく →</button>
-    </div>
-    <div class="sortBtns" id="sortBtnsSplit" hidden>
-      <button class="sortB day" id="sortDay">← 当日</button>
-      <button class="sortB off" id="sortOff">あとでいい</button>
-      <button class="sortB pre" id="sortPre">事前 →</button>
-    </div>
-  </div>
 
   <div id="printArea"></div>
   <footer>記録はこの端末のブラウザ内にだけ保存され、どこにも送信されません。<br>
@@ -744,7 +686,6 @@ const RATE=[["3","◎","よい"],["2","○","ふつう"],["1","△","気にな�
 /* 変な値が入っていても画面が壊れないように */
 function rateOf(v){ if(v===undefined||v===null) return null;
   var t=String(v); for(var i=0;i<RATE.length;i++) if(RATE[i][0]===t) return RATE[i]; return null }
-const WEIGHTS=[["2","重視する"],["1","ふつう"],["0","気にしない"]];
 const KEY="engakunote.v3";
 function applyOrder(){
   if(S.catOrder && S.catOrder.length){
@@ -781,7 +722,7 @@ function moveItem(cid,k,dir){
 }
 const ALL=[]; CATS.forEach(function(c){c.items.forEach(function(it){ALL.push(it.k)})});
 
-let S={parks:[],cur:null,weights:{},off:Object.assign({},DEFAULT_OFF),pg:{},catOrder:null,itemOrder:{}}, storageOK=true, sumView="one";
+let S={parks:[],cur:null,off:Object.assign({},DEFAULT_OFF),pg:{},catOrder:null,itemOrder:{}}, storageOK=true, sumView="one";
 let STORE=null, STORE_KIND="なし", STORE_ERR="", LOADED="（保存が使えません）", PROBE=null, ACCESS="未確認", NOKEEP=false;
 (function(){
   var probe=function(get,name){
@@ -829,8 +770,7 @@ function showSave(state){
   else if(BAK.length) h='<span class="ok">✓ '+t+'</span>';
   if(BAK.length) h+='<button onclick="undoBak()">元にもどす</button>';
   el.innerHTML=h;
-  const b=document.getElementById("saveBtn");
-  if(b&&state!=="ok"){ b.textContent="保存できません"; b.classList.add("bad") } }
+}
 /* 消す・読みこむ の前に控えを取る（最大5件） */
 let BAK=[];
 function snapshot(){ try{ BAK.push(JSON.stringify(S)); if(BAK.length>5)BAK.shift(); }catch(e){} }
@@ -843,7 +783,6 @@ function warnStorage(){ document.getElementById("storageWarn").innerHTML=
  '<div class="banner"><b>このブラウザでは自動保存が使えません。</b><br>記録は画面を閉じると消えてしまいます。「設定」で書き出して控えてください。</div>' }
 const uid=function(){return Math.random().toString(36).slice(2,9)};
 const cur=function(){ for(var i=0;i<S.parks.length;i++) if(S.parks[i].id===S.cur) return S.parks[i]; return null };
-const w=function(id){ return S.weights[id]===undefined?1:+S.weights[id] };
 /* 評価（◎○△✕）は最初はオフ。設定でオンにできる */
 const useRate=function(){ return !!S.showRate };
 function setShowRate(v){ S.showRate=!!v; save(); render(); renderPick() }
@@ -915,7 +854,6 @@ function setOpt(k,v,multi){ const p=cur(); if(!p)return;
       b.setAttribute("aria-pressed", String(sel.indexOf(b.textContent)>-1)) }) }
   syncCat(k.slice(0,k.lastIndexOf("_"))); syncScore(); }
 function setMemo(k,v){ const p=cur(); if(!p)return; if(v)p.m[k]=v; else delete p.m[k]; save() }
-function setW(cid,v){ S.weights[cid]=v; save(); syncScore(); renderPick(); renderSum(); }
 function toggleWhy(el){ el.parentNode.classList.toggle("open") }
 function closeCat(btn){ var d=btn.closest("details"); if(!d)return;
   d.open=false; d.scrollIntoView({block:"start"}); }
@@ -924,9 +862,6 @@ function toggleMemo(btn){ var it=btn.closest(".item"); if(!it)return;
   var open=it.classList.contains("memoOn");
   btn.textContent = open ? "メモを閉じる" : "＋ メモ";
   if(open){ var ta=it.querySelector(".memoBox"); if(ta) ta.focus() } }
-function toggleRate(btn){ var it=btn.closest(".item"); if(!it)return;
-  it.classList.toggle("rateOn");
-  btn.textContent = it.classList.contains("rateOn") ? "評価をやめる" : "評価をつける"; }
 function ensureStorageAccess(){
   return new Promise(function(done){
     if(!document.hasStorageAccess){ ACCESS="この端末では確認不要"; return done(true) }
@@ -942,18 +877,6 @@ function ensureStorageAccess(){
       });
     }).catch(function(){ ACCESS="確認できませんでした"; done(true) });
   });
-}
-function manualSave(){
-  const b=document.getElementById("saveBtn"); if(!b)return;
-  b.textContent="保存中…";
-  ensureStorageAccess().then(function(){ doManualSave() });
-}
-function doManualSave(){
-  const b=document.getElementById("saveBtn"); if(!b)return;
-  save();
-  if(storageOK){ b.textContent="✓ 保存しました"; b.classList.add("done"); b.classList.remove("bad");
-    clearTimeout(b._t); b._t=setTimeout(function(){ b.textContent="保存"; b.classList.remove("done") },1800) }
-  else { b.textContent=NOKEEP?"閉じると消えます":"保存できません"; b.classList.add("bad") }
 }
 function imsg2(t){ const e=document.getElementById("ioMsg2"); if(e)e.textContent=t }
 function showC(id){ document.getElementById(id).classList.add("on") }
@@ -1013,13 +936,13 @@ function syncScore(){
   if(bar) bar.style.width=(d[1]?Math.round(d[0]/d[1]*100):0)+"%";
 }
 function score(p){ let got=0,max=0;
-  CATS.forEach(function(c){ const ww=w(c.id); if(!ww)return;
+  CATS.forEach(function(c){
     c.items.forEach(function(it){ if(!on(it.k))return; const v=p.r[it.k];
-      if(v===undefined)return; got+=(+v)*ww; max+=3*ww }) });
+      if(v===undefined)return; got+=(+v); max+=3 }) });
   return max? Math.round(got/max*100):null }
 /* ◎○△✕ の内訳 */
 function tally(p){ var t={3:0,2:0,1:0,0:0,n:0};
-  CATS.forEach(function(c){ if(!w(c.id))return;
+  CATS.forEach(function(c){
     c.items.forEach(function(it){ if(!on(it.k))return; var v=p.r[it.k];
       if(v===undefined)return; t[v]++; t.n++ }) });
   return t }
@@ -1177,9 +1100,8 @@ function renderDay(){
 
 function itemHTML(c,p,it,showCat){
   const k=it.k, v=p.r[k];
-  const rated = v!==undefined;
   const hasMemo = !!((c.kind==="rate"? p.m[k] : p.a[k])||"").trim();
-  let h='<div class="item'+((c.kind!=="rate"&&rated)?" rateOn":"")+(hasMemo?" memoOn":"")+'" data-k="'+k+'">';
+  let h='<div class="item'+(hasMemo?" memoOn":"")+'" data-k="'+k+'">';
   if(showCat) h+='<span class="fromcat">'+c.name+'</span>';
   h+='<p class="q">'+it.q+'</p>';
   if(it.g){
@@ -1203,7 +1125,7 @@ function itemHTML(c,p,it,showCat){
   }else{
     h+='<button class="memoToggle" onclick="toggleMemo(this)">'+((p.a[k]&&p.a[k].trim())?"メモを閉じる":"＋ メモ")+'</button>';
     h+='<textarea class="memoBox" placeholder="メモ" oninput="setAns(&quot;'+k+'&quot;,this.value)">'+esc(p.a[k]||"")+'</textarea>';
-    if(useRate()) h+='<button class="rateToggle" onclick="toggleRate(this)">'+(rated?"評価をやめる":"評価をつける")+'</button>'+rateHTML;
+    if(useRate()) h+=rateHTML;
   }
   h+='<button class="sinkBtn" onclick="toggleSink(&quot;'+k+'&quot;)">'+((p.d&&p.d[k])?"もう一度書く ↑":"書けた ↓")+'</button>';
   return h+'</div>';
@@ -1254,7 +1176,9 @@ function sumHTML(p){
     live.forEach(function(it){
       const k=it.k;
       let v='';
-      if(c.kind==="ask"){ v = (p.a[k]&&p.a[k].trim()) ? esc(p.a[k]) : '' }
+      const RA=rateOf(p.r[k]);
+      const mark = (useRate()&&RA) ? '<b class="rmk">'+RA[1]+'</b> ' : '';
+      if(c.kind==="ask"){ v = (p.a[k]&&p.a[k].trim()) ? mark+esc(p.a[k]) : (mark||'') }
       else if(c.kind==="check"){ v = p.r[k]!==undefined ? "確認ずみ" : '' }
       else { const r=p.r[k];
         const R=rateOf(r);
@@ -1301,8 +1225,7 @@ function renderCmp(){
            '<tr><th>家から（分）</th>'+S.parks.map(function(p){return '<td>'+(esc(p.mins)||"—")+'</td>'}).join("")+'</tr>';
   CATS.forEach(function(c){
     const live=liveItems(c); if(!live.length)return;
-    const ww=w(c.id);
-    rows+='<tr class="catrow"><th>'+c.name+((useRate()&&c.kind==="rate")?(ww==2?"（重視）":ww==0?"（対象外）":""):"")+
+    rows+='<tr class="catrow"><th>'+c.name+
       '</th><td colspan="'+S.parks.length+'"></td></tr>';
     live.forEach(function(it){ const k=it.k;
       rows+='<tr><th>'+it.q+'</th>'+S.parks.map(function(p){
@@ -1314,7 +1237,10 @@ function renderCmp(){
           return '<td class="'+(v===undefined?"vna":"v"+v)+'">'+mk+mm+'</td>' }
         if(c.kind==="check"){ const v=p.r[k];
           return '<td class="'+(v===undefined?"vna":"v3")+'">'+(v===undefined?"—":"✓")+'</td>' }
-        return '<td class="ans">'+(esc(p.a[k])||'<span class="vna">—</span>')+'</td>';
+        const RA=rateOf(p.r[k]);
+        const mark=(useRate()&&RA)?'<b class="rmk">'+RA[1]+'</b> ':'';
+        const av=esc(p.a[k]);
+        return '<td class="ans'+((useRate()&&RA)?' v'+p.r[k]:'')+'">'+(av?mark+av:(mark||'<span class="vna">—</span>'))+'</td>';
       }).join("")+'</tr>' }) });
   rows+=totalRow;
   el.innerHTML='<table><thead><tr><th style="min-width:190px">項目</th>'+th+'</tr></thead><tbody>'+rows+'</tbody></table>';
@@ -1348,9 +1274,7 @@ function renderPick(){
       '<div style="padding:12px 16px;display:flex;gap:7px">'+
       '<button class="btn sm ghost" onclick="toggleCat(\''+c.id+'\',true)">全部使う</button>'+
       '<button class="btn sm ghost" onclick="toggleCat(\''+c.id+'\',false)">全部外す</button></div>'+
-      ((useRate()&&c.kind==="rate")?('<div class="wlabel">このカテゴリを点数でどれくらい重くみるか</div>'+
-      '<div class="weight">'+WEIGHTS.map(function(x){
-        return '<button aria-pressed="'+(String(w(c.id))===x[0])+'" onclick="setW(&quot;'+c.id+'&quot;,&quot;'+x[0]+'&quot;)">'+x[1]+'</button>' }).join("")+'</div>'):"")+
+
       '<div class="pickcat">'+shown.map(function(it){ const k=it.k;
         return '<div class="pickrow"><input type="checkbox" id="pk_'+k+'" '+(on(k)?"checked":"")+
           ' onchange="toggleItem(&quot;'+k+'&quot;,this.checked)"><div class="pickmain">'+
@@ -1393,7 +1317,7 @@ function renderPickCounts(){
   const a=document.getElementById("allN"); if(a)a.textContent=ALL.length;
   const b=document.getElementById("onN"); if(b)b.textContent=n;
   const c=document.getElementById("onBadge"); if(c)c.textContent=n+"/"+ALL.length;
-  const d=document.getElementById("allN2"); if(d)d.textContent=ALL.length; }
+}
 
 /* ---- 印刷 ---- */
 function doPrint(mode){
@@ -1415,7 +1339,7 @@ function doPrint(mode){
     CATS.forEach(function(c){
       const live=liveItems(c); if(!live.length)return;
       if(c.phase!==ph){ ph=c.phase; h+='<p class="pCat" style="background:#333;color:#fff">'+ph+'</p>' }
-      h+='<p class="pCat">'+c.name+((useRate()&&c.kind==="rate")?"（◎○△✕）":"")+'</p>';
+      h+='<p class="pCat">'+c.name+(useRate()?"（◎○△✕）":"")+'</p>';
       h+=(c.kind==="ask")?'<div>':'<div class="pCols">';
       live.forEach(function(x){
         h+= (c.kind==="ask")
@@ -1433,10 +1357,10 @@ function doImport(go){ const t=document.getElementById("io").value.trim();
   if(!t){ msg("先に文字列を貼りつけてください。"); return }
   if(!go){ showC("cfImport"); return } hideC("cfImport"); snapshot();
   try{ const d=JSON.parse(t); if(!d||!Array.isArray(d.parks)) throw new Error("bad");
-    S=Object.assign({parks:[],cur:null,weights:{},off:{}},d); applyOrder();
+    S=Object.assign({parks:[],cur:null,off:{}},d); applyOrder();
     if(!S.cur&&S.parks[0])S.cur=S.parks[0].id; save(); render(); msg("読みこみました。");
   }catch(e){ msg("読みこめませんでした。文字列が途中で切れていないか確かめてください。") } }
-function wipe(){ hideC("cfWipe"); snapshot(); S={parks:[],cur:null,weights:{},off:Object.assign({},DEFAULT_OFF),pg:{}}; save(); render(); msg("すべて消しました。") }
+function wipe(){ hideC("cfWipe"); snapshot(); S={parks:[],cur:null,off:Object.assign({},DEFAULT_OFF),pg:{}}; save(); render(); msg("すべて消しました。") }
 function msg(t){ const e=document.getElementById("ioMsg"); if(e)e.textContent=t }
 function bmsg(t){ const e=document.getElementById("bkMsg"); if(e)e.textContent=t;
   const n=document.getElementById("nudge");
@@ -1467,7 +1391,7 @@ function loadBackupFile(input){
 function applyBackupFile(){
   if(!PENDING){ hideC("cfFile"); return }
   hideC("cfFile"); snapshot();
-  S=Object.assign({parks:[],cur:null,weights:{},off:{}},PENDING); PENDING=null; applyOrder();
+  S=Object.assign({parks:[],cur:null,off:{}},PENDING); PENDING=null; applyOrder();
   if(!S.cur&&S.parks[0])S.cur=S.parks[0].id;
   save(); render(); bmsg("戻しました。"); renderNudge();
 }
@@ -1625,103 +1549,6 @@ if(document.hasStorageAccess){
     }
   }).catch(function(){});
 }
-/* ================= カードで仕分ける ================= */
-var SORT={list:[],idx:0,hist:[],x0:0,dx:0,drag:false,mode:"split"};
-function sortLabel(pg){ return pg==="pre" ? "いまは 事前" : "いまは 当日" }
-function sortOpen(mode){
-  SORT.mode = (mode==="must") ? "must" : "split";
-  document.getElementById("sortBtnsMust").hidden  = SORT.mode!=="must";
-  document.getElementById("sortBtnsSplit").hidden = SORT.mode==="must";
-  var l=document.querySelector(".sortHint.left"), r=document.querySelector(".sortHint.right");
-  if(l) l.textContent = SORT.mode==="must" ? "あとでいい" : "当日きく";
-  if(r) r.textContent = SORT.mode==="must" ? "絶対きく"   : "事前にしらべる";
-  SORT.list=[]; SORT.hist=[]; SORT.idx=0;
-  CATS.forEach(function(c){ c.items.forEach(function(it){ SORT.list.push({c:c,it:it}) }) });
-  document.getElementById("sortWrap").hidden=false;
-  document.body.style.overflow="hidden";
-  sortShow();
-}
-function sortClose(){
-  document.getElementById("sortWrap").hidden=true;
-  document.body.style.overflow="";
-  save(); renderPre(); renderDay(); renderPick(); renderCmp(); renderSum();
-}
-function sortShow(){
-  var card=document.getElementById("sortCard"), done=document.getElementById("sortDone");
-  var cnt=document.getElementById("sortCount");
-  if(SORT.idx>=SORT.list.length){
-    card.hidden=true; done.hidden=false;
-    done.innerHTML = SORT.mode==="must"
-      ? ("おつかれさまでした。<br>いま使う項目は <b>"+ALL.filter(on).length+"</b> 件です。<br>"
-        +"<span style=\"font-size:13px;font-weight:400\">外したものは「項目をえらぶ」からいつでも足せます。</span>")
-      : "ぜんぶ仕分けました。<br>おつかれさまでした。";
-    cnt.textContent=SORT.list.length+" / "+SORT.list.length;
-    return;
-  }
-  card.hidden=false; done.hidden=true;
-  var e=SORT.list[SORT.idx];
-  var pg=pageOf(e.it), used=on(e.it.k);
-  cnt.textContent=(SORT.idx+1)+" / "+SORT.list.length;
-  var h='<span class="cat">'+e.c.name+'</span><p class="q">'+e.it.q+'</p>';
-  if(e.it.w) h+='<span class="why">'+e.it.w+'</span>';
-  h+='<span class="now">'+(SORT.mode==="must"
-        ? (used? "いまは 使う" : "いまは あとで")
-        : (used? sortLabel(pg) : "いまは あとで"))+'</span>';
-  card.innerHTML=h;
-  card.style.transform=""; card.style.opacity="1";
-  hintFade(0);
-}
-function hintFade(dx){
-  var l=document.querySelector(".sortHint.left"), r=document.querySelector(".sortHint.right");
-  if(l) l.style.opacity = dx<-20 ? Math.min(1,(-dx-20)/70) : 0;
-  if(r) r.style.opacity = dx> 20 ? Math.min(1,( dx-20)/70) : 0;
-}
-function sortDecide(kind){
-  if(SORT.idx>=SORT.list.length) return;
-  var e=SORT.list[SORT.idx], k=e.it.k;
-  SORT.hist.push({k:k,pg:(S.pg&&S.pg[k]), off:!!(S.off&&S.off[k]), idx:SORT.idx});
-  if(kind==="off"||kind==="later"){ S.off[k]=1 }
-  else if(kind==="must"){ delete S.off[k] }
-  else { delete S.off[k]; setPage(e.it,kind) }
-  save();
-  var card=document.getElementById("sortCard");
-  var to = kind==="off" ? "translateY(120%)"
-         : ((kind==="pre"||kind==="must") ? "translateX(120%) rotate(9deg)" : "translateX(-120%) rotate(-9deg)");
-  card.style.transform=to; card.style.opacity="0";
-  SORT.idx++;
-  setTimeout(sortShow,180);
-}
-function sortUndo(){
-  var h=SORT.hist.pop(); if(!h) return;
-  if(h.pg===undefined){ if(S.pg) delete S.pg[h.k] } else { S.pg[h.k]=h.pg }
-  if(h.off){ S.off[h.k]=1 } else { delete S.off[h.k] }
-  SORT.idx=h.idx; save(); sortShow();
-}
-(function(){
-  function on2(id,fn){ var el=document.getElementById(id); if(el) el.addEventListener("click",fn) }
-  on2("sortMustStart",function(){ sortOpen("must") });
-  on2("sortLater",function(){ sortDecide("later") });
-  on2("sortMust", function(){ sortDecide("must") });
-  on2("sortClose",sortClose);
-  on2("sortUndo",sortUndo);
-  on2("sortDay",function(){ sortDecide("day") });
-  on2("sortPre",function(){ sortDecide("pre") });
-  on2("sortOff",function(){ sortDecide("off") });
-  var card=document.getElementById("sortCard"); if(!card) return;
-  function start(x){ SORT.drag=true; SORT.x0=x; SORT.dx=0; card.style.transition="none" }
-  function move(x){ if(!SORT.drag)return; SORT.dx=x-SORT.x0;
-    card.style.transform="translateX("+SORT.dx+"px) rotate("+(SORT.dx/26)+"deg)"; hintFade(SORT.dx) }
-  function end(){ if(!SORT.drag)return; SORT.drag=false; card.style.transition="";
-    if(SORT.dx>90){ sortDecide(SORT.mode==="must"?"must":"pre") }
-    else if(SORT.dx<-90){ sortDecide(SORT.mode==="must"?"later":"day") }
-    else { card.style.transform=""; hintFade(0) } }
-  card.addEventListener("touchstart",function(ev){ start(ev.touches[0].clientX) },{passive:true});
-  card.addEventListener("touchmove", function(ev){ move(ev.touches[0].clientX) },{passive:true});
-  card.addEventListener("touchend",  end);
-  card.addEventListener("mousedown", function(ev){ start(ev.clientX); ev.preventDefault() });
-  window.addEventListener("mousemove",function(ev){ move(ev.clientX) });
-  window.addEventListener("mouseup",  end);
-})();
 applyOrder();
 render(); renderPickCounts();
 if(!S.parks.length) togglePicker(true);
