@@ -11,6 +11,8 @@
 <title>園見学ノート</title>
 <!-- v20260821a -->
 <!-- v20260824a -->
+<!-- v20260824a -->
+<!-- v20260824a -->
 <style>
 :root{
   --page:#FFEFD4; --sheet:#FFFDF7; --card:#FFFFFF;
@@ -63,9 +65,7 @@ header{position:sticky;top:0;z-index:30;background:var(--page);padding-bottom:2p
 @media (max-width:460px){
   .hd{padding:11px 14px 2px}
   .hd h1{font-size:17.5px}
-  .fileBtn,.saveBtn{margin-left:0;flex:1;text-align:center;padding:9px 8px;font-size:12.5px}
-  .fileBtn{order:3}
-  .saveBtn{order:4;flex:0 0 34%}
+  .saveBtn{margin-left:0;order:3;flex:0 0 34%;text-align:center;padding:9px 8px;font-size:12.5px}
   nav{padding:6px 10px 8px;gap:4px}
   nav button{font-size:11.5px;padding:8px 1px}
   .wrap{padding:0 11px 110px}
@@ -81,9 +81,7 @@ header{position:sticky;top:0;z-index:30;background:var(--page);padding-bottom:2p
 .parkNow .caretd{color:var(--ink-3);font-size:12px}
 #picker{max-width:760px;margin:0 auto;padding:0 14px}
 #picker[hidden]{display:none}
-.fileBtn{margin-left:auto;background:var(--sel-good);color:#fff;border:0;border-radius:999px;padding:9px 13px;font-size:12.5px;font-weight:800;cursor:pointer;box-shadow:var(--pop);white-space:nowrap}
-.fileBtn:active{transform:translateY(2px);box-shadow:none}
-.saveBtn{background:var(--sun);color:#4E3A2C;border:0;border-radius:999px;
+.saveBtn{margin-left:auto;background:var(--sun);color:#4E3A2C;border:0;border-radius:999px;
   padding:8px 18px;font-size:13.5px;font-weight:800;cursor:pointer;box-shadow:var(--pop);white-space:nowrap}
 .saveBtn:active{transform:translateY(2px);box-shadow:none}
 .saveBtn.done{background:var(--mint);color:#fff}
@@ -99,6 +97,8 @@ h2{font-size:15.5px;font-weight:800;margin:0;letter-spacing:.03em}
 .lbl{font-size:11px;letter-spacing:.11em;color:var(--ink-2);font-weight:800}
 .muted{color:var(--ink-2);font-size:13.5px;line-height:1.75}
 .btn{background:var(--sun);color:#4E3A2C;border:0;border-radius:999px;padding:12px 19px;font-weight:800;font-size:15px;cursor:pointer;box-shadow:var(--pop)}
+.btn.chosen{background:var(--sun);color:#4E3A2C;border:2px solid var(--sun);box-shadow:var(--pop)}
+.btn.chosen::before{content:"\2713\3000";font-weight:800}
 .btn.ghost{background:var(--sheet);color:var(--ink-2);box-shadow:none;border:2px solid var(--line)}
 .btn.danger{background:var(--coral-soft);color:var(--danger-ink);box-shadow:none;border:2px solid var(--coral)}
 .btn.sm{padding:8px 14px;font-size:12.5px}
@@ -322,7 +322,6 @@ footer{padding:22px 6px;color:var(--ink-3);font-size:11px;line-height:1.9;text-a
       <circle cx="17" cy="9" r="1.6" fill="#4E3A2C"/><circle cx="23" cy="9" r="1.6" fill="#4E3A2C"/>
       <path d="M20 12.4 L23 14.6 L17 14.6 Z" fill="var(--coral)"/></svg>
     <button class="parkNow" id="parkNow" onclick="togglePicker()"><span id="parkNowName">園見学ノート</span> <span class="caretd">▾</span></button>
-    <button class="fileBtn" id="fileBtn" onclick="saveBackupFile()" aria-label="ファイルに保存">⤓ ファイル</button>
     <button class="saveBtn" id="saveBtn" onclick="manualSave()">保存</button>
   </div>
   <div id="picker" hidden>
@@ -414,16 +413,44 @@ footer{padding:22px 6px;color:var(--ink-3);font-size:11px;line-height:1.9;text-a
         <div class="secbody">
         <p class="muted" style="margin:0">
           <b>① 事前</b>　全部の項目が並んでいます。園のホームページ、重要事項説明書（入園のしおり）、自治体の公式サイトで<b>分かるものだけ</b>埋めてください。園によって載っている量は違うので、埋まらなくて大丈夫です。<br><br>
-          <b>② 当日</b>　<b>事前に書けなかったものだけ</b>が出ます。「見て確認すること」と「聞いて確認すること」に分かれています。見学は先に園内をまわって最後に質問、という流れが多いので、この順で使えます。書き込むと、その項目はこの画面から消えます。<br><br>
+          <b>② 当日</b>　<b>事前に書けなかったものだけ</b>が出ます。上から<b>「見て確認すること」</b>、下に<b>「聞いて確認すること」</b>の順です。見学は先に園内をまわって最後に質問、という流れが多いので、この順で使えます。書き込むと、その項目はこの画面から消えます。<br><br>
           <b>③ まとめ</b>　記入したものを一覧で見返せます。園が複数あれば横に並べて比べられます。紙に印刷したり、1枚の画像にして保存もできます。<br><br>
           各項目の<b style="color:var(--coral)">「聞く理由 ▾」</b>を押すと、なぜそこを見るのかが読めます。<br><br>
-          入力は<b>自動で保存されます</b>。ただしブラウザの中の保存なので、確実に残したいときは<b>設定 →「持ち出す・戻す」→「ファイルに保存」</b>を使ってください。園はいくつでも追加できます（画面の上の「＋ 園を追加」）。
+          入力は<b>自動で保存されます</b>。上の<b>「保存」</b>ボタンは、ちゃんと保存できているかの確認用です（押すと緑になります）。<br><br>
+          園はいくつでも追加できます。<b>画面の上の園名（▾）</b>を押すと、園の切りかえ・追加・削除ができます。<br><br>
+          念のためファイルにも残したいときは<b>この設定の「持ち出す・戻す」→「ファイルに保存」</b>を使ってください。
         </p>
         </div>
       </details>
 
       <details class="card sec">
-        <summary><span class="secn">2</span><h2>項目をえらぶ</h2><span class="count" id="onBadge">0</span><span class="caret">▶</span></summary>
+        <summary><span class="secn">2</span><h2>評価（◎○△✕）</h2><span class="count" id="rateBadge">使わない</span><span class="caret">▶</span></summary>
+        <div class="secbody">
+        <p class="muted" style="margin:0 0 11px">
+          園を見ながら、その場の印象を<b>4段階</b>で残す機能です。<br>
+          <b>◎ よい</b>　<b>○ ふつう</b>　<b>△ 気になる</b>　<b>✕ 合わない</b>
+        </p>
+        <p class="muted" style="margin:0 0 11px">
+          つけると<b>「まとめ」に点数が出て</b>、園が複数あるとき横に並べて比べられます。
+          点数がつくのは<b>「見て確認すること」だけ</b>です。定員や料金は良し悪しではないので、点数には入れていません。
+        </p>
+        <p class="muted" style="margin:0 0 11px">
+          カテゴリごとに<b>「点数でどれくらい重くみるか」</b>も決められます（下の「項目をえらぶ」の中に出ます）。
+          たとえば「保育者の様子」を<b>重視する</b>にすると、その項目の◎が点数に強くひびきます。
+        </p>
+        <p class="muted" style="margin:0 0 13px">
+          点数は園に優劣をつけるためではなく、<b>自分が何を大事にしているかを確かめる</b>ためのものです。最後は実際に見た感触で決めてくださいね。
+        </p>
+        <div class="confirm on" style="background:var(--sky-soft);display:flex">
+          <p style="margin:0;flex:1;min-width:150px"><b>いまは<span id="rateNow">使わない</span>設定です。</b><br>
+            <span style="font-size:12.5px">評価を使わなくても、メモだけで記録できます。</span></p>
+          <button class="btn sm" id="rateBtn" onclick="setShowRate(!useRate())">評価を使う</button>
+        </div>
+        </div>
+      </details>
+
+      <details class="card sec">
+        <summary><span class="secn">3</span><h2>項目をえらぶ</h2><span class="count" id="onBadge">0</span><span class="caret">▶</span></summary>
         <div class="secbody">
         <p class="muted" style="margin:0 0 11px">
           全部で<b id="allN">0</b>項目あります。見学は1時間ほどなので、<b>ぜんぶは聞けません</b>。
@@ -432,9 +459,9 @@ footer{padding:22px 6px;color:var(--ink-3);font-size:11px;line-height:1.9;text-a
         <p class="muted" style="margin:0 0 11px"><b>「事前」で分かることは、先にホームページなどで調べてまとめておきましょう。</b>当日は、行かないと分からないことだけに集中できます。</p>
         <p class="muted" style="margin:0 0 11px">1つずつ選ぶのが大変なときは、<b>この画面のいちばん上にある「カードで仕分ける」</b>が早いです。</p>
         <div class="row" style="gap:7px;flex-wrap:wrap">
-          <button class="btn sm" onclick="preset('rec')">おすすめに戻す</button>
-          <button class="btn sm ghost" onclick="preset('all')">ぜんぶ使う</button>
-          <button class="btn sm ghost" onclick="preset('none')">ぜんぶ外す</button>
+          <button class="btn sm ghost" id="ps_rec" onclick="preset('rec')">おすすめに戻す</button>
+          <button class="btn sm ghost" id="ps_all" onclick="preset('all')">ぜんぶ使う</button>
+          <button class="btn sm ghost" id="ps_none" onclick="preset('none')">ぜんぶ外す</button>
         </div>
         <p class="muted" style="margin:11px 0 0;font-weight:800">いま使う項目：<span id="onN">0</span> 個</p>
         <p class="muted" style="margin:6px 0 0;font-size:12px">↑↓ で<b>並べ替え</b>できます（カテゴリごと・項目ごと）。チェックが付いているものが<b>最初から表示されます</b>。外したものは消えるわけではなく、<b>ここでいつでも足せます</b>。項目の下の<b>「聞く理由」</b>を読んでから決めてください。</p>
@@ -449,7 +476,7 @@ footer{padding:22px 6px;color:var(--ink-3);font-size:11px;line-height:1.9;text-a
       </details>
 
       <details class="card sec">
-        <summary><span class="secn">3</span><h2>保存について</h2><span class="caret">▶</span></summary>
+        <summary><span class="secn">4</span><h2>保存について</h2><span class="caret">▶</span></summary>
         <div class="secbody">
         <p class="muted" style="margin:0 0 11px">
           入力するたびに<b>自動で保存されます</b>。念のため確かめたいときは、画面いちばん上の<b>「保存」ボタン</b>を押してください。押すと緑色になります。<br>
@@ -470,7 +497,7 @@ footer{padding:22px 6px;color:var(--ink-3);font-size:11px;line-height:1.9;text-a
       </details>
 
       <details class="card sec">
-        <summary><span class="secn">4</span><h2>持ち出す・戻す</h2><span class="caret">▶</span></summary>
+        <summary><span class="secn">5</span><h2>持ち出す・戻す</h2><span class="caret">▶</span></summary>
         <div class="secbody">
         <p class="muted" style="margin:0 0 11px"><b>いちばん確実な方法です。</b>記録をファイルにして端末に保存します。ブラウザの中の保存と違って、これは消えません。見学が終わったら押しておくと安心です。</p>
         <div class="row" style="gap:8px;flex-wrap:wrap">
@@ -502,13 +529,13 @@ footer{padding:22px 6px;color:var(--ink-3);font-size:11px;line-height:1.9;text-a
       </details>
 
       <details class="card sec">
-        <summary><span class="secn">5</span><h2>この道具について</h2><span class="caret">▶</span></summary>
+        <summary><span class="secn">6</span><h2>この道具について</h2><span class="caret">▶</span></summary>
         <div class="secbody">
         <p class="verline">バージョン 2026-08-24a</p>
         <p class="muted" style="margin:0">
           項目は「保育士にゆとりがあるか」を軸に組んでいます。設備の新しさより、そこで働く人に余裕があるかどうかが、子どもの過ごし方に直結するからです。<br><br>
-          点数は<b>あなたが◎○△✕を付けた項目だけ</b>で計算します。定員や料金のような事実の項目は、評価を付けなければ点数に入りません。<br><br>
-          点数は園に優劣をつけるためではなく、<b>自分が何を大事にしているかを確かめる</b>ためのものです。最後は実際に見た感触で決めてくださいね。
+          <b>事前</b>には全部の項目が、<b>聞いて確認すること</b>から順に並んでいます。<b>当日</b>には、事前に書けなかったものだけが、<b>見て確認すること</b>・<b>聞いて確認すること</b>の順で出ます。<br><br>
+          ◎○△✕の評価と点数については、上の<b>「2 評価（◎○△✕）」</b>を読んでみてください。最初はオフになっています。
         </p>
         </div>
       </details>
@@ -817,6 +844,9 @@ function warnStorage(){ document.getElementById("storageWarn").innerHTML=
 const uid=function(){return Math.random().toString(36).slice(2,9)};
 const cur=function(){ for(var i=0;i<S.parks.length;i++) if(S.parks[i].id===S.cur) return S.parks[i]; return null };
 const w=function(id){ return S.weights[id]===undefined?1:+S.weights[id] };
+/* 評価（◎○△✕）は最初はオフ。設定でオンにできる */
+const useRate=function(){ return !!S.showRate };
+function setShowRate(v){ S.showRate=!!v; save(); render(); renderPick() }
 const on=function(k){ return !S.off[k] };
 function esc(s){ return String(s==null?"":s).replace(/[&<>"]/g,function(m){return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[m]}) }
 function pageOf(it){ return "all" }
@@ -829,7 +859,8 @@ function catOf(cid){ for(var i=0;i<CATS.length;i++) if(CATS[i].id===cid) return 
 /* その項目が入力済みか */
 function filled(p,c,it){ const k=it.k;
   if(p.r[k]!==undefined) return true;
-  return !!(p.a[k]&&p.a[k].trim()) }
+  if(p.a[k]&&p.a[k].trim()) return true;
+  return !!(p.m[k]&&p.m[k].trim()) }
 /* 下に沈めるかどうか。「聞く」欄は自分でボタンを押したときだけ沈む */
 function sunk(p,it){ if(!p.d) p.d={}; return !!p.d[it.k] }
 function toggleMiss(){ const p=cur(); if(!p)return; p.showMiss=!p.showMiss; save(); renderDay();
@@ -1019,7 +1050,7 @@ function setSum(v){ sumView=v;
 
 function render(){ renderParks(); renderPre(); renderDay(); renderSum(); renderCmp(); renderNudge() }
 function goBackup(){ setTab("set"); setTimeout(function(){
-  var d=document.querySelectorAll("#set details.sec")[3];
+  var d=document.querySelectorAll("#set details.sec")[4];
   if(d){ d.open=true; d.scrollIntoView() } },60) }
 function pickBackupFile(){ var el=document.getElementById("bkFile"); if(el) el.click() }
 function renderNudge(){
@@ -1035,7 +1066,7 @@ function renderNudge(){
   var need = !S._f || (S._t && S._t > S._f);
   if(need){
     el.innerHTML='<div class="nudge thin">記録をファイルに残しておくと安心です'
-      +'<button class="btn sm" onclick="goBackup()">保存</button></div>';
+      +'<button class="btn sm" onclick="goBackup()">ファイルに保存</button></div>';
   } else {
     el.innerHTML='<div class="nudge ok">✓ '+new Date(S._f).toLocaleString("ja-JP")+' にファイルへ保存ずみ</div>';
   }
@@ -1087,11 +1118,8 @@ function renderPre(){
      '事前にまとめておくと、当日は聞きたいことだけに集中できます。</p>'+
      '<p>園のホームページ、重要事項説明書（入園のしおり）、自治体の公式サイトに載っていることが多いです。'+
      'ここで書ききれなかった項目は、「当日」の方に表示されるので、全て埋められなくても大丈夫です。</p></div>';
-  ["rate","ask"].forEach(function(kind){
-    var any=CATS.some(function(c){ return c.kind===kind && liveItems(c).length });
-    if(!any) return;
-    h+='<div class="phase"><b>'+(kind==="rate"?"見て確認すること":"聞いて確認すること")+'</b>'+
-       '<span>'+(kind==="rate"?"当日そのまま使えます":"サイトに載っていることが多い")+'</span></div>';
+  /* 事前は「聞いて確認すること」→「見て確認すること」の順。見出しは出さない */
+  ["ask","rate"].forEach(function(kind){
     CATS.forEach(function(c){ if(c.kind!==kind)return;
       var live=liveItems(c); if(!live.length)return;
       h+=catHTML(c,p,live,"pre") });
@@ -1169,12 +1197,13 @@ function itemHTML(c,p,it,showCat){
   const rateHTML='<div class="rate">'+RATE.map(function(r){
       return '<button data-v="'+r[0]+'" aria-pressed="'+(v===r[0])+'" onclick="setRate(&quot;'+k+'&quot;,&quot;'+r[0]+'&quot;)"><b>'+r[1]+'</b><span>'+r[2]+'</span></button>' }).join("")+'</div>';
   if(c.kind==="rate"){
-    h+=rateHTML+'<button class="memoToggle" onclick="toggleMemo(this)">'+((p.m[k]&&p.m[k].trim())?"メモを閉じる":"＋ メモ")+'</button>'+
+    if(useRate()) h+=rateHTML;
+    h+='<button class="memoToggle" onclick="toggleMemo(this)">'+((p.m[k]&&p.m[k].trim())?"メモを閉じる":"＋ メモ")+'</button>'+
        '<textarea class="memoBox" placeholder="メモ" oninput="setMemo(&quot;'+k+'&quot;,this.value)">'+esc(p.m[k]||"")+'</textarea>';
   }else{
     h+='<button class="memoToggle" onclick="toggleMemo(this)">'+((p.a[k]&&p.a[k].trim())?"メモを閉じる":"＋ メモ")+'</button>';
     h+='<textarea class="memoBox" placeholder="メモ" oninput="setAns(&quot;'+k+'&quot;,this.value)">'+esc(p.a[k]||"")+'</textarea>';
-    h+='<button class="rateToggle" onclick="toggleRate(this)">'+(rated?"評価をやめる":"評価をつける")+'</button>'+rateHTML;
+    if(useRate()) h+='<button class="rateToggle" onclick="toggleRate(this)">'+(rated?"評価をやめる":"評価をつける")+'</button>'+rateHTML;
   }
   h+='<button class="sinkBtn" onclick="toggleSink(&quot;'+k+'&quot;)">'+((p.d&&p.d[k])?"もう一度書く ↑":"書けた ↓")+'</button>';
   return h+'</div>';
@@ -1230,7 +1259,7 @@ function sumHTML(p){
       else { const r=p.r[k];
         const R=rateOf(r);
         v = R ? R[1]+" "+R[2] : '';
-        if(r!==undefined && p.m[k]) v+='<span class="mm">'+esc(p.m[k])+'</span>' }
+        if(p.m[k]&&p.m[k].trim()) v+='<span class="mm">'+esc(p.m[k])+'</span>' }
       if(!v){ anyNa++; v='<span class="na">未記入</span>' }
       rows+='<div class="sumrow"><div class="k">'+it.q+'</div><div class="v">'+v+'</div></div>';
     });
@@ -1242,14 +1271,19 @@ function renderSum(){
   const el=document.getElementById("sumOne"), p=cur();
   if(!p){ el.innerHTML=emptyCard(); return }
   const sc=score(p), d=done(p), r=sumHTML(p);
-  el.innerHTML='<div class="score" style="margin-bottom:13px">'+CHICK+'<div style="flex:1">'+
+  el.innerHTML=(useRate()
+    ? '<div class="score" style="margin-bottom:13px">'+CHICK+'<div style="flex:1">'+
       '<span class="n" id="scoreN">'+(sc===null?"—":sc)+'<small>'+(sc===null?"":"点")+'</small></span>'+
       '<div class="muted" id="scoreT" style="font-size:12px;font-weight:800;margin-top:3px">'+d[0]+' / '+d[1]+' 項目に記入</div>'+
-      tallyHTML(p)+'</div></div>'+
+      tallyHTML(p)+'</div></div>'
+    : '<div class="score" style="margin-bottom:13px">'+CHICK+'<div style="flex:1">'+
+      '<span class="n" id="scoreN">'+d[0]+'<small> / '+d[1]+' 項目</small></span>'+
+      '<div class="muted" id="scoreT" style="font-size:12px;font-weight:800;margin-top:3px">記入ずみ</div>'+
+      '</div></div>')+
     '<div class="card" style="padding:17px">'+
     '<h2>'+esc(p.name)+'</h2>'+
     '<p class="muted" style="margin:5px 0 0">'+(p.date?esc(p.date)+'　':'')+(p.mins?'家から'+esc(p.mins)+'分':'')+'</p>'+
-    '<p class="muted" style="margin:9px 0 0;font-weight:800">総合 '+(sc===null?"—":sc+"点")+'　／　記入 '+d[0]+'/'+d[1]+'　／　未記入 '+r[1]+'</p>'+
+    '<p class="muted" style="margin:9px 0 0;font-weight:800">'+(useRate()?'総合 '+(sc===null?"—":sc+"点")+'　／　':'')+'記入 '+d[0]+'/'+d[1]+'　／　未記入 '+r[1]+'</p>'+
     (p.note?'<p class="muted" style="margin:11px 0 0">'+esc(p.note)+'</p>':'')+
     '</div><div class="card" style="padding:6px 17px 17px">'+r[0]+'</div>';
 }
@@ -1259,29 +1293,30 @@ function renderCmp(){
   if(!S.parks.length){ el.innerHTML='<div class="empty">園を登録すると、ここに全部の園が横に並びます。</div>'; return }
   const memo=document.getElementById("showMemo").checked;
   const th=S.parks.map(function(p){return '<th>'+esc(p.name)+'</th>'}).join("");
-  let rows='<tr class="total"><th>総合</th>'+S.parks.map(function(p){
+  const totalRow = useRate() ? ('<tr class="total"><th>総合</th>'+S.parks.map(function(p){
     const sc=score(p), t=tally(p);
-    return '<td>'+(sc===null?"—":sc)+'<div class="tsub">◎'+t[3]+' ○'+t[2]+' △'+t[1]+' ✕'+t[0]+'<br>'+t.n+'問</div></td>' }).join("")+'</tr>'+
+    return '<td>'+(sc===null?"—":sc)+'<div class="tsub">◎'+t[3]+' ○'+t[2]+' △'+t[1]+' ✕'+t[0]+'<br>'+t.n+'問</div></td>' }).join("")+'</tr>') : '';
+  let rows=totalRow+
     '<tr><th>見学日</th>'+S.parks.map(function(p){return '<td>'+(esc(p.date)||"—")+'</td>'}).join("")+'</tr>'+
            '<tr><th>家から（分）</th>'+S.parks.map(function(p){return '<td>'+(esc(p.mins)||"—")+'</td>'}).join("")+'</tr>';
   CATS.forEach(function(c){
     const live=liveItems(c); if(!live.length)return;
     const ww=w(c.id);
-    rows+='<tr class="catrow"><th>'+c.name+(c.kind==="rate"?(ww==2?"（重視）":ww==0?"（対象外）":""):"")+
+    rows+='<tr class="catrow"><th>'+c.name+((useRate()&&c.kind==="rate")?(ww==2?"（重視）":ww==0?"（対象外）":""):"")+
       '</th><td colspan="'+S.parks.length+'"></td></tr>';
     live.forEach(function(it){ const k=it.k;
       rows+='<tr><th>'+it.q+'</th>'+S.parks.map(function(p){
         if(c.kind==="rate"){ const v=p.r[k];
-          const R0=rateOf(v), mk=R0?R0[1]:"—";
+          const R0=rateOf(v);
+          if(!useRate()) return '<td class="ans">'+(esc(p.m[k])||'<span class="vna">—</span>')+'</td>';
+          const mk=R0?R0[1]:"—";
           const mm=(memo&&p.m[k])?'<div class="memo-cell">'+esc(p.m[k])+'</div>':'';
           return '<td class="'+(v===undefined?"vna":"v"+v)+'">'+mk+mm+'</td>' }
         if(c.kind==="check"){ const v=p.r[k];
           return '<td class="'+(v===undefined?"vna":"v3")+'">'+(v===undefined?"—":"✓")+'</td>' }
         return '<td class="ans">'+(esc(p.a[k])||'<span class="vna">—</span>')+'</td>';
       }).join("")+'</tr>' }) });
-  rows+='<tr class="total"><th>総合</th>'+S.parks.map(function(p){
-    const sc=score(p), t=tally(p);
-    return '<td>'+(sc===null?"—":sc)+'<div class="tsub">◎'+t[3]+' ○'+t[2]+' △'+t[1]+' ✕'+t[0]+'<br>'+t.n+'問</div></td>' }).join("")+'</tr>';
+  rows+=totalRow;
   el.innerHTML='<table><thead><tr><th style="min-width:190px">項目</th>'+th+'</tr></thead><tbody>'+rows+'</tbody></table>';
 }
 
@@ -1313,9 +1348,9 @@ function renderPick(){
       '<div style="padding:12px 16px;display:flex;gap:7px">'+
       '<button class="btn sm ghost" onclick="toggleCat(\''+c.id+'\',true)">全部使う</button>'+
       '<button class="btn sm ghost" onclick="toggleCat(\''+c.id+'\',false)">全部外す</button></div>'+
-      '<div class="wlabel">このカテゴリを点数でどれくらい重くみるか</div>'+
+      ((useRate()&&c.kind==="rate")?('<div class="wlabel">このカテゴリを点数でどれくらい重くみるか</div>'+
       '<div class="weight">'+WEIGHTS.map(function(x){
-        return '<button aria-pressed="'+(String(w(c.id))===x[0])+'" onclick="setW(&quot;'+c.id+'&quot;,&quot;'+x[0]+'&quot;)">'+x[1]+'</button>' }).join("")+'</div>'+
+        return '<button aria-pressed="'+(String(w(c.id))===x[0])+'" onclick="setW(&quot;'+c.id+'&quot;,&quot;'+x[0]+'&quot;)">'+x[1]+'</button>' }).join("")+'</div>'):"")+
       '<div class="pickcat">'+shown.map(function(it){ const k=it.k;
         return '<div class="pickrow"><input type="checkbox" id="pk_'+k+'" '+(on(k)?"checked":"")+
           ' onchange="toggleItem(&quot;'+k+'&quot;,this.checked)"><div class="pickmain">'+
@@ -1332,7 +1367,28 @@ function renderPick(){
     '<div class="card empty">見つかりませんでした。<br>別の言葉で探してみてください。</div>';
   renderPickCounts();
 }
+/* いまどの状態か（おすすめ／ぜんぶ／ゼロ）を見て、そのボタンだけ色を変える */
+function presetMode(){
+  const offN=ALL.filter(function(k){ return !on(k) }).length;
+  if(offN===0) return "all";
+  if(offN===ALL.length) return "none";
+  const d=Object.keys(DEFAULT_OFF);
+  if(offN===d.length && d.every(function(k){ return !on(k) })) return "rec";
+  return "";
+}
+function syncPresetBtns(){ const m=presetMode();
+  ["rec","all","none"].forEach(function(x){ const b=document.getElementById("ps_"+x);
+    if(b){ b.classList.toggle("ghost", m!==x); b.classList.toggle("chosen", m===x);
+           b.setAttribute("aria-pressed", String(m===x)) } }); }
+function syncRateUI(){
+  const u=useRate();
+  const b=document.getElementById("rateBadge"); if(b) b.textContent = u?"使う":"使わない";
+  const n=document.getElementById("rateNow");   if(n) n.textContent = u?"使う":"使わない";
+  const t=document.getElementById("rateBtn");
+  if(t){ t.textContent = u?"評価をやめる":"評価を使う"; t.classList.toggle("ghost",u) }
+}
 function renderPickCounts(){
+  syncPresetBtns(); syncRateUI();
   const n=ALL.filter(on).length;
   const a=document.getElementById("allN"); if(a)a.textContent=ALL.length;
   const b=document.getElementById("onN"); if(b)b.textContent=n;
@@ -1350,7 +1406,7 @@ function doPrint(mode){
     if(!p){ msg("先に園を登録してください。"); return }
     const r=sumHTML(p);
     a.innerHTML='<p class="pTitle">'+esc(p.name)+'</p><p class="pSub">'+
-      (p.date?esc(p.date)+'　':'')+(p.mins?'家から'+esc(p.mins)+'分　':'')+'総合 '+(score(p)===null?"—":score(p)+"点")+'</p>'+
+      (p.date?esc(p.date)+'　':'')+(p.mins?'家から'+esc(p.mins)+'分　':'')+(useRate()?'総合 '+(score(p)===null?"—":score(p)+"点"):'')+'</p>'+
       (p.note?'<p style="margin:0 0 10px">'+esc(p.note)+'</p>':'')+r[0];
   }else{
     let h='<p class="pTitle">園見学 持っていくリスト</p>'+
@@ -1359,7 +1415,7 @@ function doPrint(mode){
     CATS.forEach(function(c){
       const live=liveItems(c); if(!live.length)return;
       if(c.phase!==ph){ ph=c.phase; h+='<p class="pCat" style="background:#333;color:#fff">'+ph+'</p>' }
-      h+='<p class="pCat">'+c.name+(c.kind==="rate"?"（◎○△✕）":"")+'</p>';
+      h+='<p class="pCat">'+c.name+((useRate()&&c.kind==="rate")?"（◎○△✕）":"")+'</p>';
       h+=(c.kind==="ask")?'<div>':'<div class="pCols">';
       live.forEach(function(x){
         h+= (c.kind==="ask")
