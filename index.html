@@ -14,6 +14,7 @@
 <!-- v20260824a -->
 <!-- v20260824a -->
 <!-- v20260824c -->
+<!-- v20260824d -->
 <style>
 :root{
   --page:#FFEFD4; --sheet:#FFFDF7; --card:#FFFFFF;
@@ -260,24 +261,47 @@ footer{padding:22px 6px;color:var(--ink-3);font-size:11px;line-height:1.9;text-a
 .tally .tn{background:var(--line-2);color:var(--ink-2)}
 .tsub{font-family:var(--maru);font-size:10.5px;font-weight:800;color:var(--ink-2);line-height:1.5;margin-top:3px}
 /* ---- 印刷 ---- */
-#printArea{display:none}
+/* 印刷の紙面。画面では隠しているが、A4に収める倍率を測るときだけ表に出す */
+#printArea{display:none;width:190mm;overflow:hidden;background:#fff;color:#000;font-size:10.5px;line-height:1.5}
+body.measuring #printArea{display:block;position:fixed;left:-10000px;top:0;visibility:hidden}
+#printFit{transform-origin:top left}
+#printArea .pTitle{font-size:16px;font-weight:800;margin:0 0 2px}
+#printArea .pSub{font-size:10px;color:#555;margin:0 0 10px}
+#printArea .pCat{font-size:11px;font-weight:800;background:#EEE;padding:2px 6px;margin:8px 0 4px;break-after:avoid;break-inside:avoid}
+#printArea .p2 > .pCat:first-child{margin-top:0}
+#printArea .pItem{display:flex;gap:5px;align-items:flex-start;padding:2px 0;break-inside:avoid}
+#printArea .pBox{width:11px;height:11px;border:1px solid #333;flex:0 0 auto;margin-top:2px}
+#printArea .pLine{flex:1;border-bottom:1px dotted #BBB;min-height:15px}
+#printArea .pQ{flex:0 0 46%;font-weight:600}
+#printArea .pCols{column-count:2;column-gap:18px}
+#printArea table{font-size:9px;width:100%;table-layout:fixed;border-collapse:collapse;line-height:1.25}
+#printArea table th,#printArea table td{font-size:9px;line-height:1.25;padding:1.5px 4px;min-width:0 !important;word-break:break-word}
+#printArea table th:first-child{width:42%}
+#printArea thead th{position:static;border-bottom:1.5px solid #333;background:none;text-align:left}
+#printArea th,#printArea td{border-bottom:1px solid #DDD;padding:1.5px 4px;text-align:left;vertical-align:top}
+#printArea .catrow th{background:#EEE;font-weight:800}
+#printArea thead th:first-child{width:44%}
+#printArea tbody tr.total:last-child{display:none}
+#printArea .total th,#printArea .total td{border-top:1.5px solid #333;font-weight:800}
+#printArea .tsub{font-size:8px;font-weight:400;color:#555}
+#printArea .memo-cell{font-size:8px;color:#555}
+#printArea .p2{column-count:2;column-gap:16px;column-fill:balance}
+#printArea .sumcat{font-size:11px;font-weight:800;background:#EEE;padding:2px 6px;margin:8px 0 3px;break-after:avoid;break-inside:avoid}
+#printArea .p2 > .sumcat:first-child{margin-top:0}
+#printArea .sumrow{display:flex;gap:6px;padding:1px 0;line-height:1.35;border-bottom:1px dotted #DDD;break-inside:avoid}
+#printArea .sumrow .k{flex:0 0 44%}
+#printArea .sumrow .v{flex:1;font-weight:800}
+#printArea .mm{display:block;font-size:8.5px;font-weight:400;color:#555}
+#printArea .rmk{font-size:11px}
+#printArea .na,#printArea .vna{color:#999;font-weight:400}
+#printArea .card{box-shadow:none;background:none;padding:0;border-radius:0}
+#printArea .scroller{overflow:visible}
 @media print{
   header,nav,.parks,.addbox,.io,.btn,footer,.why,.confirm,.banner,.wrap>section,.tip{display:none !important}
-  body{background:#fff;color:#000;font-size:10.5px;line-height:1.5}
+  body{background:#fff;color:#000}
   .wrap{max-width:none;padding:0}
-  #printArea{display:block !important}
-  .pTitle{font-size:16px;font-weight:800;margin:0 0 2px}
-  .pSub{font-size:10px;color:#555;margin:0 0 10px}
-  .pCat{font-size:11.5px;font-weight:800;background:#EEE;padding:3px 7px;margin:11px 0 5px;break-after:avoid}
-  .pItem{display:flex;gap:6px;align-items:flex-start;padding:3px 0;break-inside:avoid}
-  .pBox{width:11px;height:11px;border:1px solid #333;flex:0 0 auto;margin-top:2px}
-  .pLine{flex:1;border-bottom:1px dotted #BBB;min-height:15px}
-  .pQ{flex:0 0 46%;font-weight:600}
-  .pCols{column-count:2;column-gap:18px}
-  table{font-size:9px} thead th{position:static;border-bottom:1.5px solid #333}
-  th,td{border-bottom:1px solid #DDD;padding:4px 5px}
-  .scroller{overflow:visible} .card{box-shadow:none}
-  @page{margin:11mm}
+  #printArea{display:block !important;position:static;visibility:visible}
+  @page{size:A4 portrait;margin:10mm}
 }
 @media (prefers-reduced-motion:reduce){*{transition:none !important}}
 </style>
@@ -331,6 +355,27 @@ footer{padding:22px 6px;color:var(--ink-3);font-size:11px;line-height:1.9;text-a
         <button id="s-one" aria-pressed="true"  onclick="setSum('one')">この園の記録</button>
         <button id="s-all" aria-pressed="false" onclick="setSum('all')">園をくらべる</button>
       </div>
+
+      <div class="card" style="padding:16px 17px">
+        <h2>画像で保存する</h2>
+        <p class="muted" style="margin:7px 0 11px">記入した項目を<b>A4サイズ1枚</b>の画像にします。スマホに保存したり、家族に送ったりできます。</p>
+        <button class="btn" onclick="makeImage()">この園を画像にする</button>
+        <p id="imgMsg" class="muted" style="margin:10px 0 0"></p>
+        <div id="imgWrap"><canvas id="imgCanvas"></canvas>
+          <p class="muted" style="margin:9px 0 0;font-size:12px">保存できないときは、この画像を長押し（PCは右クリック）しても保存できます。</p></div>
+        <hr style="border:0;border-top:2px dotted var(--line);margin:15px 0">
+        <h2>紙に印刷する</h2>
+        <p class="muted" style="margin:7px 0 11px">
+          どれも<b>A4タテ1枚</b>に収まるように、はみ出す分だけ自動で小さくします。<br>
+          <b>持っていく用</b>は、えらんだ項目が空欄で並んだ紙です。<b>まとめ</b>はこの園の記録、<b>比較表</b>は全部の園を並べた紙です。
+        </p>
+        <div class="row" style="gap:7px;flex-wrap:wrap">
+          <button class="btn sm" onclick="doPrint('list')">持っていく用</button>
+          <button class="btn sm ghost" onclick="doPrint('one')">この園のまとめ</button>
+          <button class="btn sm ghost" onclick="doPrint('compare')">比較表</button>
+        </div>
+        <p id="printMsg" class="muted" style="margin:10px 0 0"></p>
+      </div>
       <div id="sumOne"></div>
       <div id="sumAll" hidden>
         <div class="card" style="padding:14px 16px;margin-bottom:13px">
@@ -339,24 +384,6 @@ footer{padding:22px 6px;color:var(--ink-3);font-size:11px;line-height:1.9;text-a
             <span style="font-size:13.5px;font-weight:800">メモも表に出す</span></label>
         </div>
         <div class="card scroller" id="cmpBody"></div>
-      </div>
-      <div class="card" style="padding:16px 17px">
-        <h2>紙に印刷する</h2>
-        <p class="muted" style="margin:7px 0 11px">
-          <b>持っていく用</b>は、えらんだ項目が空欄で並んだ紙です。<b>まとめ</b>はこの園の記録、<b>比較表</b>は全部の園を並べた紙です。
-        </p>
-        <div class="row" style="gap:7px;flex-wrap:wrap">
-          <button class="btn sm" onclick="doPrint('list')">持っていく用</button>
-          <button class="btn sm ghost" onclick="doPrint('one')">この園のまとめ</button>
-          <button class="btn sm ghost" onclick="doPrint('compare')">比較表</button>
-        </div>
-        <hr style="border:0;border-top:2px dotted var(--line);margin:15px 0">
-        <h2>画像で保存する</h2>
-        <p class="muted" style="margin:7px 0 11px">記入した項目だけを1枚の画像にします。スマホに保存したり、家族に送ったりできます。</p>
-        <button class="btn" onclick="makeImage()">この園を画像にする</button>
-        <p id="imgMsg" class="muted" style="margin:10px 0 0"></p>
-        <div id="imgWrap"><canvas id="imgCanvas"></canvas>
-          <p class="muted" style="margin:9px 0 0;font-size:12px">保存できないときは、この画像を長押し（PCは右クリック）しても保存できます。</p></div>
       </div>
     </div>
   </section>
@@ -371,7 +398,7 @@ footer{padding:22px 6px;color:var(--ink-3);font-size:11px;line-height:1.9;text-a
         <p class="muted" style="margin:0 0 15px">
           <b>① 事前</b>　全部の項目が並んでいます。園のホームページ、重要事項説明書（入園のしおり）、自治体の公式サイトで<b>分かるものだけ</b>埋めてください。園によって載っている量は違うので、埋まらなくて大丈夫です。<br><br>
           <b>② 当日</b>　<b>事前に書けなかったものだけ</b>が出ます。上から<b>「見て確認すること」</b>、下に<b>「聞いて確認すること」</b>の順です。見学は先に園内をまわって最後に質問、という流れが多いので、この順で使えます。書き込むと、その項目はこの画面から消えます。<br><br>
-          <b>③ まとめ</b>　記入したものを一覧で見返せます。園が複数あれば横に並べて比べられます。紙に印刷したり、1枚の画像にして保存もできます。<br><br>
+          <b>③ まとめ</b>　記入したものを一覧で見返せます。園が複数あれば横に並べて比べられます。<b>A4タテ1枚の画像にして保存</b>したり、<b>A4タテ1枚に印刷</b>したりもできます（このタブのいちばん上）。<br><br>
           <b>④ 設定</b>　いま開いている画面です。中身は下にまとめました。
         </p>
 
@@ -381,15 +408,15 @@ footer{padding:22px 6px;color:var(--ink-3);font-size:11px;line-height:1.9;text-a
           <b>② 評価（◎○△✕）</b>　見た印象を4段階で残すかどうかを決めます。<b>最初はオフ</b>で、メモだけで記録できます。<br><br>
           <b>③ 項目をえらぶ</b>　使う項目を足したり外したり、順番を入れかえたりできます。<b style="color:var(--coral)">各項目の「聞く理由」（なぜそれを確認するのか）も、ここで読めます。</b><br><br>
           <b>④ 保存について</b>　保存のしくみと、うまく保存されないときの調べ方。<br><br>
-          <b>⑤ 持ち出す・戻す</b>　記録をファイルにして残したり、別の端末へ移したりできます。<br><br>
-          <b>⑥ この道具について</b>　どんな考えで項目を選んだか。
+          <b>⑤ 記録のバックアップ</b>　記録を<b>ファイルにして端末に保存</b>しておけます。ブラウザの中の保存は消えることがありますが、このファイルは消えません。機種変更のときや、うっかり消してしまったときに、ここから戻せます。<br><br>
+          <b>⑥ このツールについて</b>　どんな考えで項目を選んだか。
         </p>
 
         <p class="grp">保存と、園の追加</p>
         <p class="muted" style="margin:0">
           入力は<b>書いたそばから自動で保存されます</b>。保存ボタンはありません。<br><br>
           園はいくつでも追加できます。<b>画面の上の園名（▾）</b>を押すと、園の切りかえ・追加・削除ができます。<br><br>
-          念のためファイルにも残したいときは<b>「⑤ 持ち出す・戻す」→「ファイルに保存」</b>を使ってください。
+          念のためファイルにも残したいときは<b>「⑤ 記録のバックアップ」→「ファイルに保存」</b>を使ってください。
         </p>
         </div>
       </details>
@@ -462,7 +489,7 @@ footer{padding:22px 6px;color:var(--ink-3);font-size:11px;line-height:1.9;text-a
       </details>
 
       <details class="card sec">
-        <summary><span class="secn">5</span><h2>持ち出す・戻す</h2><span class="caret">▶</span></summary>
+        <summary><span class="secn">5</span><h2>記録のバックアップ</h2><span class="caret">▶</span></summary>
         <div class="secbody">
         <p class="muted" style="margin:0 0 11px"><b>いちばん確実な方法です。</b>記録をファイルにして端末に保存します。ブラウザの中の保存と違って、これは消えません。見学が終わったら押しておくと安心です。</p>
         <div class="row" style="gap:8px;flex-wrap:wrap">
@@ -494,9 +521,9 @@ footer{padding:22px 6px;color:var(--ink-3);font-size:11px;line-height:1.9;text-a
       </details>
 
       <details class="card sec">
-        <summary><span class="secn">6</span><h2>この道具について</h2><span class="caret">▶</span></summary>
+        <summary><span class="secn">6</span><h2>このツールについて</h2><span class="caret">▶</span></summary>
         <div class="secbody">
-        <p class="verline">バージョン 2026-08-24c</p>
+        <p class="verline">バージョン 2026-08-24d</p>
         <p class="muted" style="margin:0">
           項目は「保育士にゆとりがあるか」を軸に組んでいます。設備の新しさより、そこで働く人に余裕があるかどうかが、子どもの過ごし方に直結するからです。<br><br>
           <b>事前</b>には全部の項目が、<b>聞いて確認すること</b>から順に並んでいます。<b>当日</b>には、事前に書けなかったものだけが、<b>見て確認すること</b>・<b>聞いて確認すること</b>の順で出ます。<br><br>
@@ -981,7 +1008,7 @@ function renderNudge(){
   if(NOKEEP){
     el.innerHTML='<div class="nudge warn"><b>このブラウザでは、閉じると記録が消えます。</b><br>'
       +'ブラウザ側の制限で、ここでは保存を残せません。<b>「ファイルに保存」を使ってください。</b>'
-      +'そのファイルは消えません。次に開いたら「設定 → 持ち出す・戻す → ファイルから戻す」で続きから書けます。'
+      +'そのファイルは消えません。次に開いたら「設定 → 記録のバックアップ → ファイルから戻す」で続きから書けます。'
       +'<button class="btn sm" style="margin-top:9px" onclick="saveBackupFile()">いますぐファイルに保存</button></div>';
     return;
   }
@@ -1331,26 +1358,46 @@ function doPrint(mode){
     const r=sumHTML(p);
     a.innerHTML='<p class="pTitle">'+esc(p.name)+'</p><p class="pSub">'+
       (p.date?esc(p.date)+'　':'')+(p.mins?'家から'+esc(p.mins)+'分　':'')+(useRate()?'総合 '+(score(p)===null?"—":score(p)+"点"):'')+'</p>'+
-      (p.note?'<p style="margin:0 0 10px">'+esc(p.note)+'</p>':'')+r[0];
+      (p.note?'<p style="margin:0 0 10px">'+esc(p.note)+'</p>':'')+
+      '<div class="p2">'+r[0]+'</div>';
   }else{
     let h='<p class="pTitle">園見学 持っていくリスト</p>'+
-      '<p class="pSub">園名：＿＿＿＿＿＿＿＿＿＿＿　見学日：＿＿月＿＿日　　家から：＿＿分</p>';
+      '<p class="pSub">園名：＿＿＿＿＿＿＿＿＿＿＿　見学日：＿＿月＿＿日　　家から：＿＿分</p><div class="p2">';
     let ph="";
     CATS.forEach(function(c){
       const live=liveItems(c); if(!live.length)return;
       if(c.phase!==ph){ ph=c.phase; h+='<p class="pCat" style="background:#333;color:#fff">'+ph+'</p>' }
       h+='<p class="pCat">'+c.name+(useRate()?"（◎○△✕）":"")+'</p>';
-      h+=(c.kind==="ask")?'<div>':'<div class="pCols">';
+      h+='<div>';
       live.forEach(function(x){
         h+= (c.kind==="ask")
           ? '<div class="pItem"><span class="pQ">'+x.q+'</span><span class="pLine"></span></div>'
           : '<div class="pItem"><span class="pBox"></span><span style="flex:1">'+x.q+'</span></div>' });
       h+='</div>' });
-    h+='<p class="pCat">全体の印象</p><div class="pItem"><span class="pLine"></span></div>'+
+    h+='</div><p class="pCat">全体の印象</p><div class="pItem"><span class="pLine"></span></div>'+
        '<div class="pItem"><span class="pLine"></span></div><div class="pItem"><span class="pLine"></span></div>';
     a.innerHTML=h;
   }
+  a.innerHTML='<div id="printFit">'+a.innerHTML+'</div>';
+  const k=fitPrint();
+  pmsg(k>=0.999 ? "A4タテ1枚に収まります。"
+     : k>=0.7   ? "A4タテ1枚に収めるため、"+Math.round(k*100)+"% に縮めました。"
+     :            "項目が多いので "+Math.round(k*100)+"% まで縮めました。字が小さいときは、設定で項目を減らしてください。");
   setTimeout(function(){ window.print() },120);
+}
+function pmsg(t){ const e=document.getElementById("printMsg"); if(e)e.textContent=t }
+/* A4タテ1枚（297mm − 上下10mm）に収まるよう、はみ出す分だけ縮める */
+function fitPrint(){
+  const a=document.getElementById("printArea"), inner=document.getElementById("printFit");
+  if(!inner) return 1;
+  inner.style.transform="none"; a.style.height="";
+  document.body.classList.add("measuring");
+  const h=inner.getBoundingClientRect().height;
+  document.body.classList.remove("measuring");
+  const maxH=277/25.4*96;
+  const k=(h>0)? Math.min(1, maxH/h) : 1;
+  if(k<1){ inner.style.transform="scale("+k.toFixed(4)+")"; a.style.height=Math.ceil(h*k)+"px" }
+  return k;
 }
 function doExport(){ document.getElementById("io").value=JSON.stringify(S); msg("書き出しました。この文字列をまるごとコピーして控えてください。") }
 function doImport(go){ const t=document.getElementById("io").value.trim();
@@ -1417,7 +1464,10 @@ function imgData(p){
     live.forEach(function(it){
       const k=it.k;
       let v=null, sub=null, col=IC.ink;
-      if(c.kind==="ask"){ if(p.a[k]&&p.a[k].trim()) v=p.a[k].trim() }
+      if(c.kind==="ask"){
+        const R=useRate()?rateOf(p.r[k]):null, av=(p.a[k]||"").trim();
+        if(av||R){ v=(R?R[1]+"　":"")+av || (R[1]+" "+R[2]);
+          if(R) col = R[0]==="3"?IC.mint : R[0]==="2"?IC.sky : R[0]==="1"?IC.warn : IC.coral } }
       else if(c.kind==="check"){ if(p.r[k]!==undefined) v="確認ずみ" }
       else { const r=p.r[k];
         if(rateOf(r)){ const R=rateOf(r);
@@ -1429,83 +1479,115 @@ function imgData(p){
   });
   return rows;
 }
-function makeImage(){
-  const p=cur(); if(!p){ imsg("先に園を登録してください。"); return }
+const A4R=297/210;
+/* 幅 W の1段組みで描いて、オフスクリーンのキャンバスを返す。
+   cuts は「ここで切ってもよい」高さ（カテゴリの切れ目）。 */
+function imgBuild(p,W){
   const data=imgData(p);
-  if(!data.length){ imsg("まだ何も記入されていません。"); return }
-  const W=1080, PAD=56, LW=390, GAP=26, RW=W-PAD*2-LW-GAP;
-  const cv=document.getElementById("imgCanvas"), ctx=cv.getContext("2d");
-  const d=done(p), sc=score(p);
-  /* 1回目：高さを測る */
-  let y=0;
-  y+=14;                       /* 上のバンド */
-  y+=44; ctx.font="800 52px "+IMGF; y+=52;              /* 園名 */
-  y+=14; y+=26;                                          /* 日付行 */
-  y+=10; y+=30;                                          /* 総合行 */
+  const F=W/1080, px=function(n){ return Math.round(n*F) };
+  const PAD=px(56), LW=px(390), GAP=px(26), RW=W-PAD*2-LW-GAP;
+  const cv=document.createElement("canvas"), ctx=cv.getContext("2d");
+  const d=done(p), sc=score(p), useSc=useRate();
+  let y=px(14)+px(44)+px(52)+px(14)+px(26);
+  if(useSc) y+=px(10)+px(30);
   let noteLines=[];
-  if(p.note&&p.note.trim()){ ctx.font="400 26px "+IMGF;
-    noteLines=wrapJP(ctx,p.note.trim(),W-PAD*2); y+=18+noteLines.length*38 }
-  y+=30;
+  if(p.note&&p.note.trim()){ ctx.font="400 "+px(26)+"px "+IMGF;
+    noteLines=wrapJP(ctx,p.note.trim(),W-PAD*2); y+=px(18)+noteLines.length*px(38) }
+  y+=px(30);
   const plan=[];
   data.forEach(function(g){
-    y+=16; ctx.font="800 32px "+IMGF; const catY=y+32; y+=44; y+=14;
+    y+=px(16)+px(44)+px(14);
     const its=[];
     g.items.forEach(function(it){
-      ctx.font="400 24px "+IMGF; const L=wrapJP(ctx,it.label,LW);
-      ctx.font="800 27px "+IMGF; const V=wrapJP(ctx,it.value,RW);
-      let S2=[]; if(it.sub){ ctx.font="400 22px "+IMGF; S2=wrapJP(ctx,it.sub,RW) }
-      const h=Math.max(L.length*34, V.length*38+S2.length*32)+22;
+      ctx.font="400 "+px(24)+"px "+IMGF; const L=wrapJP(ctx,it.label,LW);
+      ctx.font="800 "+px(27)+"px "+IMGF; const V=wrapJP(ctx,it.value,RW);
+      let S2=[]; if(it.sub){ ctx.font="400 "+px(22)+"px "+IMGF; S2=wrapJP(ctx,it.sub,RW) }
+      const h=Math.max(L.length*px(34), V.length*px(38)+S2.length*px(32))+px(22);
       its.push({L:L,V:V,S:S2,col:it.col,h:h}); y+=h;
     });
-    plan.push({cat:g.cat,color:g.color,catY:catY,items:its});
+    plan.push({cat:g.cat,color:g.color,items:its});
   });
-  y+=40; const H=y+46;
+  const H=y+px(40)+px(46);
   cv.width=W; cv.height=H;
-  /* 2回目：描く */
   ctx.textBaseline="alphabetic";
   ctx.fillStyle=IC.paper; ctx.fillRect(0,0,W,H);
-  ctx.fillStyle=IC.band;  ctx.fillRect(0,0,W,14);
-  let yy=14+44;
-  ctx.fillStyle=IC.ink; ctx.font="800 52px "+IMGF; ctx.fillText(p.name||"（園名なし）",PAD,yy+44); yy+=52;
-  yy+=14; ctx.font="400 26px "+IMGF; ctx.fillStyle=IC.ink2;
-  const meta=[p.date?p.date:"",p.mins?"家から"+p.mins+"分":"",p.addr?p.addr:""].filter(Boolean).join("　");
-  ctx.fillText(meta,PAD,yy+22); yy+=26;
-  yy+=10; ctx.font="800 30px "+IMGF; ctx.fillStyle=IC.ink;
-  ctx.fillText("総合 "+(sc===null?"—":sc+"点")+"　／　記入 "+d[0]+" / "+d[1]+" 項目",PAD,yy+26); yy+=30;
-  if(noteLines.length){ yy+=18; ctx.font="400 26px "+IMGF; ctx.fillStyle=IC.ink2;
-    noteLines.forEach(function(l,i){ ctx.fillText(l,PAD,yy+26+i*38) }); yy+=noteLines.length*38 }
-  yy+=30;
+  ctx.fillStyle=IC.band;  ctx.fillRect(0,0,W,px(14));
+  let yy=px(14)+px(44);
+  ctx.fillStyle=IC.ink; ctx.font="800 "+px(52)+"px "+IMGF;
+  ctx.fillText(p.name||"（園名なし）",PAD,yy+px(44)); yy+=px(52);
+  yy+=px(14); ctx.font="400 "+px(26)+"px "+IMGF; ctx.fillStyle=IC.ink2;
+  const meta=[p.date||"",p.mins?"家から"+p.mins+"分":"",p.addr||""].filter(Boolean).join("　");
+  ctx.fillText(meta,PAD,yy+px(22)); yy+=px(26);
+  if(useSc){ yy+=px(10); ctx.font="800 "+px(30)+"px "+IMGF; ctx.fillStyle=IC.ink;
+    ctx.fillText("総合 "+(sc===null?"—":sc+"点")+"　／　記入 "+d[0]+" / "+d[1]+" 項目",PAD,yy+px(26)); yy+=px(30) }
+  if(noteLines.length){ yy+=px(18); ctx.font="400 "+px(26)+"px "+IMGF; ctx.fillStyle=IC.ink2;
+    noteLines.forEach(function(l,i){ ctx.fillText(l,PAD,yy+px(26)+i*px(38)) }); yy+=noteLines.length*px(38) }
+  yy+=px(30);
+  const cuts=[];
   plan.forEach(function(g){
-    yy+=16;
+    cuts.push(yy);
+    yy+=px(16);
     ctx.fillStyle=g.color.indexOf("mint")>-1?IC.mint:g.color.indexOf("sky")>-1?IC.sky:
                   g.color.indexOf("coral")>-1?IC.coral:g.color.indexOf("grape")>-1?"#A98BE0":IC.band;
-    ctx.beginPath(); ctx.arc(PAD+9,yy+22,9,0,7); ctx.fill();
-    ctx.fillStyle=IC.ink; ctx.font="800 32px "+IMGF; ctx.fillText(g.cat,PAD+30,yy+32); yy+=44;
+    ctx.beginPath(); ctx.arc(PAD+px(9),yy+px(22),px(9),0,7); ctx.fill();
+    ctx.fillStyle=IC.ink; ctx.font="800 "+px(32)+"px "+IMGF; ctx.fillText(g.cat,PAD+px(30),yy+px(32)); yy+=px(44);
     ctx.strokeStyle=IC.line; ctx.lineWidth=2;
-    ctx.beginPath(); ctx.moveTo(PAD,yy+6); ctx.lineTo(W-PAD,yy+6); ctx.stroke(); yy+=14;
+    ctx.beginPath(); ctx.moveTo(PAD,yy+px(6)); ctx.lineTo(W-PAD,yy+px(6)); ctx.stroke(); yy+=px(14);
     g.items.forEach(function(it){
-      ctx.font="400 24px "+IMGF; ctx.fillStyle=IC.ink2;
-      it.L.forEach(function(l,i){ ctx.fillText(l,PAD,yy+24+i*34) });
-      ctx.font="800 27px "+IMGF; ctx.fillStyle=it.col;
-      it.V.forEach(function(l,i){ ctx.fillText(l,PAD+LW+GAP,yy+25+i*38) });
-      if(it.S.length){ ctx.font="400 22px "+IMGF; ctx.fillStyle=IC.ink2;
-        it.S.forEach(function(l,i){ ctx.fillText(l,PAD+LW+GAP,yy+25+it.V.length*38+i*32) }) }
+      ctx.font="400 "+px(24)+"px "+IMGF; ctx.fillStyle=IC.ink2;
+      it.L.forEach(function(l,i){ ctx.fillText(l,PAD,yy+px(24)+i*px(34)) });
+      ctx.font="800 "+px(27)+"px "+IMGF; ctx.fillStyle=it.col;
+      it.V.forEach(function(l,i){ ctx.fillText(l,PAD+LW+GAP,yy+px(25)+i*px(38)) });
+      if(it.S.length){ ctx.font="400 "+px(22)+"px "+IMGF; ctx.fillStyle=IC.ink2;
+        it.S.forEach(function(l,i){ ctx.fillText(l,PAD+LW+GAP,yy+px(25)+it.V.length*px(38)+i*px(32)) }) }
       yy+=it.h;
       ctx.strokeStyle=IC.line; ctx.lineWidth=1;
-      ctx.beginPath(); ctx.moveTo(PAD,yy-9); ctx.lineTo(W-PAD,yy-9); ctx.stroke();
+      ctx.beginPath(); ctx.moveTo(PAD,yy-px(9)); ctx.lineTo(W-PAD,yy-px(9)); ctx.stroke();
     });
   });
-  ctx.font="400 20px "+IMGF; ctx.fillStyle=IC.ink3;
-  ctx.fillText("園見学ノート　"+new Date().toLocaleDateString("ja-JP"),PAD,H-24);
+  ctx.font="400 "+px(20)+"px "+IMGF; ctx.fillStyle=IC.ink3;
+  ctx.fillText("園見学ノート　"+new Date().toLocaleDateString("ja-JP"),PAD,H-px(24));
+  return {cv:cv,W:W,H:H,cuts:cuts};
+}
+function makeImage(){
+  const p=cur(); if(!p){ imsg("先に園を登録してください。"); return }
+  if(!imgData(p).length){ imsg("まだ何も記入されていません。"); return }
+  const out=document.getElementById("imgCanvas"), g=out.getContext("2d");
+  const M=40;
+  let note="";
+  /* まず1段組み。A4タテに収まればそのまま */
+  let r=imgBuild(p,1000);
+  let cw=1000+M*2, ch=Math.round(cw*A4R);
+  if(r.H<=ch-M*2){
+    out.width=cw; out.height=ch;
+    g.fillStyle=IC.paper; g.fillRect(0,0,cw,ch);
+    g.drawImage(r.cv,M,M);
+  }else{
+    /* 収まらないので2段組みにする */
+    const CW=660, GX=52;
+    r=imgBuild(p,CW);
+    cw=CW*2+GX+M*2; ch=Math.round(cw*A4R);
+    const avail=ch-M*2;
+    let cut=r.H;
+    r.cuts.forEach(function(y){ if(Math.abs(y-r.H/2)<Math.abs(cut-r.H/2)) cut=y });
+    if(!(cut>0&&cut<r.H)) cut=Math.round(r.H/2);
+    const k=Math.min(1, avail/Math.max(cut, r.H-cut));
+    out.width=cw; out.height=ch;
+    g.fillStyle=IC.paper; g.fillRect(0,0,cw,ch);
+    g.imageSmoothingEnabled=true; g.imageSmoothingQuality="high";
+    g.drawImage(r.cv, 0,0,   r.W,cut,     M,             M, r.W*k, cut*k);
+    g.drawImage(r.cv, 0,cut, r.W,r.H-cut, M+r.W*k+GX,    M, r.W*k, (r.H-cut)*k);
+    note = (k<1) ? "項目が多いので、"+Math.round(k*100)+"% に縮めて2段組みで収めました。" : "2段組みでA4タテ1枚に収めました。";
+  }
   document.getElementById("imgWrap").classList.add("on");
-  saveImage(cv,p);
+  saveImage(out,p,note);
 }
 function safeName(n){ return String(n||"園").replace(/[\/:*?"<>|]/g,"_").slice(0,40) }
-function saveImage(cv,p){
+function saveImage(cv,p,note){
   cv.toBlob(function(blob){
     if(!blob){ imsg("画像を作れませんでした。項目を減らすか、印刷をお使いください。"); return }
     downloadBlob(safeName(p.name)+"_見学メモ.png", blob,
-      "保存しました。","保存できませんでした。下の画像を長押し（PCは右クリック）で保存してください。", imsg);
+      (note?note+" ":"")+"保存しました。","保存できませんでした。下の画像を長押し（PCは右クリック）で保存してください。", imsg);
   },"image/png");
 }
 
