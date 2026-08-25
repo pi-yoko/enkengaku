@@ -21,6 +21,8 @@
 <!-- v20260824g -->
 <!-- v20260824h -->
 <!-- v20260824i -->
+<!-- v20260825a -->
+<!-- v20260825a -->
 <style>
 :root{
   --page:#FFEFD4; --sheet:#FFFDF7; --card:#FFFFFF;
@@ -150,20 +152,8 @@ textarea{resize:vertical;min-height:56px;line-height:1.7}
 .sec .count{margin-left:auto}
 .searchBox{display:flex;gap:8px;align-items:center}
 .searchBox input{flex:1}
-.movebar{display:flex;align-items:center;gap:6px;padding:8px 16px 4px}
-.movebar>span{font-size:11px;font-weight:800;color:var(--ink-3);margin-right:auto}
-.movebar button{background:var(--sheet);border:2px solid var(--line);color:var(--ink-2);
-  border-radius:999px;padding:6px 13px;font-size:11.5px;font-weight:800;cursor:pointer}
-.movebar button:active{transform:translateY(2px)}
-.movebar.sm{padding:6px 0 0;justify-content:flex-end}
-.movebar.sm button{padding:5px 14px;font-size:13px;min-width:46px}
-.plist{margin:0 0 11px;padding-left:22px;font-size:13px;line-height:1.75;color:var(--ink-2)}
-.plist li{margin:0 0 7px}
-.plist b{color:var(--ink)}
-.grp{margin:0 0 9px;font-size:13px;font-weight:800;color:var(--ink);letter-spacing:.06em;border-left:5px solid var(--sun);padding-left:9px;line-height:1.4}
-.grp + .muted{padding-left:14px}
-.verline{margin:0 0 10px;font-size:11.5px;font-weight:800;color:var(--ink-3);letter-spacing:.05em}
 .item{border-top:2px dotted var(--line);padding:14px 17px}
+.dateIn{width:100%;margin-top:9px;background:var(--sheet);border:2px solid var(--line);border-radius:13px;padding:10px 12px;font:inherit;font-size:15px;color:var(--ink)}
 .item .q{font-size:14.5px;font-weight:800;line-height:1.6;margin:0}
 .why{background:none;border:0;padding:2px 0 0;color:var(--coral);font-size:11.5px;font-weight:800;cursor:pointer}
 .why-body{display:none;margin:8px 0 0;padding:10px 13px;background:var(--coral-soft);border-radius:15px;font-size:12.5px;line-height:1.8;color:var(--ink-2)}
@@ -194,7 +184,7 @@ textarea{resize:vertical;min-height:56px;line-height:1.7}
 table{border-collapse:collapse;width:100%;font-size:13px}
 th,td{border-bottom:2px dotted var(--line);padding:9px 10px;text-align:left;vertical-align:top}
 thead th{position:sticky;top:0;background:var(--card);font-size:12.5px;font-weight:800;border-bottom:3px solid var(--sun);white-space:nowrap}
-tbody th{font-weight:600;color:var(--ink-2);min-width:190px;font-size:12.5px}
+tbody th{font-weight:700;color:var(--ink);min-width:190px;font-size:12.5px}
 td{text-align:center;font-variant-numeric:tabular-nums;min-width:78px;font-weight:800}
 td.ans{text-align:left;font-weight:600;font-size:12px;min-width:140px;line-height:1.6}
 tr.catrow th{background:var(--sun-soft);font-weight:800;color:var(--ink);font-size:12px}
@@ -223,9 +213,9 @@ footer{padding:22px 6px;color:var(--ink-3);font-size:11px;line-height:1.9;text-a
 .sub{display:flex;gap:6px;padding:0 0 3px}
 .sub button{flex:1;background:var(--sheet);border:2px solid var(--line);border-radius:999px;padding:8px 3px;font-size:12.5px;font-weight:800;color:var(--ink-3);cursor:pointer}
 .sub button[aria-pressed="true"]{background:var(--grape);border-color:var(--grape);color:#fff}
-.sumcat{font-size:12px;font-weight:800;letter-spacing:.05em;color:var(--ink-3);margin:15px 0 5px 4px}
+.sumcat{font-size:12px;font-weight:800;letter-spacing:.05em;color:var(--ink-2);margin:15px 0 5px 4px}
 .sumrow{display:flex;gap:11px;padding:8px 0;border-bottom:2px dotted var(--line)}
-.sumrow .k{flex:0 0 46%;font-size:12.5px;color:var(--ink-2);line-height:1.6}
+.sumrow .k{flex:0 0 46%;font-size:12.5px;color:var(--ink);line-height:1.6}
 .sumrow .v{flex:1;font-size:13.5px;font-weight:800;line-height:1.6;word-break:break-word}
 .sumrow .v.na{color:var(--ink-3);font-weight:600}
 .rmk{color:var(--ink);font-size:15px}
@@ -235,7 +225,7 @@ footer{padding:22px 6px;color:var(--ink-3);font-size:11px;line-height:1.9;text-a
 .saveState button{background:var(--coral-soft);border:2px solid var(--coral);color:var(--coral);border-radius:999px;padding:2px 11px;font-size:11px;font-weight:800;cursor:pointer}
 #imgWrap{display:none;margin-top:13px}
 #imgWrap.on{display:block}
-#imgWrap canvas{width:100%;height:auto;border-radius:16px;border:2px solid var(--line);display:block}
+#imgWrap img{width:100%;height:auto;border-radius:16px;border:2px solid var(--line);display:block;-webkit-touch-callout:default;-webkit-user-select:auto;user-select:auto}
 .ages{display:grid;grid-template-columns:repeat(6,1fr);gap:5px;margin-top:10px}
 .ages label{display:grid;gap:3px;justify-items:center}
 .ages span{font-size:10.5px;font-weight:800;color:var(--ink-2)}
@@ -273,6 +263,7 @@ footer{padding:22px 6px;color:var(--ink-3);font-size:11px;line-height:1.9;text-a
 /* 印刷の紙面。画面では隠しているが、A4に収める倍率を測るときだけ表に出す */
 #printArea{display:none;width:190mm;overflow:hidden;background:#fff;color:#000;font-size:10.5px;line-height:1.5}
 #printArea.multi{overflow:visible}
+#printArea .cgrp + .cgrp{break-before:page}
 body.measuring #printArea{display:block;position:fixed;left:-10000px;top:0;visibility:hidden;overflow:visible}
 #printFit{transform-origin:top left}
 #printArea .pTitle{font-size:16px;font-weight:800;margin:0 0 2px}
@@ -285,7 +276,7 @@ body.measuring #printArea{display:block;position:fixed;left:-10000px;top:0;visib
 #printArea .pQ{flex:0 1 auto;max-width:74%;font-weight:600}
 #printArea .pCols{column-count:2;column-gap:18px}
 #printArea table{font-size:9px;width:100%;table-layout:fixed;border-collapse:collapse;line-height:1.25}
-#printArea table th,#printArea table td{font-size:9px;line-height:1.25;padding:1.5px 4px;min-width:0 !important;white-space:normal;overflow-wrap:anywhere}
+#printArea table th,#printArea table td{font-size:9px;line-height:1.25;padding:1.5px 4px;color:#000;min-width:0 !important;white-space:normal;overflow-wrap:anywhere}
 #printArea table th:first-child{width:42%}
 #printArea thead{display:table-header-group}
 #printArea tr{break-inside:avoid}
@@ -298,15 +289,15 @@ body.measuring #printArea{display:block;position:fixed;left:-10000px;top:0;visib
 #printArea .tsub{font-size:8px;font-weight:400;color:#555}
 #printArea .memo-cell{font-size:8px;color:#555}
 #printArea .p2{column-count:2;column-gap:14px;column-fill:balance}
-#printArea .sumcat{font-size:10.5px;font-weight:800;background:#EEE;padding:1px 5px;margin:5px 0 2px;break-after:avoid;break-inside:avoid}
+#printArea .sumcat{font-size:10.5px;font-weight:800;color:#000;background:#EEE;padding:1px 5px;margin:5px 0 2px;break-after:avoid;break-inside:avoid}
 #printArea .p2 > .sumcat:first-child{margin-top:0}
 #printArea .sumrow{display:flex;gap:6px;padding:0.5px 0;line-height:1.3;border-bottom:1px dotted #DDD;break-inside:avoid}
-#printArea .sumrow .k{flex:0 0 52%}
+#printArea .sumrow .k{flex:0 0 52%;color:#000}
 #printArea .sumrow .v{flex:1;font-weight:800;font-size:10px}
 #printArea .sumrow .k{font-size:10px}
 #printArea .mm{display:block;font-size:8.5px;font-weight:400;color:#555}
 #printArea .rmk{font-size:11px}
-#printArea .na,#printArea .vna{color:#999;font-weight:400}
+#printArea .na,#printArea .vna{color:#777;font-weight:400}
 #printArea .card{box-shadow:none;background:none;padding:0;border-radius:0}
 #printArea .scroller{overflow:visible}
 @media print{
@@ -370,13 +361,17 @@ body.measuring #printArea{display:block;position:fixed;left:-10000px;top:0;visib
         <button id="s-all" aria-pressed="false" onclick="setSum('all')">園をくらべる</button>
       </div>
 
-      <div class="card" style="padding:16px 17px">
+      <details class="card sec" id="outBox">
+        <summary><span class="secn">＋</span><h2>画像で保存する・紙に印刷する</h2><span class="caret">▶</span></summary>
+        <div class="secbody">
         <h2>画像で保存する</h2>
         <p class="muted" style="margin:7px 0 11px">記入した項目を<b>A4サイズ1枚</b>の画像にします。スマホに保存したり、家族に送ったりできます。</p>
         <button class="btn" onclick="makeImage()">この園を画像にする</button>
         <p id="imgMsg" class="muted" style="margin:10px 0 0"></p>
-        <div id="imgWrap"><canvas id="imgCanvas"></canvas>
-          <p class="muted" style="margin:9px 0 0;font-size:12px">保存できないときは、この画像を長押し（PCは右クリック）しても保存できます。</p></div>
+        <div id="imgWrap">
+          <p class="muted" style="margin:0 0 9px;font-size:12px"><b>この画像を長押し</b>（PCは右クリック）→「イメージを保存」でも保存できます。</p>
+          <img id="imgOut" alt="この園の記録">
+          <canvas id="imgCanvas" hidden></canvas></div>
         <hr style="border:0;border-top:2px dotted var(--line);margin:15px 0">
         <h2>紙に印刷する</h2>
         <p class="muted" style="margin:7px 0 4px">4種類あります。どれも<b>A4タテ</b>です。</p>
@@ -384,7 +379,7 @@ body.measuring #printArea{display:block;position:fixed;left:-10000px;top:0;visib
           <li><b>できあがり（1園分）</b><br>いま選んでいる園の、記入した内容をまとめた完成版。園名・見学日入り。</li>
           <li><b>見学に持っていく（ぜんぶ）</b><br>使う項目が<b>全部</b>、空欄で並んだ紙。園名も空欄なので、どの園でも使えます。</li>
           <li><b>見学に持っていく（まだの分）</b><br>その園で<b>まだ書けていない項目だけ</b>。園名・見学日入り。当日はこれ1枚で足ります。</li>
-          <li><b>比較表</b><br>全部の園を横に並べた表。<b>4園までなら1枚</b>、それ以上は原寸のまま複数枚に分けます（園名は毎ページの上に出ます）。</li>
+          <li><b>比較表</b><br>園を横に並べた表。読みやすさのため<b>3園ずつ紙を変えて</b>刷ります。項目が多いときは、そのぶん枚数が増えます。</li>
         </ol>
         <p class="muted" style="margin:0 0 11px;font-size:12px">①②③は、はみ出す分だけ自動で小さくして1枚に収めます。</p>
         <div class="row" style="gap:7px;flex-wrap:wrap">
@@ -394,7 +389,8 @@ body.measuring #printArea{display:block;position:fixed;left:-10000px;top:0;visib
           <button class="btn sm ghost" onclick="doPrint('compare')">④ 比較表</button>
         </div>
         <p id="printMsg" class="muted" style="margin:10px 0 0"></p>
-      </div>
+        </div>
+      </details>
       <div id="sumOne"></div>
       <div id="sumAll" hidden>
         <div class="card" style="padding:14px 16px;margin-bottom:13px">
@@ -480,7 +476,7 @@ body.measuring #printArea{display:block;position:fixed;left:-10000px;top:0;visib
           <button class="btn sm ghost" id="ps_none" onclick="preset('none')">ぜんぶ外す</button>
         </div>
         <p class="muted" style="margin:11px 0 0;font-weight:800">いま使う項目：<span id="onN">0</span> 個</p>
-        <p class="muted" style="margin:6px 0 0;font-size:12px">↑↓ で<b>並べ替え</b>できます（カテゴリごと・項目ごと）。チェックが付いているものが<b>最初から表示されます</b>。外したものは消えるわけではなく、<b>ここでいつでも足せます</b>。項目の下の<b>「聞く理由」</b>を読んでから決めてください。</p>
+        <p class="muted" style="margin:6px 0 0;font-size:12px">チェックが付いているものが<b>最初から表示されます</b>。外したものは消えるわけではなく、<b>ここでいつでも足せます</b>。項目の下の<b>「聞く理由」</b>を読んでから決めてください。</p>
         <div class="searchBox">
           <input type="text" id="pickQ" placeholder="項目をさがす（例：おむつ、アレルギー、延長）" autocomplete="off"
                  oninput="setPickQ(this.value)">
@@ -492,25 +488,7 @@ body.measuring #printArea{display:block;position:fixed;left:-10000px;top:0;visib
       </details>
 
       <details class="card sec">
-        <summary><span class="secn">4</span><h2>保存について</h2><span class="caret">▶</span></summary>
-        <div class="secbody">
-        <p class="muted" style="margin:0 0 11px">
-          入力するたびに<b>自動で保存されます</b>。保存ボタンを押す必要はありません。<br>
-          まちがえて消してしまったときは、画面の上に出る<b>「元にもどす」</b>を押してください。
-        </p>
-        <p class="muted" style="margin:0 0 13px;font-size:12.5px">
-          記録は<b>ブラウザごとに別々に</b>保存されます。前回と違うブラウザで開くと出てきません。いつも同じところから開いてください。
-        </p>
-        <hr style="border:0;border-top:2px dotted var(--line);margin:0 0 13px">
-        <p class="muted" style="margin:0 0 10px;font-weight:800">うまく保存されないとき</p>
-        <p class="muted" style="margin:0 0 10px;font-size:12.5px">下のボタンを押して、出てきた文字をそのまま伝えてもらえれば原因が分かります。</p>
-        <button class="btn sm" onclick="document.getElementById('diag').textContent=diagText()">しらべる</button>
-        <pre id="diag" style="white-space:pre-wrap;font-size:12px;line-height:1.8;color:var(--ink-2);margin:11px 0 0;font-family:inherit"></pre>
-        </div>
-      </details>
-
-      <details class="card sec">
-        <summary><span class="secn">5</span><h2>記録のバックアップ</h2><span class="caret">▶</span></summary>
+        <summary><span class="secn">4</span><h2>記録のバックアップ</h2><span class="caret">▶</span></summary>
         <div class="secbody">
         <p class="muted" style="margin:0 0 11px"><b>いちばん確実な方法です。</b>記録をファイルにして端末に保存します。ブラウザの中の保存と違って、これは消えません。見学が終わったら押しておくと安心です。</p>
         <div class="row" style="gap:8px;flex-wrap:wrap">
@@ -541,30 +519,27 @@ body.measuring #printArea{display:block;position:fixed;left:-10000px;top:0;visib
         </div>
       </details>
 
-      <details class="card sec">
-        <summary><span class="secn">6</span><h2>このツールについて</h2><span class="caret">▶</span></summary>
-        <div class="secbody">
-        <p class="verline">バージョン 2026-08-24i</p>
-        <p class="muted" style="margin:0">
-          項目は「保育士にゆとりがあるか」を軸に組んでいます。設備の新しさより、そこで働く人に余裕があるかどうかが、子どもの過ごし方に直結するからです。<br><br>
-          <b>事前</b>には全部の項目が、<b>聞いて確認すること</b>から順に並んでいます。<b>当日</b>には、事前に書けなかったものだけが、<b>見て確認すること</b>・<b>聞いて確認すること</b>の順で出ます。<br><br>
-          ◎○△✕の評価と点数については、上の<b>「② 評価（◎○△✕）」</b>を読んでみてください。最初はオフになっています。
-        </p>
-        </div>
-      </details>
 
     </div>
   </section>
 
   <div id="printArea"></div>
-  <footer>記録はこの端末のブラウザ内にだけ保存され、どこにも送信されません。<br>
+  <footer><span class="verline">バージョン 2026-08-25a</span><br>
+    記録はこの端末のブラウザ内にだけ保存され、どこにも送信されません。<br>
     園の運用は自治体・法人によって異なります。気になる点は必ず園にご確認ください。</footer>
 </div>
 
 <script>
 const CATS=[
+{id:"tel",name:"見学予約時に電話等で確認すると安心",kind:"ask",color:"var(--grape)",
+ tip:"かけるなら平日の10時過ぎ（登園が落ち着くころ）か、14時前後（お昼寝の時間帯）。行事の日を避けたいので、先にホームページを見ておくと確実です。",
+ items:[
+  {k:"tel_0", q:"見学の所要時間はどのくらいか"},
+  {k:"tel_1", q:"子どもを連れて行ってよいか", o:["○","✕"]},
+  {k:"tel_3", q:"持ち物（スリッパ・筆記用具）は必要か", o:["いる","いらない"]},
+  {k:"tel_5", q:"車・ベビーカーで行ってよいか", w:"駐車場やベビーカーの置き場所も一緒に聞いておくと当日慌てません。見学中は園内を回るため、抱っこ紐がおすすめです。", o:["○","✕"]}
+ ]},
 {id:"prep",name:"基本の情報",kind:"ask",color:"var(--sky)",
- tip:"ここは見学に行く前に埋められます。先に埋めておくと、当日は「行かないと分からないこと」だけに集中できます。",
  items:[
   {k:"prep_0", q:"園の種類", w:"自治体のホームページか、園のサイトに出ています。認可保育園…国の基準を満たした定員20名以上の園。0〜5歳対象、自治体の選考（点数）で入る。認可外保育園…国の認可基準には当てはまらないが、届出をして運営している施設の総称。園に直接申込め、保育料は園が決める。小規模保育…定員6〜19名、0〜2歳限定の認可。手厚くて入りやすい。企業主導型…企業がつくる認可外だが国の助成つき。従業員枠＋地域枠があり、自治体の選考を通さず直接申込める。認定こども園…保育園＋幼稚園の合体型。親が働いていてもいなくても通え、途中で退職しても在園し続けられる。家庭的保育…保育者の自宅で5名以下を見る認可。0〜2歳限定で、家庭に最も近い環境。", o:["認可保育園","認可外保育園","小規模保育","企業主導型","認定こども園","家庭的保育"]},
   {k:"prep_1", q:"住所・最寄り駅・家からのルート", w:"子どもと一緒に行くと倍の時間かかります。実際のルートを歩いてみると安心です。"},
@@ -584,14 +559,6 @@ const CATS=[
   {k:"prep_x2", q:"エプロン・口拭きのサブスクはあるか", w:"サブスクを利用すると、エプロン・口拭きを持っていく、洗うなどの手間が減ります。", o:["あり","なし"]},
   {k:"prep_x3", q:"年間行事"},
   {k:"prep_9", q:"去年の申込状況・内定の最低指数", w:"自治体が公表していることがあります。"}
- ]},
-{id:"tel",name:"見学前に電話で確認しておくこと",kind:"ask",color:"var(--grape)",
- tip:"かけるなら平日の10時過ぎ（登園が落ち着くころ）か、14時前後（お昼寝の時間帯）。行事の日を避けたいので、先にホームページを見ておくと確実です。",
- items:[
-  {k:"tel_0", q:"見学の所要時間はどのくらいか"},
-  {k:"tel_1", q:"子どもを連れて行ってよいか", o:["○","✕"]},
-  {k:"tel_3", q:"持ち物（スリッパ・筆記用具）は必要か", o:["いる","いらない"]},
-  {k:"tel_5", q:"車・ベビーカーで行ってよいか", w:"駐車場やベビーカーの置き場所も一緒に聞いておくと当日慌てません。見学中は園内を回るため、抱っこ紐がおすすめです。", o:["○","✕"]}
  ]},
 {id:"route",name:"通園経路・園のまわり",kind:"rate",color:"var(--sky)",
  items:[
@@ -735,42 +702,9 @@ const RATE=[["3","◎","よい"],["2","○","ふつう"],["1","△","気にな�
 function rateOf(v){ if(v===undefined||v===null) return null;
   var t=String(v); for(var i=0;i<RATE.length;i++) if(RATE[i][0]===t) return RATE[i]; return null }
 const KEY="engakunote.v3";
-function applyOrder(){
-  if(S.catOrder && S.catOrder.length){
-    var pos={}; S.catOrder.forEach(function(id,i){ pos[id]=i });
-    CATS.sort(function(a,b){ return (pos[a.id]===undefined?9999:pos[a.id])-(pos[b.id]===undefined?9999:pos[b.id]) });
-  }
-  if(S.itemOrder){
-    CATS.forEach(function(c){
-      var ord=S.itemOrder[c.id]; if(!ord||!ord.length) return;
-      var pos={}; ord.forEach(function(k,i){ pos[k]=i });
-      c.items.sort(function(a,b){ return (pos[a.k]===undefined?9999:pos[a.k])-(pos[b.k]===undefined?9999:pos[b.k]) });
-    });
-  }
-}
-function saveOrder(){
-  S.catOrder=CATS.map(function(c){return c.id});
-  S.itemOrder={}; CATS.forEach(function(c){ S.itemOrder[c.id]=c.items.map(function(it){return it.k}) });
-  save();
-}
-function moveCat(id,dir){
-  var i=-1; CATS.forEach(function(c,n){ if(c.id===id) i=n });
-  var j=i+dir; if(i<0||j<0||j>=CATS.length) return;
-  var t=CATS[i]; CATS[i]=CATS[j]; CATS[j]=t;
-  saveOrder(); renderPick(); renderPre(); renderDay(); renderCmp(); renderSum();
-  var el=document.querySelector('[data-pcat="'+id+'"]'); if(el) el.scrollIntoView({block:"center"});
-}
-function moveItem(cid,k,dir){
-  var c=catOf(cid); if(!c) return;
-  var i=-1; c.items.forEach(function(it,n){ if(it.k===k) i=n });
-  var j=i+dir; if(i<0||j<0||j>=c.items.length) return;
-  var t=c.items[i]; c.items[i]=c.items[j]; c.items[j]=t;
-  saveOrder(); renderPick(); renderPre(); renderDay();
-  var el=document.getElementById("pk_"+k); if(el) el.scrollIntoView({block:"center"});
-}
 const ALL=[]; CATS.forEach(function(c){c.items.forEach(function(it){ALL.push(it.k)})});
 
-let S={parks:[],cur:null,off:Object.assign({},DEFAULT_OFF),pg:{},catOrder:null,itemOrder:{}}, storageOK=true, sumView="one";
+let S={parks:[],cur:null,off:Object.assign({},DEFAULT_OFF),pg:{}}, storageOK=true, sumView="one";
 let STORE=null, STORE_KIND="なし", STORE_ERR="", LOADED="（保存が使えません）", PROBE=null, ACCESS="未確認", NOKEEP=false;
 (function(){
   var probe=function(get,name){
@@ -1004,7 +938,8 @@ function done(p){ let n=0,t=0;
   CATS.forEach(function(c){ c.items.forEach(function(it){ if(!on(it.k))return; t++;
     if(filled(p,c,it)) n++ }) }); return [n,t] }
 
-function setTab(t){ ["pre","day","sum","set"].forEach(function(x){
+function setTab(t){ S.tab=t; renderNudge();
+  ["pre","day","sum","set"].forEach(function(x){
     document.getElementById(x).hidden=x!==t;
     document.getElementById("t-"+x).setAttribute("aria-selected",String(x===t)) });
   if(t==="pre") renderPre();
@@ -1021,11 +956,13 @@ function setSum(v){ sumView=v;
 
 function render(){ renderParks(); renderPre(); renderDay(); renderSum(); renderCmp(); renderNudge() }
 function goBackup(){ setTab("set"); setTimeout(function(){
-  var d=document.querySelectorAll("#set details.sec")[4];
+  var d=document.querySelectorAll("#set details.sec")[3];
   if(d){ d.open=true; d.scrollIntoView() } },60) }
 function pickBackupFile(){ var el=document.getElementById("bkFile"); if(el) el.click() }
 function renderNudge(){
   var el=document.getElementById("nudge"); if(!el) return;
+  /* 事前タブでは出さない（記入に集中してもらう） */
+  if(S.tab==="pre" || !S.tab){ el.innerHTML=""; return }
   if(NOKEEP){
     el.innerHTML='<div class="nudge warn"><b>このブラウザでは、閉じると記録が消えます。</b><br>'
       +'ブラウザ側の制限で、ここでは保存を残せません。<b>「ファイルに保存」を使ってください。</b>'
@@ -1078,12 +1015,7 @@ function emptyCard(){ return '<div class="card empty">'+CHICK.replace('width="44
 function renderPre(){
   const el=document.getElementById("preBody"), p=cur();
   if(!p){ el.innerHTML=emptyCard(); return }
-  let h='<div class="card meta">'+
-    '<label><span class="lbl">園の名前</span><input type="text" value="'+esc(p.name)+'" oninput="setField(&quot;name&quot;,this.value)"></label>'+
-    '<div class="g2"><label><span class="lbl">見学の予定日</span><input type="date" value="'+esc(p.date)+'" oninput="setField(&quot;date&quot;,this.value)"></label>'+
-    '<label><span class="lbl">家から（分）</span><input type="text" inputmode="numeric" value="'+esc(p.mins)+'" oninput="setField(&quot;mins&quot;,this.value)"></label></div>'+
-    '<label><span class="lbl">場所・行き方</span><input type="text" value="'+esc(p.addr)+'" oninput="setField(&quot;addr&quot;,this.value)"></label></div>';
-  h+='<div class="card guide">'+
+  let h='<div class="card guide">'+
      '<p><b>調べられることは、この「事前」の中で見学前に先に記入しておきましょう。</b></p>'+
      '<p>見学は<b>先に園内をまわって、最後に質問という流れが多く、質問できる時間はあまりありません。</b>'+
      '事前にまとめておくと、当日は聞きたいことだけに集中できます。</p>'+
@@ -1184,6 +1116,9 @@ function catHTML(c,p,live,pg){
     '<span class="remain" data-remain="'+c.id+'">残り '+live.length+'</span><span class="caret">▶</span></summary>';
   if(c.tip) h+='<div class="tip">'+c.tip+'</div>';
   h+='<div class="items">';
+  /* 見学の予定日は「基本の情報」のいちばん上に置く */
+  if(c.id==="prep") h+='<div class="item"><p class="q">見学の予定日</p>'+
+    '<input type="date" class="dateIn" value="'+esc(p.date)+'" oninput="setField(&quot;date&quot;,this.value)"></div>';
   live.forEach(function(it){ h+=itemHTML(c,p,it,false) });
   h+='</div><button class="catClose" onclick="closeCat(this)">▲ 「'+c.name+'」を閉じる</button>';
   return h+'</details>';
@@ -1254,7 +1189,7 @@ function renderSum(){
       '</div></div>')+
     '<div class="card" style="padding:17px">'+
     '<h2>'+esc(p.name)+'</h2>'+
-    '<p class="muted" style="margin:5px 0 0">'+(p.date?esc(p.date)+'　':'')+(p.mins?'家から'+esc(p.mins)+'分':'')+'</p>'+
+    '<p class="muted" style="margin:5px 0 0">'+(p.date?esc(p.date):'')+'</p>'+
     '<p class="muted" style="margin:9px 0 0;font-weight:800">'+(useRate()?'総合 '+(sc===null?"—":sc+"点")+'　／　':'')+'記入 '+d[0]+'/'+d[1]+'　／　未記入 '+r[1]+'</p>'+
     (p.note?'<p class="muted" style="margin:11px 0 0">'+esc(p.note)+'</p>':'')+
     '</div><div class="card" style="padding:6px 17px 17px">'+r[0]+'</div>';
@@ -1269,8 +1204,7 @@ function renderCmp(){
     const sc=score(p), t=tally(p);
     return '<td>'+(sc===null?"—":sc)+'<div class="tsub">◎'+t[3]+' ○'+t[2]+' △'+t[1]+' ✕'+t[0]+'<br>'+t.n+'問</div></td>' }).join("")+'</tr>') : '';
   let rows=totalRow+
-    '<tr><th>見学日</th>'+S.parks.map(function(p){return '<td>'+(esc(p.date)||"—")+'</td>'}).join("")+'</tr>'+
-           '<tr><th>家から（分）</th>'+S.parks.map(function(p){return '<td>'+(esc(p.mins)||"—")+'</td>'}).join("")+'</tr>';
+    '<tr><th>見学日</th>'+S.parks.map(function(p){return '<td>'+(esc(p.date)||"—")+'</td>'}).join("")+'</tr>';
   CATS.forEach(function(c){
     const live=liveItems(c); if(!live.length)return;
     rows+='<tr class="catrow"><th>'+c.name+
@@ -1316,9 +1250,7 @@ function renderPick(){
     return '<details class="card cat" data-pcat="'+c.id+'"'+(PICKQ?" open":"")+'><summary>'+
       '<span class="dot" style="background:'+c.color+'"></span><h2>'+c.name+'</h2>'+
       '<span class="count">'+n+'/'+c.items.length+'</span><span class="caret">▶</span></summary>'+
-      (PICKQ?"":'<div class="movebar"><span>カテゴリの順番</span>'+
-        '<button onclick="moveCat(&quot;'+c.id+'&quot;,-1)">↑ 上へ</button>'+
-        '<button onclick="moveCat(&quot;'+c.id+'&quot;,1)">↓ 下へ</button></div>')+
+
       '<div style="padding:12px 16px;display:flex;gap:7px">'+
       '<button class="btn sm ghost" onclick="toggleCat(\''+c.id+'\',true)">全部使う</button>'+
       '<button class="btn sm ghost" onclick="toggleCat(\''+c.id+'\',false)">全部外す</button></div>'+
@@ -1328,9 +1260,7 @@ function renderPick(){
           ' onchange="toggleItem(&quot;'+k+'&quot;,this.checked)"><div class="pickmain">'+
           '<label for="pk_'+k+'">'+it.q+'</label>'+
           (it.w?'<button class="why" onclick="toggleWhy(this)">聞く理由 ▾</button><p class="why-body">'+it.w+'</p>':'')+
-          (PICKQ?"":'<div class="movebar sm">'+
-            '<button onclick="moveItem(&quot;'+c.id+'&quot;,&quot;'+k+'&quot;,-1)">↑</button>'+
-            '<button onclick="moveItem(&quot;'+c.id+'&quot;,&quot;'+k+'&quot;,1)">↓</button></div>')+
+
           '</div></div>' }).join("")+
       '</div></details>' }).join("");
   var hp=document.getElementById("pickQHit");
@@ -1372,16 +1302,27 @@ function doPrint(mode){
   const a=document.getElementById("printArea"), p=cur();
   if(mode==="compare"){
     if(!S.parks.length){ msg("先に園を登録してください。"); return }
-    renderCmp();
-    /* 園が多いほど、項目名の列を細くして園の欄を広く取る */
-    const lw=Math.max(24, 44-S.parks.length*3);
-    a.innerHTML='<p class="pTitle">園見学 比較表</p><p class="pSub">園見学ノート</p>'+
-      document.getElementById("cmpBody").innerHTML.replace('min-width:190px','min-width:0;width:'+lw+'%');
+    /* 園が多いと欄が細くなって読めないので、3園ずつ紙を分ける */
+    const ALLP=S.parks, GN=CMP_PER_PAGE;
+    const lw=Math.max(30, 44-Math.min(GN,ALLP.length)*3);
+    let h='';
+    for(let i=0;i<ALLP.length;i+=GN){
+      const part=ALLP.slice(i,i+GN);
+      S.parks=part; renderCmp();
+      const num=(ALLP.length>GN) ? '（'+(Math.floor(i/GN)+1)+'／'+Math.ceil(ALLP.length/GN)+'）' : '';
+      h+= '<div class="cgrp">'
+        + '<p class="pTitle">園見学 比較表'+num+'</p>'
+        + '<p class="pSub">'+part.map(function(x){return esc(x.name)}).join('　／　')+'</p>'
+        + document.getElementById("cmpBody").innerHTML.replace('min-width:190px','min-width:0;width:'+lw+'%')
+        + '</div>';
+    }
+    S.parks=ALLP; renderCmp();
+    a.innerHTML=h;
   }else if(mode==="one"){
     if(!p){ msg("先に園を登録してください。"); return }
     const r=sumHTML(p);
     a.innerHTML='<p class="pTitle">'+esc(p.name)+'</p><p class="pSub">'+
-      (p.date?esc(p.date)+'　':'')+(p.mins?'家から'+esc(p.mins)+'分　':'')+(useRate()?'総合 '+(score(p)===null?"—":score(p)+"点"):'')+'</p>'+
+      (p.date?esc(p.date)+'　':'')+(useRate()?'総合 '+(score(p)===null?"—":score(p)+"点"):'')+'</p>'+
       (p.note?'<p style="margin:0 0 10px">'+esc(p.note)+'</p>':'')+
       '<div class="p2">'+r[0]+'</div>';
   }else{
@@ -1391,9 +1332,9 @@ function doPrint(mode){
     let n0=0;
     let h = only
       ? '<p class="pTitle">'+esc(p.name)+'　まだ聞けていないこと</p>'+
-        '<p class="pSub">見学日：'+(p.date?esc(p.date):'＿＿月＿＿日')+'　　家から：'+(p.mins?esc(p.mins)+'分':'＿＿分')+'</p><div class="p2">'
+        '<p class="pSub">見学日：'+(p.date?esc(p.date):'＿＿月＿＿日')+'</p><div class="p2">'
       : '<p class="pTitle">園見学 持っていくリスト</p>'+
-        '<p class="pSub">園名：＿＿＿＿＿＿＿＿＿＿＿　見学日：＿＿月＿＿日　　家から：＿＿分</p><div class="p2">';
+        '<p class="pSub">園名：＿＿＿＿＿＿＿＿＿＿＿　　見学日：＿＿月＿＿日</p><div class="p2">';
     CATS.forEach(function(c){
       let live=liveItems(c);
       if(only) live=live.filter(function(it){ return !filled(p,c,it) });
@@ -1412,13 +1353,26 @@ function doPrint(mode){
     a.innerHTML=h;
   }
   a.innerHTML='<div id="printFit">'+a.innerHTML+'</div>';
-  const r=fitPrint({multi: mode==="compare"});
-  pmsg(r.pages>1 ? "1枚に収めると字が小さくなりすぎるので、原寸のままA4タテ "+r.pages+" 枚に分けました。園の名前は毎ページの上に出ます。"
+  const multiGrp = (mode==="compare" && S.parks.length>CMP_PER_PAGE);
+  const r=fitPrint({multi: mode==="compare", force: multiGrp,
+                    group: multiGrp ? ".cgrp" : null});
+  pmsg(multiGrp
+       ? "園が多いので "+CMP_PER_PAGE+" 園ずつ、A4タテ "+r.pages+" 枚に分けました。"
+         +(r.k<0.999 ? "（"+Math.round(r.k*100)+"% に縮小）" : "")
+     : r.pages>1 ? "1枚に収めると字が小さくなりすぎるので、原寸のままA4タテ "+r.pages+" 枚に分けました。園の名前は毎ページの上に出ます。"
      : r.k>=0.999 ? "A4タテ1枚に収まります。"
      : r.k>=0.7   ? "A4タテ1枚に収めるため、"+Math.round(r.k*100)+"% に縮めました。"
      :              "項目が多いので "+Math.round(r.k*100)+"% まで縮めました。字が小さいときは、設定で項目を減らしてください。");
-  setTimeout(function(){ window.print() },120);
+  if(FRAMED){
+    pmsg("この画面（claude.ai の中）からは印刷できません。ブラウザ側で止められています。"
+        +"ご自分のURL（配布版）から開けば印刷できます。この画面では、上の「画像で保存する」をお使いください。");
+    return;
+  }
+  setTimeout(function(){ try{ window.print() }catch(e){
+    pmsg("印刷を開けませんでした。上の「画像で保存する」をお使いください。") } },120);
 }
+/* claude.ai の中（枠の中）で開かれているか。枠の中だと印刷が止められる */
+const FRAMED = (function(){ try{ return window.top !== window.self }catch(e){ return true } })();
 function pmsg(t){ const e=document.getElementById("printMsg"); if(e)e.textContent=t }
 /* A4タテ1枚（190mm × 277mm）に収める。
    ・段数（1〜3段）をいろいろ試して、いちばん大きく載る組み方をえらぶ
@@ -1428,6 +1382,8 @@ function pmsg(t){ const e=document.getElementById("printMsg"); if(e)e.textConten
 /* 紙の中身が入る範囲。1%ほど余裕をみておかないと、
    丸めのわずかなはみ出しで2枚目の白紙が出てしまう */
 const PAGE_W=190/25.4*96*0.995, PAGE_H=277/25.4*96*0.985;
+/* 比較表は1枚あたり何園まで並べるか。増やすと欄が細くなって読みにくい */
+const CMP_PER_PAGE=3;
 function fitPrint(opt){
   opt=opt||{};
   const a=document.getElementById("printArea"), inner=document.getElementById("printFit");
@@ -1439,9 +1395,19 @@ function fitPrint(opt){
 
   /* 組む幅 w で作ったとき、A4タテ1枚に収めるのに必要な倍率
      （タテもヨコもはみ出さないこと。ヨコは w×k ≦ 紙幅） */
+  /* グループ分けしているときは、いちばん背の高いグループが1枚に入ればよい */
+  function tallest(){
+    if(opt.group){
+      const gs=inner.querySelectorAll(opt.group);
+      if(gs.length){ let m=0;
+        gs.forEach(function(g){ const gh=g.getBoundingClientRect().height; if(gh>m) m=gh });
+        return m }
+    }
+    return inner.getBoundingClientRect().height;
+  }
   function at(w){
     inner.style.width=Math.round(w)+"px";
-    const h=inner.getBoundingClientRect().height;
+    const h=tallest();
     const k=Math.min(1, PAGE_W/w, (h>0? PAGE_H/h : 1));
     return {k:k,w:w,h:h};
   }
@@ -1470,6 +1436,19 @@ function fitPrint(opt){
     fin=solve();
   }
 
+  /* グループ分けしているときは、グループごとに改ページして流す。
+     縮めすぎると読めないので 0.7 が下限。それでも入らなければ枚数が増える */
+  if(opt.group && opt.force){
+    const k=Math.max(0.7, Math.min(1, fin.k));
+    inner.style.width=Math.round(k<1 ? PAGE_W/k : PAGE_W)+"px";
+    inner.style.zoom = k<1 ? k.toFixed(4) : "";
+    let pages=0;
+    inner.querySelectorAll(opt.group).forEach(function(g){
+      pages += Math.max(1, Math.ceil(g.getBoundingClientRect().height/PAGE_H)) });
+    document.body.classList.remove("measuring");
+    a.style.height=""; a.classList.add("multi");
+    return {k:k, pages:Math.max(1,pages)};
+  }
   /* 1枚に押しこむと小さくなりすぎるものは、原寸のままA4を複数枚に分ける */
   if(opt.multi && fin.k < 0.8){
     inner.style.width=Math.round(PAGE_W)+"px";
@@ -1494,7 +1473,7 @@ function doImport(go){ const t=document.getElementById("io").value.trim();
   if(!t){ msg("先に文字列を貼りつけてください。"); return }
   if(!go){ showC("cfImport"); return } hideC("cfImport"); snapshot();
   try{ const d=JSON.parse(t); if(!d||!Array.isArray(d.parks)) throw new Error("bad");
-    S=Object.assign({parks:[],cur:null,off:{}},d); applyOrder();
+    S=Object.assign({parks:[],cur:null,off:{}},d);
     if(!S.cur&&S.parks[0])S.cur=S.parks[0].id; save(); render(); msg("読みこみました。");
   }catch(e){ msg("読みこめませんでした。文字列が途中で切れていないか確かめてください。") } }
 function wipe(){ hideC("cfWipe"); snapshot(); S={parks:[],cur:null,off:Object.assign({},DEFAULT_OFF),pg:{}}; save(); render(); msg("すべて消しました。") }
@@ -1528,7 +1507,7 @@ function loadBackupFile(input){
 function applyBackupFile(){
   if(!PENDING){ hideC("cfFile"); return }
   hideC("cfFile"); snapshot();
-  S=Object.assign({parks:[],cur:null,off:{}},PENDING); PENDING=null; applyOrder();
+  S=Object.assign({parks:[],cur:null,off:{}},PENDING); PENDING=null;
   if(!S.cur&&S.parks[0])S.cur=S.parks[0].id;
   save(); render(); bmsg("戻しました。"); renderNudge();
 }
@@ -1606,7 +1585,7 @@ function imgBuild(p,W){
   ctx.fillStyle=IC.ink; ctx.font="800 "+px(52)+"px "+IMGF;
   ctx.fillText(p.name||"（園名なし）",PAD,yy+px(44)); yy+=px(52);
   yy+=px(14); ctx.font="400 "+px(26)+"px "+IMGF; ctx.fillStyle=IC.ink2;
-  const meta=[p.date||"",p.mins?"家から"+p.mins+"分":"",p.addr||""].filter(Boolean).join("　");
+  const meta=[p.date||""].filter(Boolean).join("　");
   ctx.fillText(meta,PAD,yy+px(22)); yy+=px(26);
   if(useSc){ yy+=px(10); ctx.font="800 "+px(30)+"px "+IMGF; ctx.fillStyle=IC.ink;
     ctx.fillText("総合 "+(sc===null?"—":sc+"点")+"　／　記入 "+d[0]+" / "+d[1]+" 項目",PAD,yy+px(26)); yy+=px(30) }
@@ -1669,6 +1648,11 @@ function makeImage(){
     g.drawImage(r.cv, 0,cut, r.W,r.H-cut, M+r.W*k+GX,    M, r.W*k, (r.H-cut)*k);
     note = (k<1) ? "項目が多いので、"+Math.round(k*100)+"% に縮めて2段組みで収めました。" : "2段組みでA4タテ1枚に収めました。";
   }
+  /* キャンバスのままだと長押しで保存できないので、画像に置きかえて出す */
+  try{
+    const im=document.getElementById("imgOut");
+    if(im) im.src=out.toDataURL("image/png");
+  }catch(e){}
   document.getElementById("imgWrap").classList.add("on");
   saveImage(out,p,note);
 }
@@ -1721,7 +1705,6 @@ if(document.hasStorageAccess){
     }
   }).catch(function(){});
 }
-applyOrder();
 render(); renderPickCounts();
 if(!S.parks.length) togglePicker(true);
 if(STORE && !S.parks.length){
