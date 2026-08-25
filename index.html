@@ -23,6 +23,7 @@
 <!-- v20260824i -->
 <!-- v20260825a -->
 <!-- v20260825a -->
+<!-- v20260825b -->
 <style>
 :root{
   --page:#FFEFD4; --sheet:#FFFDF7; --card:#FFFFFF;
@@ -31,7 +32,7 @@
   --sun:#FFC33D;  --sun-soft:#FFF3D0;
   --coral:#FF8D72;--coral-soft:#FFEDE7;--danger-ink:#B8452C;
   --mint:#3FBF9B; --mint-soft:#E4F7F1;
-  --sky:#5FBFE8;  --sky-soft:#E6F4FC;
+  --sky:#5FBFE8;  --sky-soft:#E6F4FC; --sky-ink:#1C6E93;
   --grape:#A98BE0;--grape-soft:#F0EAFB;
   --sel-good:#1C7F63; --sel-ok:#1B6F93; --sel-warn:#8A6200; --sel-bad:#B0392A; --sel-ink:#FFFFFF;
   --shadow:0 .3em 0 rgba(120,92,62,.06), 0 1.4em 2.6em -1.4em rgba(120,92,62,.3);
@@ -44,7 +45,7 @@
   --ink:#FBEEDD; --ink-2:#C4AF9B; --ink-3:#907E6D;
   --line:#4E4238; --line-2:#463B33;
   --sun:#FFCF5E; --sun-soft:#4A3B24; --coral:#FFA48C; --coral-soft:#4A2F28; --danger-ink:#FFA48C;
-  --mint:#6BD5B4; --mint-soft:#20403A; --sky:#86D2F2; --sky-soft:#22394A;
+  --mint:#6BD5B4; --mint-soft:#20403A; --sky:#86D2F2; --sky-soft:#22394A; --sky-ink:#86D2F2;
   --grape:#C0A6EE; --grape-soft:#332A45;
   --sel-good:#6BD5B4; --sel-ok:#86D2F2; --sel-warn:#E5B84A; --sel-bad:#FF9A85; --sel-ink:#14201C;
   --shadow:0 .3em 0 rgba(0,0,0,.18),0 1.4em 2.6em -1.4em rgba(0,0,0,.5);
@@ -55,7 +56,7 @@
   --ink:#FBEEDD; --ink-2:#C4AF9B; --ink-3:#907E6D;
   --line:#4E4238; --line-2:#463B33;
   --sun:#FFCF5E; --sun-soft:#4A3B24; --coral:#FFA48C; --coral-soft:#4A2F28; --danger-ink:#FFA48C;
-  --mint:#6BD5B4; --mint-soft:#20403A; --sky:#86D2F2; --sky-soft:#22394A;
+  --mint:#6BD5B4; --mint-soft:#20403A; --sky:#86D2F2; --sky-soft:#22394A; --sky-ink:#86D2F2;
   --grape:#C0A6EE; --grape-soft:#332A45;
   --sel-good:#6BD5B4; --sel-ok:#86D2F2; --sel-warn:#E5B84A; --sel-bad:#FF9A85; --sel-ink:#14201C;
   --shadow:0 .3em 0 rgba(0,0,0,.18),0 1.4em 2.6em -1.4em rgba(0,0,0,.5);
@@ -120,8 +121,13 @@ textarea{resize:vertical;min-height:56px;line-height:1.7}
 .mini:hover{color:var(--ink)}
 .mini.on{color:var(--ink);background:var(--coral-soft);box-shadow:inset 0 0 0 2px var(--coral)}
 .chip.del{border-color:var(--coral);color:var(--ink);background:var(--coral-soft)}
+.chip.ren{border-color:var(--sky);color:var(--ink);background:var(--sky-soft)}
+.chip.ren::before{content:"\270E\3000";font-weight:800;color:var(--sky-ink)}
+.mini.onx{color:var(--ink);background:var(--sky-soft);box-shadow:inset 0 0 0 2px var(--sky)}
 .chip.del::before{content:"\2715\3000";font-weight:800;color:var(--danger-ink)}
 .addbox.on{display:flex}
+#renbox{display:none}
+#renbox.on{display:flex}
 .addbox input{flex:1}
 .meta{padding:17px;display:grid;gap:12px}
 .meta .g2{display:grid;grid-template-columns:1fr 1fr;gap:11px}
@@ -327,7 +333,15 @@ body.measuring #printArea{display:block;position:fixed;left:-10000px;top:0;visib
       <button class="btn sm" onclick="commitPark()">追加</button>
       <button class="btn sm ghost" onclick="toggleAdd(false)">やめる</button>
     </div>
-    <div class="prow" id="prow" hidden><span class="pmsg" id="pmsg"></span><button class="mini" id="delToggle" onclick="toggleDel()">園を消す</button></div>
+    <div class="addbox" id="renbox">
+      <input type="text" id="renName" placeholder="園の名前" autocomplete="off"
+        onkeydown="if(event.key==='Enter')commitRen();if(event.key==='Escape')toggleRen(false)">
+      <button class="btn sm" onclick="commitRen()">直す</button>
+      <button class="btn sm ghost" onclick="toggleRen(false)">やめる</button>
+    </div>
+    <div class="prow" id="prow" hidden><span class="pmsg" id="pmsg"></span>
+      <button class="mini" id="renToggle" onclick="toggleRen()">名前を直す</button>
+      <button class="mini" id="delToggle" onclick="toggleDel()">園を消す</button></div>
     <div class="confirm" id="cfPark"><p id="cfParkT" style="margin:0"></p>
       <button class="btn sm danger" onclick="delParkId()">消す</button>
       <button class="btn sm ghost" onclick="hideC(&quot;cfPark&quot;)">やめる</button></div>
@@ -432,7 +446,7 @@ body.measuring #printArea{display:block;position:fixed;left:-10000px;top:0;visib
         <p class="grp">保存と、園の追加</p>
         <p class="muted" style="margin:0">
           入力は<b>書いたそばから自動で保存されます</b>。保存ボタンはありません。<br><br>
-          園はいくつでも追加できます。<b>画面の上の園名（▾）</b>を押すと、園の切りかえ・追加・削除ができます。<br><br>
+          園はいくつでも追加できます。<b>画面の上の園名（▾）</b>を押すと、園の切りかえ・追加・<b>名前直し</b>・削除ができます。<br><br>
           念のためファイルにも残したいときは<b>「⑤ 記録のバックアップ」→「ファイルに保存」</b>を使ってください。
         </p>
         </div>
@@ -524,7 +538,7 @@ body.measuring #printArea{display:block;position:fixed;left:-10000px;top:0;visib
   </section>
 
   <div id="printArea"></div>
-  <footer><span class="verline">バージョン 2026-08-25a</span><br>
+  <footer><span class="verline">バージョン 2026-08-25b</span><br>
     記録はこの端末のブラウザ内にだけ保存され、どこにも送信されません。<br>
     園の運用は自治体・法人によって異なります。気になる点は必ず園にご確認ください。</footer>
 </div>
@@ -804,7 +818,7 @@ function commitPark(){ const i=document.getElementById("newName"),n=i.value.trim
 function pick(id){ S.cur=id; save(); togglePicker(false); render() }
 function togglePicker(on){ const el=document.getElementById("picker"); if(!el)return;
   el.hidden = (on===undefined) ? !el.hidden : !on;
-  if(el.hidden) toggleAdd(false); }
+  if(el.hidden){ toggleAdd(false); toggleRen(false); toggleDel(false) } }
 function renderParkName(){ const el=document.getElementById("parkNowName"); if(!el)return;
   const p=cur(); el.textContent = p ? p.name : "園を追加してね"; }
 function setField(k,v){ const p=cur(); if(!p)return; p[k]=v; save(); if(k==="name"){renderParks();renderParkName()} }
@@ -979,19 +993,42 @@ function renderNudge(){
     el.innerHTML='<div class="nudge ok">✓ '+new Date(S._f).toLocaleString("ja-JP")+' にファイルへ保存ずみ</div>';
   }
 }
-var PDEL=0, PDELID=null;
+var PDEL=0, PDELID=null, PREN=0, PRENID=null;
 function renderParks(){ renderParkName();
   document.getElementById("parks").innerHTML=
     S.parks.map(function(p){
       if(PDEL) return '<button class="chip del" onclick="askDel(\''+p.id+'\')">'+esc(p.name)+'</button>';
+      if(PREN) return '<button class="chip ren" onclick="askRen(\''+p.id+'\')">'+esc(p.name)+'</button>';
       return '<button class="chip" aria-pressed="'+(p.id===S.cur)+'" onclick="pick(\''+p.id+'\')">'+esc(p.name)+'</button>' }).join("")+
-    (PDEL?'':'<button class="chip add" onclick="toggleAdd()">＋ 園を追加</button>');
+    ((PDEL||PREN)?'':'<button class="chip add" onclick="toggleAdd()">＋ 園を追加</button>');
   var r=document.getElementById("prow"); if(r) r.hidden = !S.parks.length; }
-function toggleDel(){ PDEL=!PDEL; PDELID=null; hideC("cfPark");
-  if(PDEL) toggleAdd(false);
+function toggleDel(o){ PDEL = (o===undefined) ? !PDEL : !!o; PDELID=null; hideC("cfPark");
+  if(PDEL){ toggleAdd(false); toggleRen(false) }
   var b=document.getElementById("delToggle");
   if(b){ b.classList.toggle("on",!!PDEL); b.textContent = PDEL ? "やめる" : "園を消す" }
   renderParks(); }
+/* 名前を直す */
+function toggleRen(o){ PREN = (o===undefined) ? !PREN : !!o; PRENID=null;
+  var box=document.getElementById("renbox"); if(box) box.classList.remove("on");
+  if(PREN){ toggleAdd(false); toggleDel(false) }
+  var b=document.getElementById("renToggle");
+  if(b){ b.classList.toggle("onx",!!PREN); b.textContent = PREN ? "やめる" : "名前を直す" }
+  renderParks(); }
+function askRen(id){ PRENID=id;
+  var nm=""; S.parks.forEach(function(x){ if(x.id===id) nm=x.name });
+  var box=document.getElementById("renbox"), i=document.getElementById("renName");
+  if(box) box.classList.add("on");
+  if(i){ i.value=nm; i.focus(); i.select() } }
+function commitRen(){ if(!PRENID){ return }
+  var i=document.getElementById("renName"), v=(i.value||"").trim();
+  if(!v){ i.focus(); return }
+  S.parks.forEach(function(x){ if(x.id===PRENID) x.name=v });
+  save(); PRENID=null;
+  document.getElementById("renbox").classList.remove("on");
+  render(); renderParks();
+  var m=document.getElementById("pmsg");
+  if(m){ m.textContent="名前を直しました。";
+    setTimeout(function(){ if(m) m.textContent="" },4000) } }
 function askDel(id){ PDELID=id;
   var nm=""; S.parks.forEach(function(x){ if(x.id===id) nm=x.name });
   document.getElementById("cfParkT").innerHTML='「'+esc(nm)+'」の記録を、書いたものごと消します。';
