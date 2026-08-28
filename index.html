@@ -25,6 +25,9 @@
 <!-- v20260825a -->
 <!-- v20260825b -->
 <!-- v20260825c -->
+<!-- v20260825d -->
+<!-- v20260825e -->
+<!-- v20260825f -->
 <style>
 :root{
   --page:#FFEFD4; --sheet:#FFFDF7; --card:#FFFFFF;
@@ -227,6 +230,17 @@ footer{padding:22px 6px;color:var(--ink-3);font-size:11px;line-height:1.9;text-a
 .sumrow .v.na{color:var(--ink-3);font-weight:600}
 .rmk{color:var(--ink);font-size:15px}
 .sumrow .v .mm{display:block;font-size:11.5px;font-weight:600;color:var(--ink-2);margin-top:2px}
+#hello{position:fixed;inset:0;z-index:300;background:rgba(60,44,32,.55);
+  display:flex;align-items:center;justify-content:center;padding:18px;overflow:auto}
+#hello[hidden]{display:none}
+.helloBox{background:var(--card);border-radius:24px;box-shadow:var(--shadow);
+  padding:24px 22px;max-width:460px;width:100%;max-height:100%;overflow:auto}
+.helloBox h2{font-size:18px;font-weight:800;margin:0 0 12px;color:var(--ink)}
+.helloBox p{margin:0 0 11px;font-size:13.5px;line-height:1.85;color:var(--ink-2)}
+.helloBox p b{color:var(--ink)}
+.helloBox .sub{background:var(--sheet);border-radius:14px;padding:11px 13px;font-size:12.5px}
+.helloBox .btn{width:100%;margin-top:4px;padding:14px}
+.helloBox .sub2{margin:11px 0 0;font-size:11.5px;text-align:center;color:var(--ink-3)}
 .saveState{max-width:760px;margin:0 auto;padding:0 16px 4px;font-size:11px;font-weight:800;color:var(--ink-3);display:flex;align-items:center;gap:8px;min-height:18px}
 .saveState .ok{color:var(--mint)}
 .saveState button{background:var(--coral-soft);border:2px solid var(--coral);color:var(--coral);border-radius:999px;padding:2px 11px;font-size:11px;font-weight:800;cursor:pointer}
@@ -306,7 +320,7 @@ body.measuring #printArea{display:block;position:fixed;left:-10000px;top:0;visib
 #printArea .scroller{overflow:visible}
 @media print{
   header,nav,.parks,.addbox,.io,.btn,footer,.why,.confirm,.banner,.wrap>section,.tip,
-  .saveState,#nudge{display:none !important}
+  .saveState,#nudge,#hello{display:none !important}
   body{background:#fff;color:#000}
   .wrap{max-width:none;padding:0}
   #printArea{display:block !important;position:static;visibility:visible}
@@ -354,6 +368,18 @@ body.measuring #printArea{display:block;position:fixed;left:-10000px;top:0;visib
 
 <div class="saveState" id="saveState"></div>
 <div class="wrap" style="padding-bottom:0"><div id="nudge"></div></div>
+
+<div id="hello" hidden><div class="helloBox" role="dialog" aria-modal="true" aria-labelledby="helloT">
+  <h2 id="helloT">園見学ノートへようこそ</h2>
+  <p>保育園の見学を、スマホ1つで記録できるノートです。</p>
+  <p><b>◆ 事前</b>　見学の前に、園のホームページや自治体のサイトで<b>調べられることを先に埋めておきます</b>。見学は質問できる時間があまりないので、先にまとめておくと当日ラクです。</p>
+  <p><b>◆ 当日</b>　事前に<b>書けなかったものだけ</b>が出ます。園内を見ながら「見て確認すること」、質問タイムに「聞いて確認すること」を埋めていきます。</p>
+  <p><b>◆ まとめ</b>　記入したものを一覧で見返せます。園が複数あれば横に並べて比べられます。画像で保存・紙に印刷もできます。</p>
+  <p class="sub">項目は<b>「設定 → 項目をえらぶ」</b>で足したり外したりできます。<br>
+     入力は<b>書いたそばから自動で保存</b>されます。</p>
+  <button class="btn" onclick="closeHello()">はじめる</button>
+  <p class="sub2">この説明は「設定 → 使い方」でいつでも読めます。</p>
+</div></div>
 <div class="wrap">
   <div id="storageWarn"></div>
   <section id="pre"><div id="preBody" class="stack"></div></section>
@@ -422,10 +448,12 @@ body.measuring #printArea{display:block;position:fixed;left:-10000px;top:0;visib
         <div class="secbody">
         <p class="grp">タブについて</p>
         <p class="muted" style="margin:0 0 15px">
-          <b>◆ 事前</b>　見学前に園のホームページ、重要事項説明書（入園のしおり）、自治体の公式サイト等で調べられるものは埋めておきましょう。園によって載っている量は違うので、全てが埋まらなくても大丈夫です。見学は質問できる時間はあまりありません。事前にまとめておくと、当日は聞きたいことだけに集中できます。<br><br>
-          初めに表示されているものは、おすすめの項目のみになっています。項目を足したり、外したりしたい場合は、「設定」→「項目をえらぶ」から編集してください。<br><br>
-          「書けた↓」を押すと、その項目は下に下がります。<br><br>
-          画面の上の園名（▾）を押すと、園の切りかえ・追加・削除ができます。
+          <b>◆ 事前</b>　<b>調べて分かることは、見学に行く前にこちらに記入しておきましょう。</b>園のホームページ、重要事項説明書（入園のしおり）、自治体の公式サイトに載っていることが多いです。<br><br>
+          見学中は質問できる時間があまりありません。先に記入しておくと、当日は<b>「行かないと分からないこと」だけに集中できます</b>。<br><br>
+          「事前」では、<b>全部埋まらなくても大丈夫です。</b>（園によって載っている情報量が違います。）ここで書けなかったものは、そのまま「当日」の欄に出るので、見学当日に記入しましょう。<br><br>
+          答えを書いたら<b>「書けた ↓」</b>を押してください。その項目は下に下がり、まだのものが上に残ります。<br><br>
+          はじめは<b>おすすめの項目だけ</b>が並んでいます。増やしたり減らしたりは「設定」→「項目をえらぶ」から編集できます。<br><br>
+          園の切りかえ・追加・名前直し・削除は、画面の上の<b>園名（▾）</b>から編集できます。
         </p>
         <p class="muted" style="margin:0 0 15px">
           <b>◆ 当日</b>　「事前」で書けなかったものだけが表示されます。見学の流れは、園を回る→最後に質問タイムが一般的です。園内を見る際には「見て確認すること」、質問できるタイミングで「聞いて確認すること」を埋めるとスムーズです。「書けた↓」を押すと、その項目は下に下がります。
@@ -436,9 +464,9 @@ body.measuring #printArea{display:block;position:fixed;left:-10000px;top:0;visib
 
         <p class="grp">設定について</p>
         <p class="muted" style="margin:0">
-          <b>① 評価（◎○△✕）</b>　項目ごとに評価を付けることができます。初めはオフになっているので、使いたい場合はオンに変えてください。評価結果はまとめから確認することができます。園ごとに比較する際に便利です。<br><br>
-          <b>② 項目をえらぶ</b>　使いたい項目を足したり外したりできます。また、各項目の「聞く理由」（なぜそれを確認するのか）を読むことができます。初めはおすすめの設定になっています。必要な項目を選択して使用してください。ただし、見学中はあまり時間がありません。必要最低限の項目にしておくことをおすすめします。<br><br>
-          <b>③ 記録のバックアップ</b>　記録をファイルにして残したり、別の端末へ移したりできます。
+          <b>評価（◎○△✕）</b>　項目ごとに評価を付けることができます。初めはオフになっているので、使いたい場合はオンに変えてください。評価結果はまとめから確認することができます。園ごとに比較する際に便利です。<br><br>
+          <b>項目をえらぶ</b>　使いたい項目を足したり外したりできます。また、各項目の「聞く理由」（なぜそれを確認するのか）を読むことができます。初めはおすすめの設定になっています。必要な項目を選択して使用してください。ただし、見学中はあまり時間がありません。必要最低限の項目にしておくことをおすすめします。<br><br>
+          <b>記録を保存する・引っこす</b>　書いたものは自動で保存されますが、スマホのデータを消したときや機種変更のときは消えてしまいます。ここで記録をファイルにしておけば、新しい端末でもそのまま続きから書けます。
         </p>
         </div>
       </details>
@@ -493,9 +521,18 @@ body.measuring #printArea{display:block;position:fixed;left:-10000px;top:0;visib
       </details>
 
       <details class="card sec">
-        <summary><span class="secn">4</span><h2>記録のバックアップ</h2><span class="caret">▶</span></summary>
+        <summary><span class="secn">4</span><h2>記録を保存する・引っこす</h2><span class="caret">▶</span></summary>
         <div class="secbody">
-        <p class="muted" style="margin:0 0 11px"><b>いちばん確実な方法です。</b>記録をファイルにして端末に保存します。ブラウザの中の保存と違って、これは消えません。見学が終わったら押しておくと安心です。</p>
+        <p class="muted" style="margin:0 0 11px">
+          <b>ふだんは使わなくて大丈夫です。</b>書いたものは自動で保存されているので、そのまま閉じても残ります。<br><br>
+          ただし、次の3つのときは<b>消えてしまいます</b>。<br>
+          ・スマホの「履歴とWebサイトデータを消去」をしたとき<br>
+          ・このサイトのデータを削除したとき<br>
+          ・<b>機種変更したとき</b>（別の端末には引き継がれません）<br><br>
+          そこで<b>「ファイルに保存」</b>を押すと、記録をまるごと1つのファイルにして端末に残せます。このファイルは消えません。
+          新しいスマホで<b>「ファイルから戻す」</b>を押せば、そのまま続きから書けます。<br><br>
+          <b>使いどころは2つ</b>です。見学がひと通り終わったとき。機種変更する前。この2回だけ押しておけば安心です。
+        </p>
         <div class="row" style="gap:8px;flex-wrap:wrap">
           <button class="btn" onclick="saveBackupFile()">ファイルに保存</button>
           <button class="btn ghost" onclick="document.getElementById('bkFile').click()">ファイルから戻す</button>
@@ -529,7 +566,7 @@ body.measuring #printArea{display:block;position:fixed;left:-10000px;top:0;visib
   </section>
 
   <div id="printArea"></div>
-  <footer><span class="verline">バージョン 2026-08-25c</span><br>
+  <footer><span class="verline">バージョン 2026-08-25f</span><br>
     記録はこの端末のブラウザ内にだけ保存され、どこにも送信されません。<br>
     園の運用は自治体・法人によって異なります。気になる点は必ず園にご確認ください。</footer>
 </div>
@@ -964,6 +1001,9 @@ function goBackup(){ setTab("set"); setTimeout(function(){
   var d=document.querySelectorAll("#set details.sec")[3];
   if(d){ d.open=true; d.scrollIntoView() } },60) }
 function pickBackupFile(){ var el=document.getElementById("bkFile"); if(el) el.click() }
+function closeHello(){ S.seen=1; save();
+  document.getElementById("hello").hidden=true;
+  if(!S.parks.length) togglePicker(true); }
 function renderNudge(){
   var el=document.getElementById("nudge"); if(!el) return;
   /* 事前タブでは出さない（記入に集中してもらう） */
@@ -971,18 +1011,11 @@ function renderNudge(){
   if(NOKEEP){
     el.innerHTML='<div class="nudge warn"><b>このブラウザでは、閉じると記録が消えます。</b><br>'
       +'ブラウザ側の制限で、ここでは保存を残せません。<b>「ファイルに保存」を使ってください。</b>'
-      +'そのファイルは消えません。次に開いたら「設定 → 記録のバックアップ → ファイルから戻す」で続きから書けます。'
+      +'そのファイルは消えません。次に開いたら「設定 → 記録を保存する・引っこす → ファイルから戻す」で続きから書けます。'
       +'<button class="btn sm" style="margin-top:9px" onclick="saveBackupFile()">いますぐファイルに保存</button></div>';
     return;
   }
-  if(!S.parks.length){ el.innerHTML=""; return }
-  var need = !S._f || (S._t && S._t > S._f);
-  if(need){
-    el.innerHTML='<div class="nudge thin">記録をファイルに残しておくと安心です'
-      +'<button class="btn sm" onclick="goBackup()">ファイルに保存</button></div>';
-  } else {
-    el.innerHTML='<div class="nudge ok">✓ '+new Date(S._f).toLocaleString("ja-JP")+' にファイルへ保存ずみ</div>';
-  }
+  el.innerHTML="";
 }
 var PDEL=0, PDELID=null, PREN=0, PRENID=null;
 function renderParks(){ renderParkName();
@@ -1725,13 +1758,9 @@ if(document.hasStorageAccess){
   }).catch(function(){});
 }
 render(); renderPickCounts();
-if(!S.parks.length) togglePicker(true);
-if(STORE && !S.parks.length){
-  var _n=document.getElementById("nudge");
-  if(_n) _n.innerHTML='<div class="nudge"><b>前に記録したものが見当たりません。</b><br>'
-    +'ファイルに保存してあるなら、そこから戻せます。'
-    +'<button class="btn sm" style="margin-top:9px" onclick="pickBackupFile()">ファイルから戻す</button></div>';
-}
+/* はじめて開いたときだけ説明を出す。「はじめる」を押すと二度と出ない */
+if(!S.seen){ document.getElementById("hello").hidden=false }
+else if(!S.parks.length){ togglePicker(true) }
 if(!storageOK){warnStorage();showSave("")}else{showSave("ok")}
 </script>
 
