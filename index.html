@@ -28,6 +28,8 @@
 <!-- v20260825d -->
 <!-- v20260825e -->
 <!-- v20260825f -->
+<!-- v20260825g -->
+<!-- v20260825h -->
 <style>
 :root{
   --page:#FFEFD4; --sheet:#FFFDF7; --card:#FFFFFF;
@@ -163,7 +165,12 @@ textarea{resize:vertical;min-height:56px;line-height:1.7}
 .searchBox{display:flex;gap:8px;align-items:center}
 .searchBox input{flex:1}
 .item{border-top:2px dotted var(--line);padding:14px 17px}
-.dateIn{width:100%;margin-top:9px;background:var(--sheet);border:2px solid var(--line);border-radius:13px;padding:10px 12px;font:inherit;font-size:15px;color:var(--ink)}
+.dateIn{width:100%;margin-top:9px;background:var(--sheet);border:2px solid var(--line);border-radius:13px;padding:10px 12px;font:inherit;font-size:16px;color:var(--ink)}
+/* iPhoneの日付欄は中身が右に寄って見切れるので、左寄せに固定する */
+input[type=date]{-webkit-appearance:none;appearance:none;text-align:left;min-height:1.4em}
+input[type=date]::-webkit-date-and-time-value{text-align:left;margin:0;min-height:1.4em}
+input[type=date]::-webkit-datetime-edit{text-align:left;padding:0}
+input[type=date]::-webkit-calendar-picker-indicator{margin-left:auto;opacity:.55}
 .item .q{font-size:14.5px;font-weight:800;line-height:1.6;margin:0}
 .why{background:none;border:0;padding:2px 0 0;color:var(--coral);font-size:11.5px;font-weight:800;cursor:pointer}
 .why-body{display:none;margin:8px 0 0;padding:10px 13px;background:var(--coral-soft);border-radius:15px;font-size:12.5px;line-height:1.8;color:var(--ink-2)}
@@ -238,9 +245,9 @@ footer{padding:22px 6px;color:var(--ink-3);font-size:11px;line-height:1.9;text-a
 .helloBox h2{font-size:18px;font-weight:800;margin:0 0 12px;color:var(--ink)}
 .helloBox p{margin:0 0 11px;font-size:13.5px;line-height:1.85;color:var(--ink-2)}
 .helloBox p b{color:var(--ink)}
-.helloBox .sub{background:var(--sheet);border-radius:14px;padding:11px 13px;font-size:12.5px}
+.helloBox .hnote{display:block;background:var(--sheet);border-radius:14px;padding:11px 13px;font-size:12.5px}
 .helloBox .btn{width:100%;margin-top:4px;padding:14px}
-.helloBox .sub2{margin:11px 0 0;font-size:11.5px;text-align:center;color:var(--ink-3)}
+.helloBox .hfoot{display:block;margin:11px 0 0;font-size:11.5px;text-align:center;color:var(--ink-3)}
 .saveState{max-width:760px;margin:0 auto;padding:0 16px 4px;font-size:11px;font-weight:800;color:var(--ink-3);display:flex;align-items:center;gap:8px;min-height:18px}
 .saveState .ok{color:var(--mint)}
 .saveState button{background:var(--coral-soft);border:2px solid var(--coral);color:var(--coral);border-radius:999px;padding:2px 11px;font-size:11px;font-weight:800;cursor:pointer}
@@ -375,10 +382,10 @@ body.measuring #printArea{display:block;position:fixed;left:-10000px;top:0;visib
   <p><b>◆ 事前</b>　見学の前に、園のホームページや自治体のサイトで<b>調べられることを先に埋めておきます</b>。見学は質問できる時間があまりないので、先にまとめておくと当日ラクです。</p>
   <p><b>◆ 当日</b>　事前に<b>書けなかったものだけ</b>が出ます。園内を見ながら「見て確認すること」、質問タイムに「聞いて確認すること」を埋めていきます。</p>
   <p><b>◆ まとめ</b>　記入したものを一覧で見返せます。園が複数あれば横に並べて比べられます。画像で保存・紙に印刷もできます。</p>
-  <p class="sub">項目は<b>「設定 → 項目をえらぶ」</b>で足したり外したりできます。<br>
+  <p class="hnote">項目は<b>「設定 → 項目をえらぶ」</b>で足したり外したりできます。<br>
      入力は<b>書いたそばから自動で保存</b>されます。</p>
   <button class="btn" onclick="closeHello()">はじめる</button>
-  <p class="sub2">この説明は「設定 → 使い方」でいつでも読めます。</p>
+  <p class="hfoot">この説明は「設定 → 使い方」でいつでも読めます。</p>
 </div></div>
 <div class="wrap">
   <div id="storageWarn"></div>
@@ -566,7 +573,7 @@ body.measuring #printArea{display:block;position:fixed;left:-10000px;top:0;visib
   </section>
 
   <div id="printArea"></div>
-  <footer><span class="verline">バージョン 2026-08-25f</span><br>
+  <footer><span class="verline">バージョン 2026-08-25h</span><br>
     記録はこの端末のブラウザ内にだけ保存され、どこにも送信されません。<br>
     園の運用は自治体・法人によって異なります。気になる点は必ず園にご確認ください。</footer>
 </div>
