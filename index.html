@@ -40,6 +40,7 @@
 <!-- v20260829j -->
 <!-- v20260829k -->
 <!-- v20260902a -->
+<!-- v20260902b -->
 <style>
 :root{
   --page:#FFEFD4; --sheet:#FFFDF7; --card:#FFFFFF;
@@ -597,7 +598,7 @@ body.measuring #printArea{display:block;position:fixed;left:-10000px;top:0;visib
   </section>
 
   <div id="printArea"></div>
-  <footer><span class="verline">バージョン 2026-09-02a</span><br>
+  <footer><span class="verline">バージョン 2026-09-02b</span><br>
     記録はこの端末のブラウザ内にだけ保存され、どこにも送信されません。<br>
     園の運用は自治体・法人によって異なります。気になる点は必ず園にご確認ください。</footer>
 </div>
@@ -627,7 +628,7 @@ const CATS=[
   {k:"prep_8", q:"保育理念・方針", w:"園によって様々な保育理念があります。お子さまに合った園かどうか、見学前に事前に確認しておくと安心です。", o:["一斉保育","自由保育","主体的保育","コーナー保育","異年齢保育（縦割り）","少人数保育","モンテッソーリ","シュタイナー","レッジョ・エミリア","リトミック","英語","体操・運動","音楽（楽器・合唱）","絵画・造形","食育","自然・戸外遊び中心","知育・学習","発達支援に力を入れる","仏教系","キリスト教系"], m:1},
   {k:"basic_3", q:"1日のスケジュール", w:"事前に知っておくと、園と家庭の生活リズムを合わせておくことができます。"},
   {k:"items_0", q:"毎日の持ち物", w:"洋服の着替えセットやタオル、水筒など、園によって違います。荷物の少ない方が負担が減ります。"},
-  {k:"items_4", q:"おむつのサブスクはあるか", w:"サブスクを利用すると、おむつを持っていく・名前を書く手間が減ります。", o:["あり","なし"]},
+  {k:"items_4", q:"おむつのサブスクはあるか。メーカーはどこか", w:"サブスクを利用すると、おむつを持っていく・名前を書く手間が減ります。メーカーによって、おむつの形やサイズ感が違います。いま使っているものと合うかどうかも見ておくと安心です。", o:["あり","なし"]},
   {k:"items_3", q:"おむつは紙か布か。持参の頻度", o:["紙","布"]},
   {k:"prep_x2", q:"エプロン・口拭きのサブスクはあるか", w:"サブスクを利用すると、エプロン・口拭きを持っていく、洗うなどの手間が減ります。", o:["あり","なし"]},
   {k:"prep_x3", q:"年間行事"},
@@ -898,6 +899,8 @@ function touch(k){ const o=ownerOf(k); if(!o)return;
   const p=cur();
   document.querySelectorAll('[data-k="'+k+'"] .sinkBtn').forEach(function(b){
     b.textContent = sinkLabel(p,k) });
+  if(!o.it.m) document.querySelectorAll('[data-k="'+k+'"] .opts button').forEach(function(b){
+    b.setAttribute("aria-pressed", String(optOn(p.a[k],b.textContent))) });
   syncCat(o.c.id,"pre"); syncCat(o.c.id,"day"); syncScore(); }
 function gridParse(sv){ var m={};
   (sv||"").split("／").forEach(function(t){ t=t.trim(); if(!t)return;
@@ -911,6 +914,10 @@ function setGrid(k,label,v){ const p=cur(); if(!p)return;
   var out=order.filter(function(lb){return m[lb]}).map(function(lb){return lb+" "+m[lb]});
   if(out.length) p.a[k]=out.join("／"); else delete p.a[k];
   save(); touch(k); }
+/* 「あり」を選んだあとに「あり（パンパース）」と書き足しても、
+   ボタンは選ばれたままにする */
+function optOn(cur_,op){ if(!cur_) return false;
+  return cur_===op || cur_.indexOf(op)===0 }
 function setOpt(k,v,multi){ const p=cur(); if(!p)return;
   if(multi){
     var cur_=(p.a[k]||"").split("／").map(function(t){return t.trim()}).filter(Boolean);
@@ -923,7 +930,8 @@ function setOpt(k,v,multi){ const p=cur(); if(!p)return;
   if(el){ const ta=el.querySelector("textarea"); if(ta) ta.value=p.a[k]||"";
     var sel=(p.a[k]||"").split("／").map(function(t){return t.trim()});
     el.querySelectorAll(".opts button").forEach(function(b){
-      b.setAttribute("aria-pressed", String(sel.indexOf(b.textContent)>-1)) }) }
+      b.setAttribute("aria-pressed", String(multi ? sel.indexOf(b.textContent)>-1
+                                                    : optOn(p.a[k],b.textContent))) }) }
   touch(k); }
 function setMemo(k,v){ const p=cur(); if(!p)return; if(v)p.m[k]=v; else delete p.m[k]; save(); touch(k) }
 function toggleWhy(el){ el.parentNode.classList.toggle("open") }
@@ -1192,7 +1200,7 @@ function itemHTML(c,p,it,showCat){
   if(it.o){
     var cur_=(p.a[k]||"").split("／").map(function(t){return t.trim()}).filter(Boolean);
     h+='<div class="opts'+(it.m?" multi":"")+'">'+it.o.map(function(op){
-      var onx = it.m ? (cur_.indexOf(op)>-1) : (p.a[k]===op);
+      var onx = it.m ? (cur_.indexOf(op)>-1) : optOn(p.a[k],op);
       return '<button aria-pressed="'+onx+'" onclick="setOpt(&quot;'+k+'&quot;,&quot;'+op+'&quot;,'+(it.m?1:0)+')">'+op+'</button>' }).join("")+'</div>';
   }
   const rateHTML='<div class="rate">'+RATE.map(function(r){
