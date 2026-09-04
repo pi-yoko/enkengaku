@@ -41,6 +41,11 @@
 <!-- v20260829k -->
 <!-- v20260902a -->
 <!-- v20260902b -->
+<!-- v20260902c -->
+<!-- v20260902d -->
+<!-- v20260902e -->
+<!-- v20260902g -->
+<!-- v20260902g -->
 <style>
 :root{
   --page:#FFEFD4; --sheet:#FFFDF7; --card:#FFFFFF;
@@ -49,7 +54,7 @@
   --sun:#FFC33D;  --sun-soft:#FFF3D0;
   --coral:#FF8D72;--coral-soft:#FFEDE7;--danger-ink:#B8452C;
   --mint:#3FBF9B; --mint-soft:#E4F7F1;
-  --sky:#5FBFE8;  --sky-soft:#E6F4FC; --sky-ink:#1C6E93;
+  --sky:#5FBFE8;  --sky-soft:#E6F4FC; --sky-ink:#1C6E93; --warn-ink:#8A5A00;
   --grape:#A98BE0;--grape-soft:#F0EAFB;
   --sel-good:#1C7F63; --sel-ok:#1B6F93; --sel-warn:#8A6200; --sel-bad:#B0392A; --sel-ink:#FFFFFF;
   --shadow:0 .3em 0 rgba(120,92,62,.06), 0 1.4em 2.6em -1.4em rgba(120,92,62,.3);
@@ -62,7 +67,7 @@
   --ink:#FBEEDD; --ink-2:#C4AF9B; --ink-3:#907E6D;
   --line:#4E4238; --line-2:#463B33;
   --sun:#FFCF5E; --sun-soft:#4A3B24; --coral:#FFA48C; --coral-soft:#4A2F28; --danger-ink:#FFA48C;
-  --mint:#6BD5B4; --mint-soft:#20403A; --sky:#86D2F2; --sky-soft:#22394A; --sky-ink:#86D2F2;
+  --mint:#6BD5B4; --mint-soft:#20403A; --sky:#86D2F2; --sky-soft:#22394A; --sky-ink:#86D2F2; --warn-ink:#F0B25A;
   --grape:#C0A6EE; --grape-soft:#332A45;
   --sel-good:#6BD5B4; --sel-ok:#86D2F2; --sel-warn:#E5B84A; --sel-bad:#FF9A85; --sel-ink:#14201C;
   --shadow:0 .3em 0 rgba(0,0,0,.18),0 1.4em 2.6em -1.4em rgba(0,0,0,.5);
@@ -73,7 +78,7 @@
   --ink:#FBEEDD; --ink-2:#C4AF9B; --ink-3:#907E6D;
   --line:#4E4238; --line-2:#463B33;
   --sun:#FFCF5E; --sun-soft:#4A3B24; --coral:#FFA48C; --coral-soft:#4A2F28; --danger-ink:#FFA48C;
-  --mint:#6BD5B4; --mint-soft:#20403A; --sky:#86D2F2; --sky-soft:#22394A; --sky-ink:#86D2F2;
+  --mint:#6BD5B4; --mint-soft:#20403A; --sky:#86D2F2; --sky-soft:#22394A; --sky-ink:#86D2F2; --warn-ink:#F0B25A;
   --grape:#C0A6EE; --grape-soft:#332A45;
   --sel-good:#6BD5B4; --sel-ok:#86D2F2; --sel-warn:#E5B84A; --sel-bad:#FF9A85; --sel-ink:#14201C;
   --shadow:0 .3em 0 rgba(0,0,0,.18),0 1.4em 2.6em -1.4em rgba(0,0,0,.5);
@@ -203,6 +208,9 @@ input[type=date]::-webkit-calendar-picker-indicator{margin-left:auto;opacity:.55
 .rate button[data-v="1"][aria-pressed="true"]{background:var(--sel-warn);border-color:var(--sel-warn)}
 .rate button[data-v="0"][aria-pressed="true"]{background:var(--sel-bad);border-color:var(--sel-bad)}
 .item textarea{margin-top:7px;font-size:16px;min-height:44px;padding:9px 12px}
+.againBtn{margin-top:8px;min-height:44px;background:none;border:2px solid transparent;border-radius:999px;
+  padding:7px 13px;font-size:12.5px;font-weight:800;color:var(--ink-3);cursor:pointer;float:left}
+.againBtn.on{border-color:var(--sky);background:var(--sky-soft);color:var(--ink)}
 .sinkBtn{margin-top:8px;min-height:44px;background:var(--sheet);border:2px solid var(--line);border-radius:999px;
   padding:7px 15px;font-size:12.5px;font-weight:800;color:var(--ink-2);cursor:pointer;float:right}
 .item::after{content:"";display:block;clear:both}
@@ -228,6 +236,11 @@ tr.total th{background:var(--card)}
 tr.catrow td{background:var(--sun-soft)}
 tr.total th,tr.total td{border-top:3px solid var(--sun);border-bottom:0;font-weight:800;padding-top:12px}
 tr.total td{font-family:var(--round-latin);font-size:19px}
+tr.same th,tr.same td{color:var(--ink-2);font-weight:600}
+tr.same .cw{color:var(--ink-2)}
+.cw{color:var(--warn-ink);font-weight:800}
+#printArea .cw{color:#000;font-weight:800}
+#printArea tr.same th,#printArea tr.same td{color:#555}
 .v3{color:var(--mint)}.v2{color:var(--sky)}.v1{color:#A8730C}.v0{color:var(--coral)}.vna{color:var(--ink-3);font-weight:600}
 .memo-cell{font-size:11px;text-align:left;color:var(--ink-2);line-height:1.55;min-width:120px;font-weight:600;margin-top:3px}
 .empty{padding:36px 24px;text-align:center;color:var(--ink-2);font-size:14px;line-height:1.9}
@@ -293,6 +306,8 @@ footer{padding:22px 6px;color:var(--ink-2);font-size:11.5px;line-height:1.9;text
 .nudge.thin .btn{margin-left:auto;flex:0 0 auto}
 .nudge.ok{background:var(--mint-soft);border-color:var(--mint);font-size:12px;font-weight:800;color:var(--mint)}
 .nudge.warn{background:var(--coral-soft);border-color:var(--coral)}
+.agTag{display:inline-block;font-size:10.5px;font-weight:800;color:var(--ink);background:var(--sky-soft);
+  border:2px solid var(--sky);border-radius:999px;padding:2px 9px;margin-bottom:5px}
 .fromcat{display:block;font-size:10.5px;font-weight:800;letter-spacing:.08em;color:var(--ink-3);margin-bottom:4px}
 .missBtn{width:100%;border-color:var(--coral) !important;color:var(--coral) !important;font-size:13px}
 .cat.miss{border:2px solid var(--coral)}
@@ -321,6 +336,10 @@ body.measuring #printArea{display:block;position:fixed;left:-10000px;top:0;visib
 #printArea .pItem{display:flex;gap:5px;align-items:flex-start;padding:1px 0;line-height:1.3;break-inside:avoid}
 #printArea .pBox{width:11px;height:11px;border:1px solid #333;flex:0 0 auto;margin-top:2px}
 #printArea .pLine{flex:1;min-width:26px;border-bottom:1px dotted #BBB;min-height:13px}
+#printArea .pAns{flex:1;min-width:26px;font-weight:800;border-bottom:1.2px solid #666;padding-left:4px}
+#printArea .pBox.on{background:#333;position:relative}
+#printArea .pBox.on::after{content:"";position:absolute;left:3px;top:0;width:4px;height:8px;
+  border:solid #fff;border-width:0 2px 2px 0;transform:rotate(40deg)}
 #printArea .pQ{flex:0 1 auto;max-width:74%;font-weight:600}
 #printArea .pUnit{flex:0 0 auto;font-weight:600;padding-left:2px}
 #printArea .pCols{column-count:2;column-gap:18px}
@@ -450,12 +469,14 @@ body.measuring #printArea{display:block;position:fixed;left:-10000px;top:0;visib
           <li><b>持っていく（全ての項目）</b>　使う項目が全部、空欄で並んだ紙。</li>
           <li><b>持っていく（まだの分）</b>　その園でまだ書けていない項目だけ。当日はこれ1枚で足ります。</li>
           <li><b>比較表</b>　園を横に並べた表。読みやすさのため3園ずつ紙を変えて刷ります。</li>
+          <li><b>持っていく（調べた分も）</b>　事前に書いた答えは印刷され、まだの分は空欄になります。調べた内容を園で確かめながら、その場で書き足せます。</li>
         </ol>
         <div class="row" style="gap:7px;flex-wrap:wrap">
           <button class="btn sm" onclick="doPrint('one')">① できあがり</button>
           <button class="btn sm ghost" onclick="doPrint('list')">② 持っていく（全ての項目）</button>
           <button class="btn sm ghost" onclick="doPrint('todo')">③ 持っていく（まだの分）</button>
           <button class="btn sm ghost" onclick="doPrint('compare')">④ 比較表</button>
+          <button class="btn sm ghost" onclick="doPrint('both')">⑤ 持っていく（調べた分も）</button>
         </div>
         <p id="printMsg" class="muted" style="margin:10px 0 0"></p>
         </div>
@@ -466,6 +487,9 @@ body.measuring #printArea{display:block;position:fixed;left:-10000px;top:0;visib
           <label class="row" style="gap:9px;cursor:pointer">
             <input type="checkbox" id="showMemo" onchange="renderCmp()" style="width:auto;transform:scale(1.3)">
             <span style="font-size:13.5px;font-weight:800">メモも表に出す</span></label>
+          <label class="row" style="gap:9px;cursor:pointer;margin-top:9px">
+            <input type="checkbox" id="dimSame" checked onchange="renderCmp()" style="width:auto;transform:scale(1.3)">
+            <span style="font-size:13.5px;font-weight:800">同じところは薄くする</span></label>
         </div>
         <div class="card scroller" id="cmpBody"></div>
       </div>
@@ -482,6 +506,7 @@ body.measuring #printArea{display:block;position:fixed;left:-10000px;top:0;visib
         <p class="muted" style="margin:0 0 15px">
           <b>◆ 事前</b>　<b>調べて分かることは、見学に行く前にこちらに記入しておきましょう。</b>園のホームページ、重要事項説明書（入園のしおり）、自治体の公式サイトに載っていることが多いです。<br><br>
           見学中は質問できる時間があまりありません。先に記入しておくと、当日は<b>「行かないと分からないこと」だけに集中できます</b>。<br><br>
+          事前に書いたことでも、当日その場で確かめたいものは<b>「当日も聞く」</b>を押しておくと、「当日」にも出しておけます。<br><br>
           「事前」では、<b>全部埋まらなくても大丈夫です。</b>（園によって載っている情報量が違います。）ここで書けなかったものは、そのまま「当日」の欄に出るので、見学当日に記入しましょう。<br><br>
           答えを書いたら<b>「書けた ↓」</b>を押してください。その項目は下に下がり、まだのものが上に残ります。<br><br>
           はじめは<b>おすすめの項目だけ</b>が並んでいます。増やしたり減らしたりは「設定」→「項目をえらぶ」から編集できます。<br><br>
@@ -598,7 +623,7 @@ body.measuring #printArea{display:block;position:fixed;left:-10000px;top:0;visib
   </section>
 
   <div id="printArea"></div>
-  <footer><span class="verline">バージョン 2026-09-02b</span><br>
+  <footer><span class="verline">バージョン 2026-09-02g</span><br>
     記録はこの端末のブラウザ内にだけ保存され、どこにも送信されません。<br>
     園の運用は自治体・法人によって異なります。気になる点は必ず園にご確認ください。</footer>
 </div>
@@ -856,8 +881,15 @@ function pageOf(it){ return "all" }
 function setPage(it,pg){ /* 事前・当日の区分は使わなくなりました */ }
 function liveItems(c,page,p){ const r=[]; c.items.forEach(function(it){
   if(!on(it.k)) return;
-  if(page==="day" && p && filled(p,c,it)) return;   /* 当日は「まだ書けていないもの」だけ */
+  /* 当日は「まだ書けていないもの」＋「当日も聞く」を付けたものだけ */
+  if(page==="day" && p && filled(p,c,it) && !again(p,it.k)) return;
   r.push(it) }); return r }
+/* 事前に書いてあっても、当日タブに出しておきたい項目 */
+function again(p,k){ return !!(p.ag && p.ag[k]) }
+function toggleAgain(k){ const p=cur(); if(!p)return;
+  if(!p.ag) p.ag={};
+  if(p.ag[k]) delete p.ag[k]; else p.ag[k]=1;
+  save(); renderPre(); renderDay(); }
 function catOf(cid){ for(var i=0;i<CATS.length;i++) if(CATS[i].id===cid) return CATS[i]; return null }
 /* その項目が入力済みか */
 function filled(p,c,it){ const k=it.k;
@@ -1186,6 +1218,7 @@ function itemHTML(c,p,it,showCat){
   const k=it.k, v=p.r[k];
   let h='<div class="item" data-k="'+k+'">';
   if(showCat) h+='<span class="fromcat">'+c.name+'</span>';
+  if(again(p,k) && filled(p,c,it)) h+='<span class="agTag">事前に記入ずみ</span>';
   h+='<p class="q">'+it.q+'</p>';
   if(it.g){
     var gv=gridParse(p.a[k]);
@@ -1217,6 +1250,8 @@ function itemHTML(c,p,it,showCat){
       : '<textarea class="memoBox" placeholder="メモ" aria-label="'+esc(it.q)+' の答え" oninput="setAns(&quot;'+k+'&quot;,this.value)">'+esc(p.a[k]||"")+'</textarea>';
     if(useRate()) h+=rateHTML;
   }
+  h+='<button class="againBtn'+(again(p,k)?" on":"")+'" onclick="toggleAgain(&quot;'+k+'&quot;)"'+
+     ' aria-pressed="'+again(p,k)+'">'+(again(p,k)?"当日も聞く ✓":"当日も聞く")+'</button>';
   h+='<button class="sinkBtn" onclick="toggleSink(&quot;'+k+'&quot;)">'+sinkLabel(p,k)+'</button>';
   return h+'</div>';
 }
@@ -1261,6 +1296,16 @@ function delPark(){ const p=cur(); if(!p)return; snapshot();
   S.cur=S.parks[0]?S.parks[0].id:null; save(); render() }
 
 /* ---- まとめ（この園） ---- */
+/* 印刷用に、その項目の答えを1行の文字にする */
+function ansText(p,c,it){ const k=it.k, out=[];
+  const RA=rateOf(p.r[k]);
+  const av=(p.a[k]||"").trim();
+  if(av){ if(RA && useRate()) out.push(RA[1]); out.push(av) }
+  else if(RA) out.push(rateShow(p.r[k]));
+  const mm=(p.m[k]||"").trim();
+  if(mm) out.push(mm);
+  return out.join("／");
+}
 function sumHTML(p){
   let h='', anyNa=0;
   CATS.forEach(function(c){
@@ -1306,10 +1351,41 @@ function renderSum(){
     '</div><div class="card" style="padding:6px 17px 17px">'+r[0]+'</div>';
 }
 
+/* 「気になる」寄りの答え。ここだけ色を変える */
+const CMP_WARN=["気になる","合っていない","していない","できない","届かない",
+  "話しにくい","もの足りない","不可","預けられない","少ない","せまい","古い","華美"];
+function warnAns(t){ if(!t) return false;
+  for(var i=0;i<CMP_WARN.length;i++) if(t.indexOf(CMP_WARN[i])===0) return true;
+  return false }
+/* 比較表の1マス。html＝表示、key＝園どうしを比べるための文字 */
+function cmpCell(p,c,it,memo){
+  const k=it.k, mm=(memo&&p.m[k])?'<div class="memo-cell">'+esc(p.m[k])+'</div>':'';
+  if(c.kind==="rate"){
+    const v=p.r[k], R0=rateOf(v);
+    if(!useRate()){
+      const raw=(p.a[k]&&p.a[k].trim()) ? p.a[k].trim() : rateShow(v);
+      const cls='ans'+(R0?" v"+v:"")+(warnAns(raw)?" cw":"");
+      return {key:raw, html:'<td class="'+cls+'">'+(raw?esc(raw)+mm:'<span class="vna">—</span>')+'</td>'} }
+    const mk=R0?R0[1]:"—";
+    const raw=(p.a[k]||"").trim();
+    const av=raw?'<div class="memo-cell">'+esc(raw)+'</div>':'';
+    return {key:(v===undefined?"":v)+"|"+raw,
+      html:'<td class="'+(v===undefined&&!av?"vna":"v"+v)+'">'+mk+av+mm+'</td>'} }
+  if(c.kind==="check"){ const v=p.r[k];
+    return {key:v===undefined?"":"1",
+      html:'<td class="'+(v===undefined?"vna":"v3")+'">'+(v===undefined?"—":"✓")+'</td>'} }
+  const RA=rateOf(p.r[k]);
+  const mark=(useRate()&&RA)?'<b class="rmk">'+RA[1]+'</b> ':'';
+  const raw=(p.a[k]||"").trim();
+  const cls='ans'+((useRate()&&RA)?' v'+p.r[k]:'')+(warnAns(raw)?" cw":"");
+  return {key:raw+"|"+(RA&&useRate()?p.r[k]:""),
+    html:'<td class="'+cls+'">'+(raw?mark+esc(raw)+mm:(mark?mark+mm:'<span class="vna">—</span>'))+'</td>'};
+}
 function renderCmp(){
   const el=document.getElementById("cmpBody"); if(!el)return;
   if(!S.parks.length){ el.innerHTML='<div class="empty">園を登録すると、ここに全部の園が横に並びます。</div>'; return }
   const memo=document.getElementById("showMemo").checked;
+  const dimEl=document.getElementById("dimSame"), dim=dimEl?dimEl.checked:true;
   const th=S.parks.map(function(p){return '<th>'+esc(p.name)+'</th>'}).join("");
   const totalRow = useRate() ? ('<tr class="total"><th>総合</th>'+S.parks.map(function(p){
     const sc=score(p), t=tally(p);
@@ -1320,26 +1396,14 @@ function renderCmp(){
     const live=liveItems(c); if(!live.length)return;
     rows+='<tr class="catrow"><th>'+c.name+
       '</th><td colspan="'+S.parks.length+'"></td></tr>';
-    live.forEach(function(it){ const k=it.k;
-      rows+='<tr><th>'+it.q+'</th>'+S.parks.map(function(p){
-        if(c.kind==="rate"){ const v=p.r[k];
-          const R0=rateOf(v);
-          if(!useRate()){
-            const lab=(p.a[k]&&p.a[k].trim()) ? esc(p.a[k]) : rateShow(v);
-            const mm=(memo&&p.m[k])?'<div class="memo-cell">'+esc(p.m[k])+'</div>':'';
-            return '<td class="ans'+(R0?" v"+v:"")+'">'+(lab?lab+mm:'<span class="vna">—</span>')+'</td>' }
-          const mk=R0?R0[1]:"—";
-          const av=(p.a[k]&&p.a[k].trim())?'<div class="memo-cell">'+esc(p.a[k])+'</div>':'';
-          const mm=(memo&&p.m[k])?'<div class="memo-cell">'+esc(p.m[k])+'</div>':'';
-          return '<td class="'+(v===undefined&&!av?"vna":"v"+v)+'">'+mk+av+mm+'</td>' }
-        if(c.kind==="check"){ const v=p.r[k];
-          return '<td class="'+(v===undefined?"vna":"v3")+'">'+(v===undefined?"—":"✓")+'</td>' }
-        const RA=rateOf(p.r[k]);
-        const mark=(useRate()&&RA)?'<b class="rmk">'+RA[1]+'</b> ':'';
-        const av=esc(p.a[k]);
-        const am=(memo&&p.m[k])?'<div class="memo-cell">'+esc(p.m[k])+'</div>':'';
-        return '<td class="ans'+((useRate()&&RA)?' v'+p.r[k]:'')+'">'+(av?mark+av+am:(mark?mark+am:'<span class="vna">—</span>'))+'</td>';
-      }).join("")+'</tr>' }) });
+    live.forEach(function(it){
+      const cells=S.parks.map(function(p){ return cmpCell(p,c,it,memo) });
+      /* 園がぜんぶ同じ答えの行は、薄くして目立たなくする */
+      let same = dim && cells.length>1 && cells[0].key!=="";
+      if(same) for(let i=1;i<cells.length;i++) if(cells[i].key!==cells[0].key){ same=false; break }
+      rows+='<tr'+(same?' class="same"':'')+'><th>'+it.q+'</th>'
+        +cells.map(function(x){return x.html}).join("")+'</tr>';
+    }) });
   rows+=totalRow;
   el.innerHTML='<table><thead><tr><th style="min-width:132px">項目</th>'+th+'</tr></thead><tbody>'+rows+'</tbody></table>';
 }
@@ -1443,29 +1507,38 @@ function doPrint(mode){
       '<div class="p2">'+r[0]+'</div>';
   }else{
     /* mode==="todo" は、その園でまだ書けていない項目だけ */
-    const only = (mode==="todo");
-    if(only && !p){ msg("先に園を登録してください。"); return }
+    const only = (mode==="todo"), both = (mode==="both");
+    if((only||both) && !p){ msg("先に園を登録してください。"); return }
     let n0=0;
-    let h = only
-      ? '<p class="pTitle">'+esc(p.name)+'　まだ聞けていないこと</p>'+
-        '<p class="pSub">見学日：'+(p.date?esc(p.date):'＿＿月＿＿日')+'</p><div class="p2">'
+    let h = (only||both)
+      ? '<p class="pTitle">'+esc(p.name)+'　'+(only?'まだ聞けていないこと':'見学メモ')+'</p>'+
+        '<p class="pSub">見学日：'+(p.date?esc(p.date):'＿＿月＿＿日')+
+        (both?'　　太字は事前に調べた内容です':'')+'</p><div class="p2">'
       : '<p class="pTitle">園見学 持っていくリスト</p>'+
         '<p class="pSub">園名：＿＿＿＿＿＿＿＿＿＿＿　　見学日：＿＿月＿＿日</p><div class="p2">';
     CATS.forEach(function(c){
       let live=liveItems(c);
-      if(only) live=live.filter(function(it){ return !filled(p,c,it) });
+      if(only) live=live.filter(function(it){ return !filled(p,c,it) || again(p,it.k) });
       if(!live.length)return;
       n0+=live.length;
       h+='<p class="pCat">'+c.name+'</p>';
       h+='<div>';
       live.forEach(function(x){
-        h+= (c.kind==="ask")
-          ? '<div class="pItem"><span class="pQ">'+x.q+'</span><span class="pLine"></span>'+(x.n?'<span class="pUnit">'+x.n+'</span>':'')+'</div>'
-          : '<div class="pItem"><span class="pBox"></span><span style="flex:1">'+x.q+'</span></div>' });
+        const ans = both ? ansText(p,c,x) : '';
+        if(c.kind==="ask"){
+          h+='<div class="pItem"><span class="pQ">'+x.q+'</span>'
+            + (ans ? '<span class="pAns">'+esc(ans)+'</span>'
+                   : '<span class="pLine"></span>'+(x.n?'<span class="pUnit">'+x.n+'</span>':''))
+            + '</div>';
+        }else{
+          h+='<div class="pItem"><span class="pBox'+(ans?' on':'')+'"></span>'
+            + '<span style="flex:1">'+x.q+(ans?'　<b>'+esc(ans)+'</b>':'')+'</span></div>';
+        } });
       h+='</div>' });
     h+='</div><p class="pCat">全体の印象</p><div class="pItem"><span class="pLine"></span></div>'+
        '<div class="pItem"><span class="pLine"></span></div><div class="pItem"><span class="pLine"></span></div>';
     if(only && !n0){ pmsg("この園は、ぜんぶ記入ずみです。印刷するものがありません。"); return }
+    if(both && !n0){ pmsg("使う項目がありません。設定の「項目をえらぶ」で選んでください。"); return }
     a.innerHTML=h;
   }
   a.innerHTML='<div id="printFit">'+a.innerHTML+'</div>';
@@ -1575,9 +1648,18 @@ function fitPrint(opt){
   }
 
   inner.style.width=Math.round(fin.w)+"px";
+  if(fin.k<1){
+    inner.style.zoom=fin.k.toFixed(4);
+    /* zoom をかけると段の分かれ方が変わり、測った高さより数十px高くなることがある。
+       実際の高さを測り直して、はみ出す分だけさらに縮める（下が切れるのを防ぐ） */
+    for(let i=0;i<5;i++){
+      const real=inner.getBoundingClientRect().height;
+      if(real<=PAGE_H) break;
+      fin.k *= (PAGE_H/real)*0.997;
+      inner.style.zoom=fin.k.toFixed(4);
+    }
+  }else{ inner.style.width="" }
   document.body.classList.remove("measuring");
-  if(fin.k<1){ inner.style.zoom=fin.k.toFixed(4) }
-  else { inner.style.width="" }
   /* 収まると分かっているので、紙1枚ぶんに高さを固定してしまう。
      こうしないと 1px 未満のはみ出しで白紙の2枚目が出ることがある */
   a.style.height=Math.floor(PAGE_H)+"px";
