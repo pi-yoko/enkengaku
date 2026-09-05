@@ -48,6 +48,9 @@
 <!-- v20260902g -->
 <!-- v20260902h -->
 <!-- v20260902i -->
+<!-- v20260905a -->
+<!-- v20260905a -->
+<!-- v20260905a -->
 <style>
 :root{
   --page:#FFEFD4; --sheet:#FFFDF7; --card:#FFFFFF;
@@ -283,6 +286,42 @@ footer{padding:22px 6px;color:var(--ink-2);font-size:11.5px;line-height:1.9;text
 .helloBox .hnote{display:block;background:var(--sheet);border-radius:14px;padding:11px 13px;font-size:12.5px}
 .helloBox .btn{width:100%;margin-top:4px;padding:14px}
 .helloBox .hfoot{display:block;margin:11px 0 0;font-size:11.5px;text-align:center;color:var(--ink-3)}
+#netdlg{position:fixed;inset:0;z-index:310;background:rgba(60,44,32,.55);
+  display:flex;align-items:center;justify-content:center;padding:18px;overflow:auto}
+#netdlg[hidden]{display:none}
+.netBox{background:var(--card);border-radius:24px;box-shadow:var(--shadow);
+  padding:22px 20px;max-width:480px;width:100%;max-height:100%;overflow:auto}
+.netBox h2{font-size:17px;font-weight:800;margin:0 0 10px;color:var(--ink)}
+.netBox p{margin:0 0 10px;font-size:13px;line-height:1.8;color:var(--ink-2)}
+.netBox p b{color:var(--ink)}
+.netBox .hnote{display:block;background:var(--sheet);border-radius:14px;padding:11px 13px;font-size:12.5px}
+.netRow{display:block;margin:0 0 10px}
+.netRow>span{display:block;font-size:12px;font-weight:800;color:var(--ink-2);margin:0 0 5px}
+.netRow select,.netRow input{width:100%;font:inherit;font-size:16px;padding:11px 12px;
+  border:2px solid var(--line);border-radius:14px;background:var(--sheet);color:var(--ink);
+  -webkit-appearance:none;appearance:none}
+.netList{margin:4px 0 12px;max-height:46vh;overflow:auto}
+.netHit{display:block;width:100%;text-align:left;font:inherit;font-size:13px;line-height:1.6;
+  background:var(--sheet);border:2px solid var(--line);border-radius:14px;
+  padding:10px 12px;margin:0 0 7px;color:var(--ink);cursor:pointer}
+.netHit b{display:block;font-size:14px;font-weight:800}
+.netHit span{color:var(--ink-3);font-size:11.5px}
+.netFill{background:var(--sheet);border-radius:14px;padding:11px 13px;margin:0 0 11px;font-size:12.5px}
+.netFill dl{margin:0;display:grid;grid-template-columns:auto 1fr;gap:5px 10px}
+.netFill dt{font-weight:800;color:var(--ink-2);white-space:nowrap}
+.netFill dd{margin:0;color:var(--ink);overflow-wrap:anywhere}
+.netFill .none{color:var(--ink-3)}
+.netBtns{display:flex;gap:8px}
+.netBtns .btn{flex:1}
+.netCard{display:flex;flex-direction:column;gap:9px}
+.netCard h2{font-size:14px;font-weight:800;margin:0;color:var(--ink)}
+.netCard p{margin:0;font-size:12px;line-height:1.75;color:var(--ink-2)}
+.netTag{display:inline-block;background:var(--sky-soft);color:var(--sky-ink);
+  font-size:10.5px;font-weight:800;border-radius:999px;padding:2px 9px;margin:0 0 5px}
+.netInfo dl{margin:0;display:grid;grid-template-columns:auto 1fr;gap:5px 10px;font-size:12.5px}
+.netInfo dt{font-weight:800;color:var(--ink-2);white-space:nowrap}
+.netInfo dd{margin:0;color:var(--ink);overflow-wrap:anywhere}
+.netSrc{font-size:11px;color:var(--ink-3);line-height:1.7}
 .srOnly{position:absolute;width:1px;height:1px;margin:-1px;padding:0;overflow:hidden;clip:rect(0 0 0 0);clip-path:inset(50%);white-space:nowrap;border:0}
 .saveState{max-width:760px;margin:0 auto;padding:0 16px 4px;font-size:11px;font-weight:800;color:var(--ink-3);display:flex;align-items:center;gap:8px;min-height:18px}
 .saveState .ok{color:var(--mint)}
@@ -372,7 +411,7 @@ body.measuring #printArea{display:block;position:fixed;left:-10000px;top:0;visib
 #printArea .scroller{overflow:visible}
 @media print{
   header,nav,.parks,.addbox,.io,.btn,footer,.why,.confirm,.banner,.wrap>section,.tip,
-  .saveState,#nudge,#hello{display:none !important}
+  .saveState,#nudge,#hello,#netdlg{display:none !important}
   body{background:#fff;color:#000}
   .wrap{max-width:none;padding:0}
   #printArea{display:block !important;position:static;visibility:visible}
@@ -432,6 +471,20 @@ body.measuring #printArea{display:block;position:fixed;left:-10000px;top:0;visib
      入力は<b>書いたそばから自動で保存</b>されます。</p>
   <button class="btn" onclick="closeHello()">はじめる</button>
   <p class="hfoot">この説明は「設定 → 使い方」でいつでも読めます。</p>
+</div></div>
+<div id="netdlg" hidden><div class="netBox" role="dialog" aria-modal="true" aria-labelledby="netT">
+  <h2 id="netT">ネットで調べて入れる</h2>
+  <p class="hnote">国が公開している保育施設のデータ（こども家庭庁「ここdeサーチ」）から、
+    園を選ぶだけで<b>まだ空いている項目だけ</b>を埋めます。すでに書いたものは消しません。</p>
+  <div id="netStep1">
+    <label class="netRow"><span>都道府県</span><select id="netPref" onchange="netSearch()"></select></label>
+    <label class="netRow"><span>園の名前（一部でOK）</span>
+      <input type="text" id="netQ" placeholder="例：さくら" autocomplete="off" oninput="netSearch()"></label>
+    <p id="netMsg" class="netSrc"></p>
+    <div id="netList" class="netList"></div>
+  </div>
+  <div id="netStep2" hidden></div>
+  <div class="netBtns"><button class="btn ghost" onclick="netClose()">とじる</button></div>
 </div></div>
 <div class="wrap">
   <div id="storageWarn"></div>
@@ -625,9 +678,12 @@ body.measuring #printArea{display:block;position:fixed;left:-10000px;top:0;visib
   </section>
 
   <div id="printArea"></div>
-  <footer><span class="verline">バージョン 2026-09-02i</span><br>
+  <footer><span class="verline">バージョン 2026-09-05a</span><br>
     記録はこの端末のブラウザ内にだけ保存され、どこにも送信されません。<br>
-    園の運用は自治体・法人によって異なります。気になる点は必ず園にご確認ください。</footer>
+    園の運用は自治体・法人によって異なります。気になる点は必ず園にご確認ください。<br>
+    <span id="netSrcLine" hidden>「ネットで調べて入れる」の情報は、
+    子ども・子育て支援情報公表システム（ここdeサーチ https://www.wam.go.jp/kokodesearch/ ）を
+    もとに作成しています。</span></footer>
 </div>
 
 <script>
@@ -918,7 +974,7 @@ function toggleAdd(o){ const b=document.getElementById("addbox");
   b.classList.toggle("on", o===undefined?!b.classList.contains("on"):o);
   if(b.classList.contains("on")){const i=document.getElementById("newName");i.value="";i.focus()} }
 function commitPark(){ const i=document.getElementById("newName"),n=i.value.trim(); if(!n){i.focus();return}
-  const p={id:uid(),name:n,addr:"",date:"",mins:"",note:"",r:{},m:{},a:{},d:{}};
+  const p={id:uid(),name:n,addr:"",date:"",mins:"",note:"",r:{},m:{},a:{},d:{},net:{}};
   S.parks.push(p); S.cur=p.id; save(); toggleAdd(false); togglePicker(false); render() }
 function pick(id){ S.cur=id; save(); togglePicker(false); render() }
 function togglePicker(on){ const el=document.getElementById("picker"); if(!el)return;
@@ -927,7 +983,7 @@ function togglePicker(on){ const el=document.getElementById("picker"); if(!el)re
 function renderParkName(){ const el=document.getElementById("parkNowName"); if(!el)return;
   const p=cur(); el.textContent = p ? p.name : "園を追加してね"; }
 function setField(k,v){ const p=cur(); if(!p)return; p[k]=v; save(); if(k==="name"){renderParks();renderParkName()} }
-function setAns(k,v){ const p=cur(); if(!p)return; if(v)p.a[k]=v; else delete p.a[k]; save(); touch(k) }
+function setAns(k,v){ const p=cur(); if(!p)return; netClear(k); if(v)p.a[k]=v; else delete p.a[k]; save(); touch(k) }
 /* 書いた直後に「残り」と見た目を更新する */
 function touch(k){ const o=ownerOf(k); if(!o)return;
   const p=cur();
@@ -940,7 +996,7 @@ function gridParse(sv){ var m={};
   (sv||"").split("／").forEach(function(t){ t=t.trim(); if(!t)return;
     var i=t.indexOf(" "); if(i<0) return; m[t.slice(0,i)]=t.slice(i+1).trim() });
   return m }
-function setGrid(k,label,v){ const p=cur(); if(!p)return;
+function setGrid(k,label,v){ const p=cur(); if(!p)return; netClear(k);
   var m=gridParse(p.a[k]); v=(v||"").trim();
   if(v) m[label]=v; else delete m[label];
   var it=null; CATS.forEach(function(c){c.items.forEach(function(x){ if(x.k===k) it=x })});
@@ -952,7 +1008,7 @@ function setGrid(k,label,v){ const p=cur(); if(!p)return;
    ボタンは選ばれたままにする */
 function optOn(cur_,op){ if(!cur_) return false;
   return cur_===op || cur_.indexOf(op)===0 }
-function setOpt(k,v,multi){ const p=cur(); if(!p)return;
+function setOpt(k,v,multi){ const p=cur(); if(!p)return; netClear(k);
   if(multi){
     var cur_=(p.a[k]||"").split("／").map(function(t){return t.trim()}).filter(Boolean);
     var i=cur_.indexOf(v);
@@ -967,7 +1023,7 @@ function setOpt(k,v,multi){ const p=cur(); if(!p)return;
       b.setAttribute("aria-pressed", String(multi ? sel.indexOf(b.textContent)>-1
                                                     : optOn(p.a[k],b.textContent))) }) }
   touch(k); }
-function setMemo(k,v){ const p=cur(); if(!p)return; if(v)p.m[k]=v; else delete p.m[k]; save(); touch(k) }
+function setMemo(k,v){ const p=cur(); if(!p)return; netClear(k); if(v)p.m[k]=v; else delete p.m[k]; save(); touch(k) }
 function toggleWhy(el){ el.parentNode.classList.toggle("open") }
 function closeCat(btn){ var d=btn.closest("details"); if(!d)return;
   d.open=false; d.scrollIntoView({block:"start"}); }
@@ -1090,6 +1146,7 @@ function pickBackupFile(){ var el=document.getElementById("bkFile"); if(el) el.c
 function closeHello(){ S.seen=1; save();
   document.getElementById("hello").hidden=true;
   if(!S.parks.length) togglePicker(true); }
+function netSrcShow(){ var e=document.getElementById("netSrcLine"); if(e) e.hidden=!netHas() }
 function renderNudge(){
   var el=document.getElementById("nudge"); if(!el) return;
   /* 事前タブでは出さない（記入に集中してもらう） */
@@ -1159,10 +1216,200 @@ const CHICK='<svg width="44" height="44" viewBox="0 0 40 40" aria-hidden="true">
 function emptyCard(){ return '<div class="card empty">'+CHICK.replace('width="44" height="44"','width="64" height="64"')+
   '<br>まずは見学する園を追加してね。<br>1園ずつ、見ながら埋めていけば大丈夫です。</div>' }
 
+
+/* ===== ネットで調べて入れる（こども家庭庁「ここdeサーチ」のデータ） ===== */
+var NETDB={};/*NETDB*/
+var NETDATE="";/*NETDATE*/
+var NETSEP=String.fromCharCode(31), NETCACHE={}, NETROWS=[], NETSEL=null;
+var PREFS=["北海道","青森県","岩手県","宮城県","秋田県","山形県","福島県","茨城県","栃木県","群馬県",
+"埼玉県","千葉県","東京都","神奈川県","新潟県","富山県","石川県","福井県","山梨県","長野県",
+"岐阜県","静岡県","愛知県","三重県","滋賀県","京都府","大阪府","兵庫県","奈良県","和歌山県",
+"鳥取県","島根県","岡山県","広島県","山口県","徳島県","香川県","愛媛県","高知県","福岡県",
+"佐賀県","長崎県","熊本県","大分県","宮崎県","鹿児島県","沖縄県"];
+function netHas(){ for(var k in NETDB) return true; return false }
+function netClear(k){ const p=cur(); if(p&&p.net&&p.net[k]){ delete p.net[k];
+  document.querySelectorAll('[data-k="'+k+'"] .netTag').forEach(function(e){e.remove()}) } }
+
+function netCardHTML(p){
+  if(!netHas()) return "";
+  var h='<div class="card netCard"><h2>ネットで調べて入れる</h2>'+
+    '<p>園の名前を選ぶと、公開データから分かる分を<b>空いている項目だけ</b>に入れます。</p>'+
+    '<button class="btn" onclick="netOpen()">園をさがす</button>';
+  if(p.netinfo){
+    h+='<div class="netInfo"><p style="margin:6px 0 4px"><b>'+esc(p.netinfo.n)+'</b>'+
+       (p.netinfo.a?'<br><span class="netSrc">'+esc(p.netinfo.a)+'</span>':'')+'</p>';
+    if(p.netinfo.rows && p.netinfo.rows.length){
+      h+='<p class="netSrc" style="margin:8px 0 4px">項目にならない情報も分かりました。</p><dl>'+
+        p.netinfo.rows.map(function(r){
+          return '<dt>'+esc(r[0])+'</dt><dd>'+esc(r[1])+'</dd>' }).join("")+'</dl>';
+    }
+    h+='<p class="netSrc" style="margin:9px 0 0">'+esc(p.netinfo.at)+' 時点の公開データです。'+
+       '見学で確かめて、ちがっていたら上書きしてください。</p></div>';
+  }
+  return h+'</div>';
+}
+function netOpen(){
+  var sel=document.getElementById("netPref");
+  if(!sel.options.length){
+    sel.innerHTML=PREFS.filter(function(x){return NETDB[x]}).map(function(x){
+      return '<option'+(x===S.netPref?' selected':'')+'>'+x+'</option>' }).join("");
+  }
+  document.getElementById("netStep1").hidden=false;
+  document.getElementById("netStep2").hidden=true;
+  document.getElementById("netdlg").hidden=false;
+  var q=document.getElementById("netQ");
+  var p=cur(); if(p && !q.value) q.value=String(p.name||"").replace(/(保育園|こども園|幼稚園|保育所)$/,"");
+  netSearch(); setTimeout(function(){ q.focus() },60);
+}
+function netClose(){ document.getElementById("netdlg").hidden=true }
+function netMsg(t){ var e=document.getElementById("netMsg"); if(e) e.textContent=t }
+
+async function netLoad(pref){
+  if(NETCACHE[pref]) return NETCACHE[pref];
+  var b64=NETDB[pref]; if(!b64) return null;
+  var bin=Uint8Array.from(atob(b64),function(c){return c.charCodeAt(0)});
+  var buf=await new Response(new Blob([bin]).stream()
+            .pipeThrough(new DecompressionStream("gzip"))).arrayBuffer();
+  var cols=JSON.parse(new TextDecoder().decode(buf));
+  var out=cols.map(function(c){
+    if(c===0||c===null) return null;
+    if(typeof c==="string") return c.split(NETSEP);
+    var vals=c[0].split(NETSEP), idx=c[1].split(",");
+    return idx.map(function(i){ return vals[+i] });
+  });
+  NETCACHE[pref]=out; return out;
+}
+var NETSEQ=0;
+async function netSearch(){
+  var seq=++NETSEQ;
+  var pref=document.getElementById("netPref").value;
+  var q=document.getElementById("netQ").value.trim();
+  S.netPref=pref; save();
+  var list=document.getElementById("netList");
+  if(!q){ list.innerHTML=""; netMsg("園の名前を入れてください。"); return }
+  netMsg("さがしています…");
+  var cols;
+  try{ cols=await netLoad(pref) }catch(e){ netMsg("データを開けませんでした（"+e+"）"); return }
+  if(seq!==NETSEQ) return;
+  if(!cols){ netMsg("この都道府県のデータがありません。"); return }
+  var names=cols[0], hit=[];
+  for(var i=0;i<names.length && hit.length<60;i++) if(names[i].indexOf(q)>-1) hit.push(i);
+  NETROWS=cols;
+  if(!hit.length){ list.innerHTML=""; netMsg("見つかりませんでした。ひらがな・漢字を変えてみてください。"); return }
+  netMsg(hit.length+(hit.length>=60?"件以上":"件")+" 見つかりました。");
+  list.innerHTML=hit.map(function(i){
+    var a=(cols[2]?cols[2][i]:"")+(cols[3]?cols[3][i]:"");
+    return '<button class="netHit" onclick="netPick('+i+')"><b>'+esc(cols[0][i])+'</b>'+
+      '<span>'+esc((cols[5]&&cols[5][i]?cols[5][i]+"／":"")+a)+'</span></button>' }).join("");
+}
+function netG(i,r){ var c=NETROWS[i]; return c&&c[r]!==undefined ? String(c[r]).trim() : "" }
+
+/* 公開データ → アプリの項目 */
+function netFields(i,pref){
+  var g=function(r){ return netG(r,i) }, L=[];
+  function A(k,v){ if(v && on(k)) L.push([k,v]) }
+  var t=g(5), ty="";
+  if(/^保育所/.test(t)) ty="認可保育園";
+  else if(/^認定こども園/.test(t)) ty="認定こども園";
+  else if(/^小規模保育/.test(t)) ty="小規模保育";
+  else if(/^家庭的保育/.test(t)) ty="家庭的保育";
+  else if(/^事業所内保育/.test(t)) ty="企業主導型";
+  else if(/認可外|ベビーホテル/.test(t)) ty="認可外保育園";
+  A("prep_0",ty);
+  A("prep_1",(pref+g(2)+g(3)).trim());
+  var h=[];
+  if(g(9)&&g(10)) h.push("平日 "+g(9)+"〜"+g(10));
+  if(g(11)&&g(12)) h.push("土曜 "+g(11)+"〜"+g(12));
+  if(g(13)) h.push("朝の延長 "+g(13)+"〜");
+  if(g(14)&&g(15)) h.push("夕方の延長 "+g(14)+"〜"+g(15));
+  A("prep_4",h.join(" ／ "));
+  if(g(8)) A("prep_5","開所は "+g(8).split("").join("・")+"（それ以外はお休み）");
+  var niwa=g(34);
+  if(niwa!=="") A("prep_7", parseFloat(niwa)>0 ? "あり" : "なし");
+  if(g(7)) A("bousai_0",g(7)+"年に開設");
+  if(g(35)==="あり") A("basic_2","保育料のほかに実費徴収あり");
+  else if(g(35)==="なし") A("basic_2","実費徴収なし");
+  var ky=g(30);
+  if(ky==="給食のみ実施") A("food_x1","完全給食");
+  else if(ky==="給食・弁当併用") A("food_x1","お弁当の日あり");
+  var kc=g(26), kh=g(27);
+  if(kc!==""||kh!=="") A("sick_5", (+kc>0)?"常勤":((+kh>0)?"非常勤":"いない"));
+  if(g(33)==="あり"||g(33)==="なし") A("sick_6",g(33));
+  return L;
+}
+/* 項目にならないけれど役に立つ情報 */
+function netExtra(i){
+  var g=function(r){ return netG(r,i) }, L=[];
+  var te=[], lb=["0歳","1歳","2歳","3歳","4歳","5歳"];
+  for(var a=0;a<6;a++) if(g(16+a)!=="") te.push(lb[a]+" "+g(16+a)+"人");
+  if(te.length) L.push(["年齢ごとの定員",te.join("・")]);
+  if(g(22)) L.push(["定員（合計）",g(22)+"人"+(g(23)?"（在籍 "+g(23)+"人）":"")]);
+  if(g(24)!==""||g(25)!=="") L.push(["保育士の人数","常勤 "+(g(24)||"？")+"人・非常勤 "+(g(25)||"？")+"人"]);
+  if(g(29)) L.push(["保育士の平均経験年数",g(29)+"年"]);
+  if(g(28)) L.push(["職員1人あたりの子ども",g(28)+"人"]);
+  if(g(31)) L.push(["障害児の受け入れ",g(31)]);
+  if(g(32)) L.push(["一時預かり",g(32)]);
+  if(g(4))  L.push(["電話番号",g(4)]);
+  if(g(6))  L.push(["公立・私立",g(6)]);
+  var so=g(37); if(/^(実施|未実施)/.test(so)) L.push(["第三者評価",so]);
+  return L;
+}
+function netPick(i){
+  NETSEL=i;
+  var p=cur(); if(!p) return;
+  var pref=document.getElementById("netPref").value;
+  var F=netFields(i,pref), X=netExtra(i);
+  var put=[], skip=[];
+  F.forEach(function(f){
+    var o=ownerOf(f[0]); if(!o) return;
+    var has=(p.a[f[0]]&&p.a[f[0]].trim());
+    (has?skip:put).push([o.it.q,f[1]]);
+  });
+  var h='<p><b>'+esc(netG(0,i))+'</b><br><span class="netSrc">'+
+    esc(pref+netG(2,i)+netG(3,i))+'</span></p>';
+  h+='<div class="netFill">'+(put.length
+      ? '<p style="margin:0 0 8px"><b>'+put.length+'件</b>を入れます（空いている項目だけ）</p><dl>'+
+        put.map(function(r){return '<dt>'+esc(r[0])+'</dt><dd>'+esc(r[1])+'</dd>'}).join("")+'</dl>'
+      : '<p class="none" style="margin:0">入れられる空きの項目はありませんでした。</p>')+'</div>';
+  if(skip.length) h+='<div class="netFill"><p class="none" style="margin:0">'+
+      'すでに書いてある '+skip.length+' 件はそのままにします。</p></div>';
+  if(X.length) h+='<div class="netFill"><p style="margin:0 0 8px">項目にはならないけれど分かったこと</p><dl>'+
+      X.map(function(r){return '<dt>'+esc(r[0])+'</dt><dd>'+esc(r[1])+'</dd>'}).join("")+'</dl></div>';
+  h+='<div class="netBtns"><button class="btn" onclick="netApply()">この内容で入れる</button>'+
+     '<button class="btn ghost" onclick="netBack()">ほかの園</button></div>';
+  document.getElementById("netStep2").innerHTML=h;
+  document.getElementById("netStep1").hidden=true;
+  document.getElementById("netStep2").hidden=false;
+}
+function netBack(){
+  document.getElementById("netStep2").hidden=true;
+  document.getElementById("netStep1").hidden=false;
+}
+function netApply(){
+  var p=cur(), i=NETSEL; if(!p||i===null) return;
+  snapshot();
+  var pref=document.getElementById("netPref").value;
+  if(!p.net) p.net={};
+  var n=0;
+  netFields(i,pref).forEach(function(f){
+    if(p.a[f[0]]&&p.a[f[0]].trim()) return;
+    p.a[f[0]]=f[1]; p.net[f[0]]=1; n++;
+  });
+  p.netinfo={ n:netG(0,i), a:pref+netG(2,i)+netG(3,i), at:NETDATE, rows:netExtra(i) };
+  save(); netClose(); render();
+  msgNet(n);
+}
+function msgNet(n){
+  var e=document.getElementById("nudge"); if(!e) return;
+  e.innerHTML='<div class="card netCard"><p><b>'+n+'件</b>入れました。'+
+    '「ネット調べ」の印がついています。見学で確かめて、ちがっていたら上書きしてください。</p></div>';
+  setTimeout(renderNudge,7000);
+}
+
 function renderPre(){
   const el=document.getElementById("preBody"), p=cur();
   if(!p){ el.innerHTML=emptyCard(); return }
-  let h='';
+  let h=netCardHTML(p);
   /* 事前は「聞いて確認すること」→「見て確認すること」の順。見出しは出さない */
   ["ask","rate"].forEach(function(kind){
     CATS.forEach(function(c){ if(c.kind!==kind)return;
@@ -1221,6 +1468,7 @@ function itemHTML(c,p,it,showCat){
   let h='<div class="item" data-k="'+k+'">';
   if(showCat) h+='<span class="fromcat">'+c.name+'</span>';
   if(again(p,k) && filled(p,c,it)) h+='<span class="agTag">事前に記入ずみ</span>';
+  if(p.net && p.net[k]) h+='<span class="netTag">ネット調べ</span>';
   h+='<p class="q">'+it.q+'</p>';
   if(it.g){
     var gv=gridParse(p.a[k]);
@@ -1907,7 +2155,7 @@ if(document.hasStorageAccess){
     }
   }).catch(function(){});
 }
-render(); renderPickCounts();
+render(); renderPickCounts(); netSrcShow();
 /* はじめて開いたときだけ説明を出す。「はじめる」を押すと二度と出ない */
 if(!S.seen){ document.getElementById("hello").hidden=false }
 else if(!S.parks.length){ togglePicker(true) }
