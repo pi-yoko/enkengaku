@@ -51,6 +51,7 @@
 <!-- v20260905a -->
 <!-- v20260905a -->
 <!-- v20260905a -->
+<!-- v20260905b -->
 <style>
 :root{
   --page:#FFEFD4; --sheet:#FFFDF7; --card:#FFFFFF;
@@ -477,7 +478,7 @@ body.measuring #printArea{display:block;position:fixed;left:-10000px;top:0;visib
   <p class="hnote">国が公開している保育施設のデータ（こども家庭庁「ここdeサーチ」）から、
     園を選ぶだけで<b>まだ空いている項目だけ</b>を埋めます。すでに書いたものは消しません。</p>
   <div id="netStep1">
-    <label class="netRow"><span>都道府県</span><select id="netPref" onchange="netSearch()"></select></label>
+    <label class="netRow"><span>都道府県（えらばなくても大丈夫）</span><select id="netPref" onchange="netSearch()"></select></label>
     <label class="netRow"><span>園の名前（一部でOK）</span>
       <input type="text" id="netQ" placeholder="例：さくら" autocomplete="off" oninput="netSearch()"></label>
     <p id="netMsg" class="netSrc"></p>
@@ -678,7 +679,7 @@ body.measuring #printArea{display:block;position:fixed;left:-10000px;top:0;visib
   </section>
 
   <div id="printArea"></div>
-  <footer><span class="verline">バージョン 2026-09-05a</span><br>
+  <footer><span class="verline">バージョン 2026-09-05b</span><br>
     記録はこの端末のブラウザ内にだけ保存され、どこにも送信されません。<br>
     園の運用は自治体・法人によって異なります。気になる点は必ず園にご確認ください。<br>
     <span id="netSrcLine" hidden>「ネットで調べて入れる」の情報は、
@@ -1220,7 +1221,7 @@ function emptyCard(){ return '<div class="card empty">'+CHICK.replace('width="44
 /* ===== ネットで調べて入れる（こども家庭庁「ここdeサーチ」のデータ） ===== */
 var NETDB={};/*NETDB*/
 var NETDATE="";/*NETDATE*/
-var NETSEP=String.fromCharCode(31), NETCACHE={}, NETROWS=[], NETSEL=null;
+var NETSEP=String.fromCharCode(31), NETCACHE={}, NETHITS=[], NETSEL=null;
 var PREFS=["北海道","青森県","岩手県","宮城県","秋田県","山形県","福島県","茨城県","栃木県","群馬県",
 "埼玉県","千葉県","東京都","神奈川県","新潟県","富山県","石川県","福井県","山梨県","長野県",
 "岐阜県","静岡県","愛知県","三重県","滋賀県","京都府","大阪府","兵庫県","奈良県","和歌山県",
@@ -1251,8 +1252,10 @@ function netCardHTML(p){
 function netOpen(){
   var sel=document.getElementById("netPref");
   if(!sel.options.length){
-    sel.innerHTML=PREFS.filter(function(x){return NETDB[x]}).map(function(x){
-      return '<option'+(x===S.netPref?' selected':'')+'>'+x+'</option>' }).join("");
+    var cur_=S.netPref||"";
+    sel.innerHTML='<option value=""'+(cur_===""?" selected":"")+'>全国からさがす</option>'+
+      PREFS.filter(function(x){return NETDB[x]}).map(function(x){
+        return '<option'+(x===cur_?' selected':'')+'>'+x+'</option>' }).join("");
   }
   document.getElementById("netStep1").hidden=false;
   document.getElementById("netStep2").hidden=true;
@@ -1270,43 +1273,65 @@ async function netLoad(pref){
   var bin=Uint8Array.from(atob(b64),function(c){return c.charCodeAt(0)});
   var buf=await new Response(new Blob([bin]).stream()
             .pipeThrough(new DecompressionStream("gzip"))).arrayBuffer();
-  var cols=JSON.parse(new TextDecoder().decode(buf));
-  var out=cols.map(function(c){
-    if(c===0||c===null) return null;
-    if(typeof c==="string") return c.split(NETSEP);
-    var vals=c[0].split(NETSEP), idx=c[1].split(",");
-    return idx.map(function(i){ return vals[+i] });
-  });
-  NETCACHE[pref]=out; return out;
+  /* 列は使うときにだけ展開する。全国からさがすときに軽くするため */
+  var o={raw:JSON.parse(new TextDecoder().decode(buf)), exp:[]};
+  NETCACHE[pref]=o; return o;
 }
+function netCol(o,r){
+  if(o.exp[r]) return o.exp[r];
+  var c=o.raw[r], v;
+  if(c===0||c===null||c===undefined) v=null;
+  else if(typeof c==="string") v=c.split(NETSEP);
+  else { var vals=c[0].split(NETSEP), idx=c[1].split(",");
+         v=idx.map(function(x){ return vals[+x] }) }
+  o.exp[r]=v; return v;
+}
+/* NETSEL = {p:都道府県, i:行番号} */
+function netG(sel,r){
+  var o=NETCACHE[sel.p]; if(!o) return "";
+  var c=netCol(o,r); if(!c) return "";
+  var v=c[sel.i]; return v===undefined ? "" : String(v).trim();
+}
+
 var NETSEQ=0;
 async function netSearch(){
   var seq=++NETSEQ;
-  var pref=document.getElementById("netPref").value;
+  var pref=document.getElementById("netPref").value;   /* "" なら全国 */
   var q=document.getElementById("netQ").value.trim();
   S.netPref=pref; save();
   var list=document.getElementById("netList");
   if(!q){ list.innerHTML=""; netMsg("園の名前を入れてください。"); return }
-  netMsg("さがしています…");
-  var cols;
-  try{ cols=await netLoad(pref) }catch(e){ netMsg("データを開けませんでした（"+e+"）"); return }
-  if(seq!==NETSEQ) return;
-  if(!cols){ netMsg("この都道府県のデータがありません。"); return }
-  var names=cols[0], hit=[];
-  for(var i=0;i<names.length && hit.length<60;i++) if(names[i].indexOf(q)>-1) hit.push(i);
-  NETROWS=cols;
-  if(!hit.length){ list.innerHTML=""; netMsg("見つかりませんでした。ひらがな・漢字を変えてみてください。"); return }
-  netMsg(hit.length+(hit.length>=60?"件以上":"件")+" 見つかりました。");
-  list.innerHTML=hit.map(function(i){
-    var a=(cols[2]?cols[2][i]:"")+(cols[3]?cols[3][i]:"");
-    return '<button class="netHit" onclick="netPick('+i+')"><b>'+esc(cols[0][i])+'</b>'+
-      '<span>'+esc((cols[5]&&cols[5][i]?cols[5][i]+"／":"")+a)+'</span></button>' }).join("");
+  var prefs = pref ? [pref] : PREFS.filter(function(x){ return NETDB[x] });
+  netMsg(pref ? "さがしています…" : "全国からさがしています…（はじめの1回だけ少し待ちます）");
+  var hits=[];
+  for(var n=0;n<prefs.length;n++){
+    var pf=prefs[n], o;
+    try{ o=await netLoad(pf) }catch(e){ netMsg("データを開けませんでした（"+e+"）"); return }
+    if(seq!==NETSEQ) return;                            /* 入力が進んでいたらやめる */
+    if(!o) continue;
+    var names=netCol(o,0);
+    for(var i=0;i<names.length;i++){
+      if(names[i].indexOf(q)>-1){ hits.push({p:pf,i:i}); if(hits.length>=60) break }
+    }
+    if(hits.length>=60) break;
+  }
+  if(!hits.length){
+    list.innerHTML="";
+    netMsg(pref ? "「"+pref+"」では見つかりませんでした。都道府県を「全国からさがす」にしてみてください。"
+                : "見つかりませんでした。園名を短く（例：さくら）してみてください。");
+    return;
+  }
+  netMsg(hits.length+(hits.length>=60?"件以上":"件")+" 見つかりました。");
+  list.innerHTML=hits.map(function(h,n){
+    var a=h.p+netG(h,2)+netG(h,3);
+    return '<button class="netHit" onclick="netPick('+n+')"><b>'+esc(netG(h,0))+'</b>'+
+      '<span>'+esc((netG(h,5)?netG(h,5)+"／":"")+a)+'</span></button>' }).join("");
+  NETHITS=hits;
 }
-function netG(i,r){ var c=NETROWS[i]; return c&&c[r]!==undefined ? String(c[r]).trim() : "" }
 
 /* 公開データ → アプリの項目 */
-function netFields(i,pref){
-  var g=function(r){ return netG(r,i) }, L=[];
+function netFields(sel){
+  var g=function(r){ return netG(sel,r) }, L=[];
   function A(k,v){ if(v && on(k)) L.push([k,v]) }
   var t=g(5), ty="";
   if(/^保育所/.test(t)) ty="認可保育園";
@@ -1316,7 +1341,7 @@ function netFields(i,pref){
   else if(/^事業所内保育/.test(t)) ty="企業主導型";
   else if(/認可外|ベビーホテル/.test(t)) ty="認可外保育園";
   A("prep_0",ty);
-  A("prep_1",(pref+g(2)+g(3)).trim());
+  A("prep_1",(sel.p+g(2)+g(3)).trim());
   var h=[];
   if(g(9)&&g(10)) h.push("平日 "+g(9)+"〜"+g(10));
   if(g(11)&&g(12)) h.push("土曜 "+g(11)+"〜"+g(12));
@@ -1338,8 +1363,8 @@ function netFields(i,pref){
   return L;
 }
 /* 項目にならないけれど役に立つ情報 */
-function netExtra(i){
-  var g=function(r){ return netG(r,i) }, L=[];
+function netExtra(sel){
+  var g=function(r){ return netG(sel,r) }, L=[];
   var te=[], lb=["0歳","1歳","2歳","3歳","4歳","5歳"];
   for(var a=0;a<6;a++) if(g(16+a)!=="") te.push(lb[a]+" "+g(16+a)+"人");
   if(te.length) L.push(["年齢ごとの定員",te.join("・")]);
@@ -1354,19 +1379,19 @@ function netExtra(i){
   var so=g(37); if(/^(実施|未実施)/.test(so)) L.push(["第三者評価",so]);
   return L;
 }
-function netPick(i){
-  NETSEL=i;
+function netPick(n){
+  var sel=NETHITS[n]; if(!sel) return;
+  NETSEL=sel;
   var p=cur(); if(!p) return;
-  var pref=document.getElementById("netPref").value;
-  var F=netFields(i,pref), X=netExtra(i);
+  var F=netFields(sel), X=netExtra(sel);
   var put=[], skip=[];
   F.forEach(function(f){
     var o=ownerOf(f[0]); if(!o) return;
     var has=(p.a[f[0]]&&p.a[f[0]].trim());
     (has?skip:put).push([o.it.q,f[1]]);
   });
-  var h='<p><b>'+esc(netG(0,i))+'</b><br><span class="netSrc">'+
-    esc(pref+netG(2,i)+netG(3,i))+'</span></p>';
+  var h='<p><b>'+esc(netG(sel,0))+'</b><br><span class="netSrc">'+
+    esc(sel.p+netG(sel,2)+netG(sel,3))+'</span></p>';
   h+='<div class="netFill">'+(put.length
       ? '<p style="margin:0 0 8px"><b>'+put.length+'件</b>を入れます（空いている項目だけ）</p><dl>'+
         put.map(function(r){return '<dt>'+esc(r[0])+'</dt><dd>'+esc(r[1])+'</dd>'}).join("")+'</dl>'
@@ -1386,16 +1411,15 @@ function netBack(){
   document.getElementById("netStep1").hidden=false;
 }
 function netApply(){
-  var p=cur(), i=NETSEL; if(!p||i===null) return;
+  var p=cur(), sel=NETSEL; if(!p||!sel) return;
   snapshot();
-  var pref=document.getElementById("netPref").value;
   if(!p.net) p.net={};
   var n=0;
-  netFields(i,pref).forEach(function(f){
+  netFields(sel).forEach(function(f){
     if(p.a[f[0]]&&p.a[f[0]].trim()) return;
     p.a[f[0]]=f[1]; p.net[f[0]]=1; n++;
   });
-  p.netinfo={ n:netG(0,i), a:pref+netG(2,i)+netG(3,i), at:NETDATE, rows:netExtra(i) };
+  p.netinfo={ n:netG(sel,0), a:sel.p+netG(sel,2)+netG(sel,3), at:NETDATE, rows:netExtra(sel) };
   save(); netClose(); render();
   msgNet(n);
 }
