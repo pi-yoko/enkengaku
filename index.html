@@ -46,6 +46,8 @@
 <!-- v20260902e -->
 <!-- v20260902g -->
 <!-- v20260902g -->
+<!-- v20260902h -->
+<!-- v20260902i -->
 <style>
 :root{
   --page:#FFEFD4; --sheet:#FFFDF7; --card:#FFFFFF;
@@ -463,20 +465,20 @@ body.measuring #printArea{display:block;position:fixed;left:-10000px;top:0;visib
           <canvas id="imgCanvas" hidden></canvas></div>
         <hr style="border:0;border-top:2px dotted var(--line);margin:15px 0">
         <h2>紙に印刷する</h2>
-        <p class="muted" style="margin:7px 0 4px">4種類あります。どれもA4縦サイズです。</p>
+        <p class="muted" style="margin:7px 0 4px">5種類あります。どれもA4縦サイズです。</p>
         <ol class="plist">
           <li><b>できあがり</b>　いま選んでいる園の、記入した内容をまとめた完成版。</li>
-          <li><b>持っていく（全ての項目）</b>　使う項目が全部、空欄で並んだ紙。</li>
-          <li><b>持っていく（まだの分）</b>　その園でまだ書けていない項目だけ。当日はこれ1枚で足ります。</li>
+          <li><b>持っていく（全て空欄）</b>　使う項目が全部、空欄で並んだ紙。園名も空欄なので、どの園でも使えます。</li>
+          <li><b>持っていく（未記入分のみ）</b>　その園でまだ書けていない項目だけ。当日はこれ1枚で足ります。</li>
+          <li><b>持っていく（記入・未記入どちらも）</b>　事前に書いた答えは印刷され、まだの分は空欄になります。調べた内容を園で確かめながら、その場で書き足せます。</li>
           <li><b>比較表</b>　園を横に並べた表。読みやすさのため3園ずつ紙を変えて刷ります。</li>
-          <li><b>持っていく（調べた分も）</b>　事前に書いた答えは印刷され、まだの分は空欄になります。調べた内容を園で確かめながら、その場で書き足せます。</li>
         </ol>
         <div class="row" style="gap:7px;flex-wrap:wrap">
           <button class="btn sm" onclick="doPrint('one')">① できあがり</button>
-          <button class="btn sm ghost" onclick="doPrint('list')">② 持っていく（全ての項目）</button>
-          <button class="btn sm ghost" onclick="doPrint('todo')">③ 持っていく（まだの分）</button>
-          <button class="btn sm ghost" onclick="doPrint('compare')">④ 比較表</button>
-          <button class="btn sm ghost" onclick="doPrint('both')">⑤ 持っていく（調べた分も）</button>
+          <button class="btn sm ghost" onclick="doPrint('list')">② 持っていく（全て空欄）</button>
+          <button class="btn sm ghost" onclick="doPrint('todo')">③ 持っていく（未記入分のみ）</button>
+          <button class="btn sm ghost" onclick="doPrint('both')">④ 持っていく（記入・未記入どちらも）</button>
+          <button class="btn sm ghost" onclick="doPrint('compare')">⑤ 比較表</button>
         </div>
         <p id="printMsg" class="muted" style="margin:10px 0 0"></p>
         </div>
@@ -623,7 +625,7 @@ body.measuring #printArea{display:block;position:fixed;left:-10000px;top:0;visib
   </section>
 
   <div id="printArea"></div>
-  <footer><span class="verline">バージョン 2026-09-02g</span><br>
+  <footer><span class="verline">バージョン 2026-09-02i</span><br>
     記録はこの端末のブラウザ内にだけ保存され、どこにも送信されません。<br>
     園の運用は自治体・法人によって異なります。気になる点は必ず園にご確認ください。</footer>
 </div>
